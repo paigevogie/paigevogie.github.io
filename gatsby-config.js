@@ -3,7 +3,7 @@ module.exports = {
         title: "Paige Vogenthaler",
         titleTemplate: "%s · Software Engineer",
         description: "The blog and portfolio of Paige Vogenthaler.",
-        url: "https://www.paigevogenthaler.com",
+        url: "https://www.paigevogie.com",
         image: "/images/snape.jpg" // Path to your image you placed in the 'static' folder
     },
     plugins: [

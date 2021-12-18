@@ -1,11 +1,11 @@
 {
-    "name": "paigevogenthaler",
+    "name": "paigevogie.com",
     "version": "0.1.0",
     "description": "The blog and portfolio of Paige Vogenthaler.",
     "private": true,
     "author": "Paige Vogenthaler",
     "license": "ISC",
-    "homepage": "https://paigevogenthaler.com",
+    "homepage": "https://paigevogie.com",
     "babel": {
         "presets": [
             "@babel/preset-react"
