@@ -46,14 +46,15 @@
         "babel-loader": "^8.0.6",
         "babel-plugin-css-modules-transform": "^1.6.2",
         "css-loader": "^1.0.0",
+        "gh-pages": "^3.2.3",
         "node-sass": "^4.13.1",
         "webpack": "^4.41.0",
         "webpack-cli": "^3.3.9"
     },
     "scripts": {
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d public",
         "build": "rm -rf public/ && gatsby build && cp ./CNAME public/",
-        "deploy": "git subtree push --prefix public origin master",
-        "force-deploy": "git push origin `git subtree split --prefix public $(git rev-parse --symbolic-full-name --abbrev-ref HEAD)`:master --force",
         "start": "gatsby develop -p 4000 --open"
     }
 }

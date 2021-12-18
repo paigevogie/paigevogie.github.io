@@ -1,2 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[9],{hoZb:function(e,a,n){"use strict";n.r(a);var s=n("q1tI"),t=n.n(s),c=n("L6Je");a.default=()=>t.a.createElement(c.a,null,t.a.createElement("div",{className:"projects"},"In Progress."))}}]);
-//# sourceMappingURL=component---src-pages-projects-jsx-6b8e672681e686edbb1e.js.map

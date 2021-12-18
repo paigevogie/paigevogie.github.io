@@ -1,7 +1,7 @@
 import React from 'react';
 import Layout from '../components/Layout';
 
-const Contact = () => (
+const FourZeroFour = () => (
     <Layout>
         <div className="404">
             Sorry, this page doesn't exist. Head back to the <a href='/'>homepage</a>.
@@ -9,4 +9,4 @@ const Contact = () => (
     </Layout>
 );
 
-export default Contact;
+export default FourZeroFour;

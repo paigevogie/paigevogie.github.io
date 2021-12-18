@@ -1,2 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[5],{"xGn/":function(e,a,n){"use strict";n.r(a);var t=n("q1tI"),r=n.n(t),l=n("L6Je");a.default=()=>r.a.createElement(l.a,null,r.a.createElement("div",{className:"blog"},r.a.createElement("a",{href:"/blog/managers-readme"},"1. Manager's README")))}}]);
-//# sourceMappingURL=component---src-pages-blog-jsx-b086843394360304ad7b.js.map

@@ -4,7 +4,7 @@ import Layout from '../components/Layout';
 const Blog = () => (
     <Layout>
         <div className='blog'>
-            <a href='/blog/managers-readme'>1. Manager's README</a>
+            <a href='/blog/managers-readme'>Manager's README</a>
         </div>
     </Layout>
 );

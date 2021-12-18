@@ -5,7 +5,6 @@
 @import './Blog';
 @import './BlogArticle';
 @import './Projects';
-@import './Contact';
 
 @include Base {
     @include Home;
@@ -13,5 +12,4 @@
     @include Blog;
     @include BlogArticle;
     @include Projects;
-    @include Contact;
 }

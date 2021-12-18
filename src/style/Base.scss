@@ -32,7 +32,6 @@
             display: flex;
             flex-grow: 1;
             @include justify-content(center);
-            @include animation-fadein(1s);
             @content;
         }
 

@@ -1,29 +1,11 @@
 @import './_vars';
 
-@mixin img-size {
-    width: 100%;
-    @include size-min-tablet{
-        height: 45vh;
-        width: 45vh;
-    }
-}
-
 @mixin About {
     .about {
         display: flex;
         @include flex-direction(column);
+        @include justify-content(center);
         @include align-items(center);
-        padding: 0 5vw;
-
-        img {
-            @include img-size;
-            object-fit: cover;
-            border-radius: 50%;
-            border: $sizing-2XS solid $pink;
-            margin: $sizing-LG 0;
-        }
-        p {
-            padding: $sizing-SM;
-        }
+        padding: 0 8vw;
     }
 }

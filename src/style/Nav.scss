@@ -18,14 +18,13 @@
         a {
             text-decoration: none;
             text-transform: uppercase;
-            color: $off-white;
-            margin: $sizing-XS;
-            padding: $sizing-SM $sizing-XS;
+            color: $soft-black;
+            margin: $sizing-MD;
             white-space: nowrap;
             position: relative;
-            background-color: $emerald;
             width: $sizing-6XL;
             height: $sizing-6XL;
+            border: $sizing-3XS solid $soft-black;
             border-radius: 50%;
             opacity: 0.9;
             display: flex;
@@ -67,36 +66,23 @@
                 -moz-animation-delay: 0.7s;
                 animation-delay: 0.7s;
             }
-            &.contact {
-                -webkit-animation-delay: 0.9s;
-                -moz-animation-delay: 0.9s;
-                animation-delay: 0.9s;
-            }
             &:after {
                 content: "";
-                bottom: 0;
-                left: 0;
+                bottom: -5px;
+                left: 15%;
                 width: 0;
                 height: $sizing-2XS;
                 position: absolute;
-                background-color: $dark-grey;
-                transition: width 0.5s ease, background-color 0.5s, color 1s;
+                background-color: $light-grey;
+                transition: width 0.4s ease, background-color 0.5s, color 1s;
                 @include animation-fadein(3s);
             }
-            &.active {
-                color: $dark-grey;
-                background-color: $pink;
-                &:after {
-                    width: 100%;
-                    background-color: $soft-black;
-                }
+            &.active:after {
+                background-color: $soft-black;
+                width: 70%;
             }
-            &:hover {
-                color: $off-white;
-                background-color: $light-grey;
-                &:after {
-                    width: 100%;
-                }
+            &:hover:after {
+                width: 70%;
             }
         }
     }

@@ -7,17 +7,13 @@
         @include flex-direction(column);
         @include justify-content(center);
         @include align-items(center);
-
         a {
+          color: $soft-black;
+          text-decoration: none;
+          &:visited, &:hover, &:active {
+            color: $light-grey;
             text-decoration: none;
-            color: inherit;
-            font-size: $font-size-XL;
-            color: $emerald;
-            text-transform: uppercase;
-
-            &:hover, &:focus, &:active {
-                color: $gold;
-            }
+          }
         }
     }
 }

@@ -1,2 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[3],{pssB:function(e,a,t){"use strict";t.r(a);var n=t("q1tI"),s=t.n(n),c=t("L6Je");a.default=()=>s.a.createElement(c.a,null,s.a.createElement("div",{className:"404"},"Sorry, this page doesn't exist. Head back to the ",s.a.createElement("a",{href:"/"},"homepage"),"."))}}]);
-//# sourceMappingURL=component---src-pages-404-jsx-e44b07147f754cd87bd4.js.map

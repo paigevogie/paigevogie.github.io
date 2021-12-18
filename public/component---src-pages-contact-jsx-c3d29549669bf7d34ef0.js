@@ -1,2 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[7],{w2EZ:function(e,a,t){"use strict";t.r(a);var n=t("q1tI"),c=t.n(n),i=t("L6Je");a.default=()=>c.a.createElement(i.a,null,c.a.createElement("div",{className:"contact"},"The best way to contact me is via LinkedIn or email. See the links below."))}}]);
-//# sourceMappingURL=component---src-pages-contact-jsx-c3d29549669bf7d34ef0.js.map

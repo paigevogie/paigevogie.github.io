@@ -23,7 +23,6 @@ class Nav extends React.Component {
                 <a href='/about/' className={`about ${getClassName('about')}`}>About</a>
                 <a href='/blog/' className={`blog ${getClassName('blog')}`}>Blog</a>
                 <a href='/projects/' className={`projects ${getClassName('projects')}`}>Projects</a>
-                <a href='/contact/' className={`contact ${getClassName('contact')}`}>Contact</a>
             </nav>
         );
     }

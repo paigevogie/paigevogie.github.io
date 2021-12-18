@@ -4,7 +4,7 @@ import Layout from '../components/Layout';
 const Projects = () => (
     <Layout>
         <div className="projects">
-            In Progress.
+            <a href="/covid19worldmap">Covid-19 World Map</a>
         </div>
     </Layout>
 );
