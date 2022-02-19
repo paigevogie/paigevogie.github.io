@@ -11,6 +11,7 @@ const Footer = () => {
     };
 
     return (
+      <footer>
         <ul className="footer">
             {/* Email */}
             <li className="email" onClick={() => sendGA("Email")}>
@@ -52,6 +53,7 @@ const Footer = () => {
                 </a>
             </li>
         </ul>
+      </footer>
     );
 };
 

@@ -1,0 +1,20 @@
+@import './_vars';
+
+@mixin LinkList {
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 20% auto;
+    }
+    li {
+      margin: $sizing-XL 0;
+      a {
+        color: $soft-black;
+        text-decoration: none;
+        &:hover, &:active {
+          color: $light-grey;
+          text-decoration: none;
+        }
+      }
+    }
+}

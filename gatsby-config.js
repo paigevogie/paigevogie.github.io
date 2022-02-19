@@ -1,10 +1,9 @@
 module.exports = {
     siteMetadata: {
-        title: "Paige Vogenthaler",
-        titleTemplate: "%s · Software Engineer",
-        description: "The blog and portfolio of Paige Vogenthaler.",
+        defaultTitle: "paigevogie.com",
+        titleTemplate: "%s | paigevogie.com",
+        defaultDescription: "The portfolio and blog of Paige Vogenthaler.",
         url: "https://www.paigevogie.com",
-        image: "/images/snape.jpg" // Path to your image you placed in the 'static' folder
     },
     plugins: [
         `gatsby-plugin-react-helmet`,
@@ -37,7 +36,7 @@ module.exports = {
             resolve: `gatsby-plugin-mdx`,
             options: {
                 defaultLayouts: {
-                    default: require.resolve('./src/components/BlogLayout.jsx')
+                    default: require.resolve('./src/components/Layout.jsx')
                 }
             }
         },

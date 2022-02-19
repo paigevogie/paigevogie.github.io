@@ -7,8 +7,8 @@
         display: flex;
         bottom: 0;
         width: 100%;
-        @include justify-content(center);
-        @include align-items(center);
+        justify-content: center;
+        align-items: center;
         @include animation-fadein(1s);
 
         li {
@@ -21,8 +21,8 @@
             }
             a {
                 display: flex;
-                @include align-items(center);
-                @include justify-content(center);
+                align-items: center;
+                justify-content: center;
                 height: $sizing-3XL;
                 width: $sizing-3XL;
                 transition: transform 5s ease 1s;

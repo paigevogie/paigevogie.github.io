@@ -6,6 +6,7 @@ class Nav extends React.Component {
     };
 
     componentDidMount() {
+        // required for server side
         typeof window !== `undefined` && this.setState({ pathname: window.location.pathname });
     }
 
@@ -20,9 +21,9 @@ class Nav extends React.Component {
         return (
             <nav>
                 <a href='/' className={pathname === '/' ? 'active home': 'home'}>Home</a>
-                <a href='/about/' className={`about ${getClassName('about')}`}>About</a>
-                <a href='/blog/' className={`blog ${getClassName('blog')}`}>Blog</a>
-                <a href='/projects/' className={`projects ${getClassName('projects')}`}>Projects</a>
+                <a href='/about/' className={getClassName('about')}>About</a>
+                <a href='/blog/' className={getClassName('blog')}>Blog</a>
+                <a href='/projects/' className={getClassName('projects')}>Projects</a>
             </nav>
         );
     }

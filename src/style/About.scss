@@ -1,11 +1,29 @@
 @import './_vars';
 
-@mixin About {
-    .about {
-        display: flex;
-        @include flex-direction(column);
-        @include justify-content(center);
-        @include align-items(center);
-        padding: 0 8vw;
+main.about {
+    .iframes {
+      display: flex;
+      flex-wrap: wrap;
+      // @include size-min-tablet {
+        justify-content: flex-end;
+      // }
+
+      iframe, .profile-badge {
+        margin: $sizing-XL 0 0 $sizing-LG;
+      }
+      /* linkedin style overrides */
+      .profile-badge {
+        border-radius: 0;
+        height: 275px;
+        width: 275px;
+      }
+    }
+    /* linkedin stylesheet is stupid */
+    h1 , p {
+      font-size: revert;
+      font-weight: revert;
+      color: revert;
+      line-height: normal !important;
+      margin: revert;
     }
 }

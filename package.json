@@ -54,7 +54,7 @@
     "scripts": {
         "predeploy": "npm run build",
         "deploy": "gh-pages -d public",
-        "build": "rm -rf public/ && gatsby build && cp ./CNAME public/",
+        "build": "gatsby build && cp ./CNAME public/",
         "start": "gatsby develop -p 4000 --open"
     }
 }

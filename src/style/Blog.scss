@@ -1,19 +1,5 @@
-@import './_vars';
+@import './LinkList.scss';
 
-@mixin Blog {
-    .blog {
-        padding: $sizing-MD;
-        display: flex;
-        @include flex-direction(column);
-        @include justify-content(center);
-        @include align-items(center);
-        a {
-          color: $soft-black;
-          text-decoration: none;
-          &:visited, &:hover, &:active {
-            color: $light-grey;
-            text-decoration: none;
-          }
-        }
-    }
+main.blog {
+  @include LinkList;
 }

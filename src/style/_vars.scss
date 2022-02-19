@@ -56,49 +56,6 @@ $z-indexes-back: ( // list of front to back negatives, e.g. -1 to -Infinity
     }
 }
 
-// Flex Box
-@mixin flex-direction($a) {
-  -moz-flex-direction: $a;
-  -ms-flex-direction: $a;
-  -webkit-flex-direction: $a;
-  flex-direction: $a;
-}
-@mixin flex-wrap($a) {
-  -moz-flex-wrap: $a;
-  -ms-flex-wrap: $a;
-  -webkit-flex-wrap: $a;
-  flex-wrap: $a;
-}
-@mixin align-content($a) {
-  align-content: $a;
-}
-@mixin align-items($a) {
-  -moz-align-items: $a;
-  -webkit-align-items: $a;
-  align-items: $a;
-}
-@mixin align-self($a) {
-  -moz-align-self: $a;
-  -webkit-align-self: $a;
-  align-self: $a;
-}
-@mixin justify-content($a) {
-  -moz-box-pack: $a;
-  -ms-box-pack: $a;
-  -webkit-box-pack: $a;
-  box-pack: $a;
-  -moz-justify-content: $a;
-  -ms-justify-content: $a;
-  -webkit-justify-content: $a;
-  justify-content: $a;
-}
-@mixin justify-self($a) {
-  -moz-justify-self: $a;
-  -ms-justify-self: $a;
-  -webkit-justify-self: $a;
-  justify-self: $a;
-}
-
 // Misc Mixins
 @mixin calc($property, $expression) {
   #{$property}: -moz-calc(#{$expression});
@@ -178,21 +135,6 @@ $breakpoint-desktop-XL: 1440px;
 }
 @mixin size-min-desktopXL {
     @media screen and (min-width: $breakpoint-desktop-XL) {
-        @content;
-    }
-}
-@mixin size-only-mobile {
-    @media screen and (max-width: #{$breakpoint-tablet - 1}) {
-        @content;
-    }
-}
-@mixin size-only-tablet {
-    @media screen and (min-width: $breakpoint-tablet) and (max-width: #{$breakpoint-desktop - 1}) {
-        @content;
-    }
-}
-@mixin size-only-desktop {
-    @media screen and (min-width: $breakpoint-desktop) and (max-width: #{$breakpoint-desktop-XL - 1}) {
         @content;
     }
 }

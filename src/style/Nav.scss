@@ -5,15 +5,11 @@
         position: absolute;
         font-size: $font-size-XS;
         font-weight: 500;
+        width: 80px;
         @include animation-fadein(1s);
         @include size-min-tablet {
             margin: $sizing-7XL;
         }
-
-        /* Keyframes for the fade-in */
-        @-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-        @-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-        @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
 
         a {
             text-decoration: none;
@@ -28,44 +24,10 @@
             border-radius: 50%;
             opacity: 0.9;
             display: flex;
-            @include justify-content(center);
-            @include align-items(center);
+            justify-content: center;
+            align-items: center;
             transform: rotate(-12deg);
 
-            opacity:0;
-            opacity: 1 \9; /*just in case ie*/
-            -webkit-animation:fadeIn ease-in 1;
-            -moz-animation:fadeIn ease-in 1;
-            animation:fadeIn ease-in 1;
-
-            -webkit-animation-fill-mode:forwards;
-            -moz-animation-fill-mode:forwards;
-            animation-fill-mode:forwards;
-
-            -webkit-animation-duration:1s;
-            -moz-animation-duration:1s;
-            animation-duration:1s;
-
-            &.home {
-                -webkit-animation-delay: 0.1s;
-                -moz-animation-delay: 0.1s;
-                animation-delay: 0.1s;
-            }
-            &.about {
-                -webkit-animation-delay: 0.3s;
-                -moz-animation-delay: 0.3s;
-                animation-delay: 0.3s;
-            }
-            &.blog {
-                -webkit-animation-delay: 0.5s;
-                -moz-animation-delay: 0.5s;
-                animation-delay: 0.5s;
-            }
-            &.projects {
-                -webkit-animation-delay: 0.7s;
-                -moz-animation-delay: 0.7s;
-                animation-delay: 0.7s;
-            }
             &:after {
                 content: "";
                 bottom: -5px;
