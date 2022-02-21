@@ -12,6 +12,7 @@ main.about {
       width: 200px;
       height: 200px;
       border-radius: 0;
+      overflow: scroll;
       @include size-min-tablet {
         width: 275px;
         height: 275px;

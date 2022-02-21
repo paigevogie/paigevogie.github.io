@@ -6,7 +6,7 @@ const Home = () => (
     title="Home"
     className="home"
     subtitle={<p>Hello! I'm Paige. 👋 Welcome to my site.</p>}
-  ></Layout>
+  />
 );
 
 export default Home;

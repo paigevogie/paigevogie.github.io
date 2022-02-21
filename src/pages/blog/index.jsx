@@ -1,6 +1,6 @@
 import React from "react";
-import Layout from "../components/Layout";
-import "../style/Blog.scss";
+import Layout from "../../components/Layout";
+import "../../style/Blog.scss";
 
 const Blog = () => (
   <Layout title="Blog" className="blog">

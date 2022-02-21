@@ -1,6 +1,6 @@
 import React from "react";
-import Layout from "../components/Layout";
-import "../style/Projects.scss";
+import Layout from "../../components/Layout";
+import "../../style/Projects.scss";
 
 const Projects = () => (
   <Layout title="Projects" className="projects">
@@ -9,10 +9,10 @@ const Projects = () => (
         <a href="/covid19worldmap">Covid-19 World Map</a>
       </li>
       <li>
-        <a href="/dots">Dots</a>
+        <a href="/projects/dots">Dots</a>
       </li>
       <li>
-        <a href="/diagonals">Diagonals</a>
+        <a href="/projects/diagonals">Diagonals</a>
       </li>
     </ul>
   </Layout>

@@ -1,6 +1,6 @@
 import React from "react";
-import Layout from "../components/Layout";
-import "../style/Diagonals.scss";
+import Layout from "../../components/Layout";
+import "../../style/Diagonals.scss";
 
 const Diagonals = () => (
   <Layout title="Diagonals">

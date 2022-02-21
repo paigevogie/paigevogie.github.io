@@ -38,16 +38,25 @@ body,
     h3,
     h4,
     h5,
-    h6 {
+    h6,
+    b {
       font-weight: 400;
+    }
+
+    a {
+      color: $soft-black;
+      font-weight: 400;
+      text-decoration: none;
+      &:hover,
+      &:active {
+        color: $light-grey;
+        text-decoration: none;
+      }
     }
 
     header {
       text-align: right;
       margin-top: $sizing-6XL;
-      p b {
-        font-weight: 400;
-      }
     }
   }
 
