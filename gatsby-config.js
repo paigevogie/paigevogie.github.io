@@ -3,7 +3,6 @@ module.exports = {
     defaultTitle: "paigevogie.com",
     titleTemplate: "%s | paigevogie.com",
     defaultDescription: "The portfolio and blog of Paige Vogenthaler.",
-    url: "https://www.paigevogie.com",
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -23,13 +22,6 @@ module.exports = {
         short_name: `paige-vogenthaler`,
         start_url: `/`,
         icon: `src/assets/favicon.png`,
-      },
-    },
-    {
-      resolve: `gatsby-plugin-google-analytics`,
-      options: {
-        trackingId: "UA-148896184-1",
-        head: true,
       },
     },
     {
