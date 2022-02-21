@@ -1,68 +1,68 @@
-@import './_vars';
+@import "./_vars";
 
 @mixin diagonal {
-    position: absolute;
-    height: 0;
-    width: 200vw;
-    @content;
+  position: absolute;
+  height: 0;
+  width: 200vw;
+  @content;
 }
 
 .diagonals {
-    height: 100%;
-    width: 100%;
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    opacity: 0.2;
-    background-color: $off-white;
-    overflow: hidden;
-    z-index: z('diagonals');
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0.2;
+  background-color: $off-white;
+  overflow: hidden;
+  z-index: z("diagonals");
 
-    .diagonal-1 {
-        @include diagonal {
-            bottom: 0;
-            right: 5vw;
-            border-bottom: $sizing-XS solid $pink;
-            transform-origin: bottom right;
-            transform: rotate(5deg);
-        }
+  .diagonal-1 {
+    @include diagonal {
+      bottom: 0;
+      right: 5vw;
+      border-bottom: $sizing-XS solid $pink;
+      transform-origin: bottom right;
+      transform: rotate(5deg);
     }
-    .diagonal-2 {
-        @include diagonal {
-            bottom: 0;
-            left: 10vw;
-            border-bottom: $sizing-3XS solid $gold;
-            transform-origin: bottom left;
-            transform: rotate(-65deg);
-        }
+  }
+  .diagonal-2 {
+    @include diagonal {
+      bottom: 0;
+      left: 10vw;
+      border-bottom: $sizing-3XS solid $gold;
+      transform-origin: bottom left;
+      transform: rotate(-65deg);
     }
-    .diagonal-3 {
-        @include diagonal {
-            bottom: 30vh;
-            right: 0;
-            border-bottom: $sizing-2XS solid $emerald;
-            transform-origin: bottom right;
-            transform: rotate(85deg);
-        }
+  }
+  .diagonal-3 {
+    @include diagonal {
+      bottom: 30vh;
+      right: 0;
+      border-bottom: $sizing-2XS solid $emerald;
+      transform-origin: bottom right;
+      transform: rotate(85deg);
     }
-    .diagonal-4 {
-        @include diagonal {
-            top: 0;
-            left: 10vw;
-            border-bottom: $sizing-2XS solid $pink;
-            transform-origin: top left;
-            transform: rotate(45deg);
-        }
+  }
+  .diagonal-4 {
+    @include diagonal {
+      top: 0;
+      left: 10vw;
+      border-bottom: $sizing-2XS solid $pink;
+      transform-origin: top left;
+      transform: rotate(45deg);
     }
-    .diagonal-5 {
-        @include diagonal {
-            bottom: 0;
-            right: 0;
-            border-bottom: $sizing-3XS solid $emerald;
-            transform-origin: bottom right;
-            transform: rotate(20deg);
-        }
+  }
+  .diagonal-5 {
+    @include diagonal {
+      bottom: 0;
+      right: 0;
+      border-bottom: $sizing-3XS solid $emerald;
+      transform-origin: bottom right;
+      transform: rotate(20deg);
     }
+  }
 }

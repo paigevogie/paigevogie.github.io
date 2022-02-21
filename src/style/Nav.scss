@@ -1,51 +1,51 @@
-@import './_vars';
+@import "./_vars";
 
 @mixin Nav {
-    nav {
-        position: absolute;
-        font-size: $font-size-XS;
-        font-weight: 500;
-        width: 80px;
-        @include animation-fadein(1s);
-        @include size-min-tablet {
-            margin: $sizing-7XL;
-        }
-
-        a {
-            text-decoration: none;
-            text-transform: uppercase;
-            color: $soft-black;
-            margin: $sizing-MD;
-            white-space: nowrap;
-            position: relative;
-            width: $sizing-6XL;
-            height: $sizing-6XL;
-            border: $sizing-3XS solid $soft-black;
-            border-radius: 50%;
-            opacity: 0.9;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transform: rotate(-12deg);
-
-            &:after {
-                content: "";
-                bottom: -5px;
-                left: 15%;
-                width: 0;
-                height: $sizing-2XS;
-                position: absolute;
-                background-color: $light-grey;
-                transition: width 0.4s ease, background-color 0.5s, color 1s;
-                @include animation-fadein(3s);
-            }
-            &.active:after {
-                background-color: $soft-black;
-                width: 70%;
-            }
-            &:hover:after {
-                width: 70%;
-            }
-        }
+  nav {
+    position: absolute;
+    font-size: $font-size-XS;
+    font-weight: 500;
+    width: 80px;
+    @include animation-fadein(1s);
+    @include size-min-tablet {
+      margin: $sizing-7XL;
     }
+
+    a {
+      text-decoration: none;
+      text-transform: uppercase;
+      color: $soft-black;
+      margin: $sizing-MD;
+      white-space: nowrap;
+      position: relative;
+      width: $sizing-6XL;
+      height: $sizing-6XL;
+      border: $sizing-3XS solid $soft-black;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transform: rotate(-12deg);
+      background-color: white;
+
+      &:after {
+        content: "";
+        bottom: -5px;
+        left: 15%;
+        width: 0;
+        height: $sizing-2XS;
+        position: absolute;
+        background-color: $light-grey;
+        transition: width 0.4s ease, background-color 0.5s, color 1s;
+        @include animation-fadein(3s);
+      }
+      &.active:after {
+        background-color: $soft-black;
+        width: 70%;
+      }
+      &:hover:after {
+        width: 70%;
+      }
+    }
+  }
 }

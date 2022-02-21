@@ -1,29 +1,30 @@
-@import './_vars';
+@import "./_vars";
 
 main.about {
-    .iframes {
-      display: flex;
-      flex-wrap: wrap;
-      // @include size-min-tablet {
-        justify-content: flex-end;
-      // }
+  .iframes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
 
-      iframe, .profile-badge {
-        margin: $sizing-XL 0 0 $sizing-LG;
-      }
-      /* linkedin style overrides */
-      .profile-badge {
-        border-radius: 0;
-        height: 275px;
+    iframe,
+    .profile-badge {
+      margin: $sizing-XL 0 0 $sizing-LG;
+      width: 200px;
+      height: 200px;
+      border-radius: 0;
+      @include size-min-tablet {
         width: 275px;
+        height: 275px;
       }
     }
-    /* linkedin stylesheet is stupid */
-    h1 , p {
-      font-size: revert;
-      font-weight: revert;
-      color: revert;
-      line-height: normal !important;
-      margin: revert;
-    }
+  }
+  /* linkedin stylesheet is stupid */
+  h1,
+  p {
+    font-size: revert;
+    font-weight: revert;
+    color: revert;
+    line-height: normal !important;
+    margin: revert;
+  }
 }

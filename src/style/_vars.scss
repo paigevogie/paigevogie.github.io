@@ -1,76 +1,49 @@
 // Colors
-$off-white:#fdfcef;
-$lighter-grey:#ececec;
-$light-grey:silver;
-$medium-grey:grey;
-$dark-grey:dimgrey;
-$soft-black:#323232;
-$black:black;
-$gold:#ffcd38d9;
-$pink:#ffcaca;
-$emerald:#0d610df0;
+$off-white: #fdfcef;
+$lighter-grey: #ececec;
+$light-grey: silver;
+$medium-grey: grey;
+$dark-grey: dimgrey;
+$soft-black: #323232;
+$black: black;
+$gold: #ffcd38d9;
+$pink: #ffcaca;
+$emerald: #0d610df0;
 
 // Font Sizes
-$font-size-XS:11px;
-$font-size-SM:13px;
-$font-size-MD:15px;
-$font-size-LG:16px;
-$font-size-XL:20px;
-$font-size-2XL:24px;
-$font-size-3XL:32px;
-$font-size-4XL:40px;
-$font-size-5XL:48px;
-$font-size-6XL:56px;
+$font-size-XS: 11px;
+$font-size-SM: 13px;
+$font-size-MD: 15px;
+$font-size-LG: 16px;
+$font-size-XL: 20px;
+$font-size-2XL: 24px;
+$font-size-3XL: 32px;
+$font-size-4XL: 40px;
+$font-size-5XL: 48px;
+$font-size-6XL: 56px;
 
 // Sizing
-$sizing-3XS:1px;
-$sizing-2XS:2px;
-$sizing-XS:4px;
-$sizing-SM:8px;
-$sizing-MD:12px;
-$sizing-LG:16px;
-$sizing-XL:24px;
-$sizing-2XL:32px;
-$sizing-3XL:40px;
-$sizing-4XL:48px;
-$sizing-5XL:56px;
-$sizing-6XL:64px;
-$sizing-7XL:72px;
+$sizing-3XS: 1px;
+$sizing-2XS: 2px;
+$sizing-XS: 4px;
+$sizing-SM: 8px;
+$sizing-MD: 12px;
+$sizing-LG: 16px;
+$sizing-XL: 24px;
+$sizing-2XL: 32px;
+$sizing-3XL: 40px;
+$sizing-4XL: 48px;
+$sizing-5XL: 56px;
+$sizing-6XL: 64px;
+$sizing-7XL: 72px;
 
 // Z-Indexes
-$z-indexes-front: ( // list of front to back postitives, e.g Infinity to 1
-
-);
-$z-indexes-back: ( // list of front to back negatives, e.g. -1 to -Infinity
-    "rings",
-    "diagonals"
-);
-@function z($name) {
-    @if index($z-indexes-front, $name) {
-        @return (length($z-indexes-front) - index($z-indexes-front, $name)) + 1;
-    } @else if index($z-indexes-back, $name) {
-        @return index($z-indexes-back, $name)*-1;
-    } @else {
-        @warn 'There is no item "#{$name}" in this list; choose one of: #{$z-indexes-front} or #{$z-indexes-back}';
-        @return null;
-    }
-}
+// list of front to back postitives, e.g Infinity to 1
+$z-indexes-front: ();
+// list of front to back negatives, e.g. -1 to -Infinity
+$z-indexes-back: ("rings", "diagonals");
 
 // Misc Mixins
-@mixin calc($property, $expression) {
-  #{$property}: -moz-calc(#{$expression});
-  #{$property}: -ms-calc(#{$expression});
-  #{$property}: -webkit-calc(#{$expression});
-  #{$property}: calc(#{$expression});
-}
-@mixin placeholder-text {
-  $placeholders: ":-webkit-input" ":-moz" "-moz" "-ms-input";
-  @each $placeholder in $placeholders {
-    &:#{$placeholder}-placeholder {
-      @content;
-    }
-  }
-}
 @mixin transition($p, $a) {
   -webkit-transition: $p $a ease-in;
   -moz-transition: $p $a ease-in;
@@ -83,39 +56,28 @@ $z-indexes-back: ( // list of front to back negatives, e.g. -1 to -Infinity
   -ms-transform: rotate($deg);
   transform: rotate($deg);
 }
-@mixin input-placeholder {
-    &.placeholder { @content; }
-    &:-moz-placeholder { @content; }
-    &::-moz-placeholder { @content; }
-    &:-ms-input-placeholder { @content; }
-    &::-webkit-input-placeholder { @content; }
-}
-@mixin hardware($backface: true, $perspective: 1000) {
-    @if $backface {
-        backface-visibility: hidden;
-    }
-    perspective: $perspective;
-}
-@mixin truncate($truncation-boundary) {
-    max-width: $truncation-boundary;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
 @mixin animation-fadein($sec) {
-    -webkit-animation: fadein $sec; /* Safari, Chrome and Opera > 12.1 */
-       -moz-animation: fadein $sec; /* Firefox < 16 */
-        -ms-animation: fadein $sec; /* Internet Explorer */
-         -o-animation: fadein $sec; /* Opera < 12.1 */
-            animation: fadein $sec;
-    @keyframes fadein {
-        from { opacity: 0; }
-        to   { opacity: 1; }
+  -webkit-animation: fadein $sec; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: fadein $sec; /* Firefox < 16 */
+  -ms-animation: fadein $sec; /* Internet Explorer */
+  -o-animation: fadein $sec; /* Opera < 12.1 */
+  animation: fadein $sec;
+  @keyframes fadein {
+    from {
+      opacity: 0;
     }
-    @-webkit-keyframes fadein {
-        from { opacity: 0; }
-        to   { opacity: 1; }
+    to {
+      opacity: 1;
     }
+  }
+  @-webkit-keyframes fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 }
 
 // Responsive Media Queries
@@ -124,17 +86,17 @@ $breakpoint-desktop: 1024px;
 $breakpoint-desktop-XL: 1440px;
 
 @mixin size-min-tablet {
-    @media screen and (min-width: $breakpoint-tablet) {
-        @content;
-    }
+  @media screen and (min-width: $breakpoint-tablet) {
+    @content;
+  }
 }
 @mixin size-min-desktop {
-    @media screen and (min-width: $breakpoint-desktop) {
-        @content;
-    }
+  @media screen and (min-width: $breakpoint-desktop) {
+    @content;
+  }
 }
 @mixin size-min-desktopXL {
-    @media screen and (min-width: $breakpoint-desktop-XL) {
-        @content;
-    }
+  @media screen and (min-width: $breakpoint-desktop-XL) {
+    @content;
+  }
 }

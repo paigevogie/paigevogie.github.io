@@ -1,7 +1,7 @@
-import React from "react"
-import { Helmet } from "react-helmet"
-import PropTypes from "prop-types"
-import { StaticQuery, graphql } from "gatsby"
+import React from "react";
+import { Helmet } from "react-helmet";
+import PropTypes from "prop-types";
+import { StaticQuery, graphql } from "gatsby";
 
 const query = graphql`
   query SEO {
@@ -29,13 +29,15 @@ const SEO = ({ title, description, pathname, article }) => (
         },
       },
     }) => {
-
       return (
-          <Helmet titleTemplate={titleTemplate}>
-            <title>{title || defaultTitle}</title>
-            <meta name="description" content={description || defaultDescription} />
-          </Helmet>
-      )
+        <Helmet titleTemplate={titleTemplate}>
+          <title>{title || defaultTitle}</title>
+          <meta
+            name="description"
+            content={description || defaultDescription}
+          />
+        </Helmet>
+      );
     }}
   />
 );

@@ -1,49 +1,51 @@
-@import './_vars';
+@import "./_vars";
 
 @mixin Footer {
-    .footer {
-        list-style: none;
-        padding: 0;
+  .footer {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    bottom: 0;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    @include animation-fadein(1s);
+
+    li {
+      padding: $sizing-SM;
+
+      &.github a path {
+        fill: none;
+        stroke: $soft-black;
+        stroke-width: $sizing-SM;
+      }
+      a {
         display: flex;
-        bottom: 0;
-        width: 100%;
-        justify-content: center;
         align-items: center;
-        @include animation-fadein(1s);
+        justify-content: center;
+        height: $sizing-3XL;
+        width: $sizing-3XL;
+        transition: transform 5s ease 1s;
+        padding: $sizing-XS;
 
-        li {
-            padding: $sizing-SM;
-
-            &.github a path {
-                fill: none;
-                stroke: $soft-black;
-                stroke-width: $sizing-SM;
-            }
-            a {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                height: $sizing-3XL;
-                width: $sizing-3XL;
-                transition: transform 5s ease 1s;
-                padding: $sizing-XS;
-
-                path {
-                    fill: $soft-black;
-                }
-            }
-            &:hover, &:active, &:focus {
-                transform: scale(1.1);
-
-                path {
-                    fill: $light-grey;
-                }
-                &.github path {
-                    stroke: $light-grey;
-                    fill: none;
-                    stroke-width: $sizing-SM;
-                }
-            }
+        path {
+          fill: $soft-black;
         }
+      }
+      &:hover,
+      &:active,
+      &:focus {
+        transform: scale(1.1);
+
+        path {
+          fill: $light-grey;
+        }
+        &.github path {
+          stroke: $light-grey;
+          fill: none;
+          stroke-width: $sizing-SM;
+        }
+      }
     }
+  }
 }
