@@ -2,12 +2,15 @@
 
 @mixin Nav {
   nav {
-    position: absolute;
+    position: fixed;
     font-size: $font-size-XS;
     font-weight: 500;
     width: 80px;
     @include animation-fadein(1s);
     @include size-min-tablet {
+      margin: $sizing-5XL;
+    }
+    @include size-min-desktop {
       margin: $sizing-7XL;
     }
 

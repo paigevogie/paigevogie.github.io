@@ -83,7 +83,6 @@ $z-indexes-back: ("rings", "diagonals");
 // Responsive Media Queries
 $breakpoint-tablet: 768px;
 $breakpoint-desktop: 1024px;
-$breakpoint-desktop-XL: 1440px;
 
 @mixin size-min-tablet {
   @media screen and (min-width: $breakpoint-tablet) {
@@ -92,11 +91,6 @@ $breakpoint-desktop-XL: 1440px;
 }
 @mixin size-min-desktop {
   @media screen and (min-width: $breakpoint-desktop) {
-    @content;
-  }
-}
-@mixin size-min-desktopXL {
-  @media screen and (min-width: $breakpoint-desktop-XL) {
     @content;
   }
 }
