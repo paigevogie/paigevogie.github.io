@@ -15,13 +15,12 @@ const About = () => (
   >
     <Helmet>
       <script
+        asyncdefer
         src="https://platform.linkedin.com/badges/js/profile.js"
-        async
-        defer
-        type="text/javascript"
       ></script>
+      <script async defer src="//assets.pinterest.com/js/pinit.js"></script>
     </Helmet>
-    <div className="iframes">
+    <div className="embeds">
       <iframe
         title="Spotify Playlist"
         src="https://open.spotify.com/embed/playlist/37i9dQZF1EUMDoJuT8yJsl?utm_source=generator"
@@ -44,6 +43,24 @@ const About = () => (
         data-vanity="paigevogie"
         data-version="v1"
       ></div>
+      <div className="pinterest-embed">
+        <a
+          data-pin-do="embedUser"
+          data-pin-board-width="255"
+          data-pin-scale-height="166"
+          data-pin-scale-width="60"
+          href="https://www.pinterest.com/paigevogie/"
+        ></a>
+      </div>
+      <div className="pinterest-embed-sm">
+        <a
+          data-pin-do="embedUser"
+          data-pin-board-width="180"
+          data-pin-scale-height="90"
+          data-pin-scale-width="70"
+          href="https://www.pinterest.com/paigevogie/"
+        ></a>
+      </div>
     </div>
   </Layout>
 );

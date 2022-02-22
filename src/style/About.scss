@@ -1,21 +1,43 @@
 @import "./_vars";
 
 main.about {
-  .iframes {
+  .embeds {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-end;
 
     iframe,
-    .profile-badge {
+    .profile-badge,
+    .pinterest-embed,
+    .pinterest-embed-sm {
       margin: $sizing-XL 0 0 $sizing-LG;
       width: 200px;
       height: 200px;
-      border-radius: 0;
-      overflow: scroll;
+      border: 2px solid $light-grey;
+      border-radius: 15px;
+      overflow-y: scroll;
       @include size-min-tablet {
         width: 275px;
         height: 275px;
+      }
+    }
+    .pinterest-embed {
+      display: none;
+      @include size-min-tablet {
+        display: block;
+      }
+      span {
+        border: none;
+        background: none;
+      }
+    }
+    .pinterest-embed-sm {
+      @include size-min-tablet {
+        display: none;
+      }
+      span {
+        border: none;
+        background: none;
       }
     }
   }
