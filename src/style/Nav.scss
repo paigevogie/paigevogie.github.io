@@ -6,7 +6,6 @@
     font-size: $font-size-XS;
     font-weight: 500;
     width: 80px;
-    @include animation-fadein(1s);
     @include size-min-tablet {
       margin: $sizing-5XL;
     }
@@ -39,14 +38,25 @@
         height: $sizing-2XS;
         position: absolute;
         background-color: $light-grey;
-        transition: width 0.4s ease, background-color 0.5s, color 1s;
-        @include animation-fadein(3s);
+        transition: width 0.5s ease 0.1s, background-color 0.8s;
       }
       &.active:after {
+        @keyframes fadeInAnimation {
+          0% {
+            width: 0;
+          }
+          100% {
+            width: 70%;
+          }
+        }
         background-color: $soft-black;
-        width: 70%;
+        animation: fadeInAnimation 0.5s ease 0.5s;
+        animation-fill-mode: forwards;
       }
       &:hover:after {
+        background-color: $light-grey;
+      }
+      &:hover:not(.active):after {
         width: 70%;
       }
     }

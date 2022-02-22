@@ -46,7 +46,7 @@ $degEnd: 0deg;
     position: absolute;
     top: 50%;
     left: 50%;
-    @include animation-fadein(3s);
+    @include animation-fadein(4s);
   }
   .ring {
     position: absolute;

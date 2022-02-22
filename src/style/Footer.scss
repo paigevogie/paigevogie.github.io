@@ -9,10 +9,10 @@
     width: 100%;
     justify-content: center;
     align-items: center;
-    @include animation-fadein(1s);
 
     li {
       padding: $sizing-SM;
+      transition: transform 0.4s ease 0.1s;
 
       &.github a path {
         fill: none;
@@ -25,17 +25,17 @@
         justify-content: center;
         height: $sizing-3XL;
         width: $sizing-3XL;
-        transition: transform 5s ease 1s;
         padding: $sizing-XS;
 
         path {
           fill: $soft-black;
+          transition: fill 0.4s ease 0.1s;
         }
       }
       &:hover,
       &:active,
       &:focus {
-        transform: scale(1.1);
+        transform: scale(1.2);
 
         path {
           fill: $light-grey;
