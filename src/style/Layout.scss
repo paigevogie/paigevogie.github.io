@@ -34,18 +34,29 @@ body,
     justify-content: flex-start;
 
     h1,
+    b {
+      font-weight: 400;
+    }
     h2,
     h3,
     h4,
     h5,
-    h6,
-    b {
-      font-weight: 400;
+    h6 {
+      font-weight: 300;
+    }
+    h1 {
+      font-size: 2em;
+      margin-block-start: 0.67em;
+      margin-block-end: 0.67em;
     }
 
     header {
       text-align: right;
       margin-top: $sizing-6XL;
+    }
+    article {
+      display: flex;
+      flex-direction: column;
     }
   }
 

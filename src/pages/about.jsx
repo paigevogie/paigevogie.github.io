@@ -29,6 +29,7 @@ const About = () => (
     <div className="embeds">
       <iframe
         title="Spotify Playlist"
+        className="spotify-embed"
         src="https://open.spotify.com/embed/playlist/37i9dQZF1EUMDoJuT8yJsl?utm_source=generator"
         frameBorder="0"
         allowFullScreen=""
@@ -36,19 +37,11 @@ const About = () => (
       ></iframe>
       <iframe
         title="Strava Runs"
+        className="strava-embed"
         src="https://www.strava.com/athletes/55412609/latest-rides/66f1db3bfecd2a5d3c8fb9e689c8e825d99673df"
         frameBorder="0"
         scrolling="yes"
       ></iframe>
-      <div
-        className="badge-base LI-profile-badge"
-        data-locale="en_US"
-        data-size="medium"
-        data-theme="light"
-        data-type="VERTICAL"
-        data-vanity="paigevogie"
-        data-version="v1"
-      ></div>
       <div className="pinterest-embed">
         <a
           data-pin-do="embedUser"
@@ -97,6 +90,15 @@ const About = () => (
             <div className="gr_grid_book_container"><a title="Becoming" rel="nofollow" href="https://www.goodreads.com/book/show/38746485-becoming"><img alt="Becoming" border="0" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1528206996l/38746485._SX98_.jpg" /></a></div>*/}
           </div>
         </div>
+        <div
+          className="linkedin-embed badge-base LI-profile-badge"
+          data-locale="en_US"
+          data-size="medium"
+          data-theme="light"
+          data-type="VERTICAL"
+          data-vanity="paigevogie"
+          data-version="v1"
+        ></div>
       </div>
     </div>
   </Layout>

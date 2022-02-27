@@ -22,10 +22,18 @@ const SEO = ({ title, description }) => {
     query.site.siteMetadata;
 
   return (
-    <Helmet titleTemplate={titleTemplate} htmlAttributes={{ lang: "en" }}>
-      <title>{title || defaultTitle}</title>
-      <meta name="description" content={description || defaultDescription} />
-    </Helmet>
+    <Helmet
+      title={title}
+      titleTemplate={titleTemplate}
+      defaultTitle={defaultTitle}
+      htmlAttributes={{ lang: "en" }}
+      meta={[
+        {
+          name: "description",
+          content: description || defaultDescription,
+        },
+      ]}
+    />
   );
 };
 

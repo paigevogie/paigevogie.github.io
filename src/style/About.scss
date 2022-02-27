@@ -6,8 +6,9 @@ main.about {
     flex-wrap: wrap;
     justify-content: flex-end;
 
-    iframe,
-    .profile-badge,
+    .spotify-embed,
+    .strava-embed,
+    .linkedin-embed .profile-badge,
     .pinterest-embed,
     .pinterest-embed-sm,
     .goodreads-embed {
@@ -21,27 +22,50 @@ main.about {
         width: 275px;
         height: 275px;
       }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      opacity: 0;
+      animation: fadeIn 2s forwards;
+    }
+    .spotify-embed {
+      animation-delay: 1s;
+    }
+    .strava-embed {
+      animation-delay: 0s;
+    }
+    .linkedin-embed .profile-badge {
+      animation-delay: 1s;
     }
     .pinterest-embed {
       display: none;
+
       @include size-min-tablet {
         display: block;
-      }
-      span {
-        border: none;
-        background: none;
+        animation-delay: 0.5s;
+        span {
+          border: none;
+          background: none;
+        }
       }
     }
     .pinterest-embed-sm {
-      @include size-min-tablet {
-        display: none;
-      }
+      animation-delay: 0.5s;
       span {
         border: none;
         background: none;
       }
+      @include size-min-tablet {
+        display: none;
+      }
     }
     .goodreads-embed {
+      animation-delay: 1.5s;
       padding: $sizing-XS;
       .logo img {
         width: 100px;
@@ -69,13 +93,13 @@ main.about {
     }
   }
   /* linkedin stylesheet is stupid */
-  // h1,
-  // h2,
-  // p {
-  //   font-size: revert;
-  //   font-weight: revert;
-  //   color: revert;
-  //   line-height: normal !important;
-  //   margin: revert;
-  // }
+  h1,
+  h2,
+  p {
+    font-size: revert;
+    font-weight: revert;
+    color: revert;
+    line-height: normal !important;
+    margin: revert;
+  }
 }

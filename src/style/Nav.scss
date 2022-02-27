@@ -42,10 +42,10 @@
       }
       &.active:after {
         @keyframes fadeInAnimation {
-          0% {
+          from {
             width: 0;
           }
-          100% {
+          to {
             width: 70%;
           }
         }
