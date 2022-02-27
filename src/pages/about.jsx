@@ -55,6 +55,7 @@ const About = () => (
           data-pin-board-width="255"
           data-pin-scale-height="166"
           data-pin-scale-width="60"
+          target="_blank"
           href="https://www.pinterest.com/paigevogie/"
         ></a>
       </div>
@@ -64,6 +65,7 @@ const About = () => (
           data-pin-board-width="180"
           data-pin-scale-height="90"
           data-pin-scale-width="70"
+          target="_blank"
           href="https://www.pinterest.com/paigevogie/"
         ></a>
       </div>
@@ -71,6 +73,7 @@ const About = () => (
       <div className="goodreads-embed">
         <a
           rel="nofollow"
+          target="_blank"
           className="logo"
           href="https://www.goodreads.com/review/list/119223870-paige-vogie?shelf=read&utm_medium=api&utm_source=grid_widget"
         >
