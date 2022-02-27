@@ -9,7 +9,8 @@ main.about {
     iframe,
     .profile-badge,
     .pinterest-embed,
-    .pinterest-embed-sm {
+    .pinterest-embed-sm,
+    .goodreads-embed {
       margin: $sizing-XL 0 0 $sizing-LG;
       width: 200px;
       height: 200px;
@@ -40,9 +41,36 @@ main.about {
         background: none;
       }
     }
+    .goodreads-embed {
+      padding: $sizing-XS;
+      .logo img {
+        width: 100px;
+        margin: $sizing-MD $sizing-SM $sizing-SM;
+      }
+      .gr_grid_container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+
+        .gr_grid_book_container {
+          img {
+            border-radius: 8px;
+            width: 58px;
+            @include size-min-tablet {
+              width: 80px;
+            }
+          }
+        }
+        .gr_grid_branding,
+        br {
+          display: none;
+        }
+      }
+    }
   }
   /* linkedin stylesheet is stupid */
   h1,
+  h2,
   p {
     font-size: revert;
     font-weight: revert;
