@@ -43,18 +43,6 @@ body,
       font-weight: 400;
     }
 
-    a {
-      color: $soft-black;
-      font-weight: 400;
-      text-decoration: none;
-      transition: color 0.3s ease 0.1s;
-      &:hover,
-      &:active {
-        color: $light-grey;
-        text-decoration: none;
-      }
-    }
-
     header {
       text-align: right;
       margin-top: $sizing-6XL;

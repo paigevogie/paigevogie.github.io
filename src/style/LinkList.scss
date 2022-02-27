@@ -9,8 +9,20 @@
     @include size-min-desktop {
       margin: 20% auto;
     }
-  }
-  li {
-    margin: $sizing-XL 0;
+
+    li {
+      margin: $sizing-XL 0;
+
+      a {
+        color: $soft-black;
+        font-weight: 400;
+        text-decoration: none;
+        &:hover,
+        &:active {
+          color: $light-grey;
+          text-decoration: none;
+        }
+      }
+    }
   }
 }
