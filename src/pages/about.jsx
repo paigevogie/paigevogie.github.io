@@ -30,7 +30,7 @@ const About = () => (
       <iframe
         title="Spotify Playlist"
         className="spotify-embed"
-        src="https://open.spotify.com/embed/playlist/37i9dQZF1EUMDoJuT8yJsl?utm_source=generator"
+        src="https://open.spotify.com/embed/playlist/0GmNN3yZkEEN0dySQKZoVe?utm_source=generator"
         frameBorder="0"
         allowFullScreen=""
         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
