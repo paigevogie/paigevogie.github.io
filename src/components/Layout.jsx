@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Moment from "moment";
 
 import Footer from "./Footer";
 import Nav from "./Nav";
@@ -18,12 +19,14 @@ const Layout = ({
   const blogTitle = pageContext?.frontmatter?.title;
   const blogDescription = pageContext?.frontmatter?.description;
   const blogSubtitle = pageContext?.frontmatter?.subtitle;
+  const blogDate = pageContext?.frontmatter?.date;
 
   const Content = () => (
     <>
       <header>
         {!!(blogTitle || title) && <h1>{blogTitle || title}.</h1>}
         {!!(subtitle || blogSubtitle) && <>{subtitle || blogSubtitle}</>}
+        {!!blogDate && <p>{Moment.utc(blogDate).format("ll")}</p>}
       </header>
       {children}
     </>
