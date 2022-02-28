@@ -91,15 +91,6 @@ const About = () => (
           </div>
         </div>
       </div>
-      <div
-        className="linkedin-embed badge-base LI-profile-badge"
-        data-locale="en_US"
-        data-size="medium"
-        data-theme="light"
-        data-type="VERTICAL"
-        data-vanity="paigevogie"
-        data-version="v1"
-      ></div>
     </div>
   </Layout>
 );
