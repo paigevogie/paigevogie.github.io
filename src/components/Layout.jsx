@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Moment from "moment";
 
 import Footer from "./Footer";
 import Nav from "./Nav";
@@ -13,40 +12,26 @@ const Layout = ({
   description,
   children,
   className,
-  pageContext,
-  path = "",
+  isArticle = false,
 }) => {
-  const blogTitle = pageContext?.frontmatter?.title;
-  const blogDescription = pageContext?.frontmatter?.description;
-  const blogSubtitle = pageContext?.frontmatter?.subtitle;
-  const blogDate = pageContext?.frontmatter?.date;
-
-  const Content = () => (
-    <>
-      <header>
-        {!!(blogTitle || title) && <h1>{blogTitle || title}.</h1>}
-        {!!(subtitle || blogSubtitle) && <>{subtitle || blogSubtitle}</>}
-        {!!blogDate && <p>{Moment.utc(blogDate).format("ll")}</p>}
-      </header>
-      {children}
-    </>
-  );
+  const ConditionalWrapper = ({ condition, wrapper, children }) =>
+    condition ? wrapper(children) : children;
 
   return (
     <>
-      <SEO
-        title={blogTitle || title}
-        description={blogDescription || description}
-      />
+      <SEO title={title} description={description} />
       <Nav />
       <main className={className}>
-        {!!path.match(/\/blog\/[A-Za-z-]*\/?/) ? (
-          <article>
-            <Content />
-          </article>
-        ) : (
-          <Content />
-        )}
+        <ConditionalWrapper
+          condition={isArticle}
+          wrapper={(children) => <article>{children}</article>}
+        >
+          <header>
+            <h1>{title}.</h1>
+            {subtitle}
+          </header>
+          {children}
+        </ConditionalWrapper>
       </main>
       <Footer />
     </>

@@ -9,7 +9,7 @@ const Blog = () => {
   const query = useStaticQuery(
     graphql`
       query {
-        allMdx(filter: { slug: { regex: "/blog/[A-Za-z-]*/?/" } }) {
+        allMdx {
           edges {
             node {
               slug
@@ -33,15 +33,15 @@ const Blog = () => {
 
           return (
             <li>
+              <a href={"/blog/" + node.slug}>{node.frontmatter.title}</a>
               {!!node?.frontmatter?.date && !!node?.timeToRead && (
                 <p>
                   <small>
                     {Moment.utc(node.frontmatter.date).format("ll")} |{" "}
-                    {node.timeToRead} min
+                    {node.timeToRead} min read
                   </small>
                 </p>
               )}
-              <a href={"/" + node.slug}>{node.frontmatter.title}</a>
             </li>
           );
         })}

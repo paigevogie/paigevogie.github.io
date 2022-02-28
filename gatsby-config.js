@@ -22,6 +22,12 @@ module.exports = {
       },
     },
     {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/src/blog`,
+      },
+    },
+    {
       resolve: `gatsby-plugin-manifest`,
       options: {
         name: `paige-vogenthaler`,
@@ -32,11 +38,6 @@ module.exports = {
     },
     {
       resolve: `gatsby-plugin-mdx`,
-      options: {
-        defaultLayouts: {
-          default: require.resolve("./src/components/Layout.jsx"),
-        },
-      },
     },
   ],
 };
