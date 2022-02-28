@@ -7,12 +7,21 @@ const Projects = () => (
     <ul>
       <li>
         <a href="/covid19worldmap">Covid-19 World Map</a>
+        <p>
+          <small>D3 visualizations</small>
+        </p>
       </li>
       <li>
         <a href="/projects/dots">Dots</a>
+        <p>
+          <small>CSS animations</small>
+        </p>
       </li>
       <li>
         <a href="/projects/diagonals">Diagonals</a>
+        <p>
+          <small>CSS transforms</small>
+        </p>
       </li>
     </ul>
   </Layout>
