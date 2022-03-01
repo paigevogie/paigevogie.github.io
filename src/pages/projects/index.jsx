@@ -23,6 +23,12 @@ const Projects = () => (
           <small>CSS transforms</small>
         </p>
       </li>
+      <li>
+        <a href="/projects/more-dots">More Dots</a>
+        <p>
+          <small>Fun with randomness</small>
+        </p>
+      </li>
     </ul>
   </Layout>
 );

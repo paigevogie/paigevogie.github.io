@@ -19,29 +19,6 @@ $degEnd: 0deg;
 .dots {
   margin-left: auto;
 
-  h4 {
-    font-weight: 500;
-    padding: $sizing-MD;
-    text-align: end;
-    border: $sizing-3XS solid $soft-black;
-    position: relative;
-    margin: $sizing-7XL 0;
-    @include size-min-tablet {
-      margin: $sizing-7XL $sizing-3XL;
-    }
-
-    &::after {
-      content: "";
-      position: absolute;
-      top: -$sizing-SM;
-      right: -$sizing-SM;
-      bottom: $sizing-SM;
-      left: $sizing-SM;
-      background-color: $light-grey;
-      z-index: -1;
-    }
-  }
-
   .rings {
     position: absolute;
     top: 50%;
@@ -64,8 +41,7 @@ $degEnd: 0deg;
         $x: $j * $degStart/$dotCount;
         $offsetX: $i * cos($x) * 1em;
         $offsetY: $i * sin($x) * 1em;
-        $dotColor: $medium-grey;
-        $dotsList: $dotsList, $offsetX $offsetY $dotColor;
+        $dotsList: $dotsList, $offsetX $offsetY $medium-grey;
       }
 
       &:nth-child(#{$i}) {

@@ -4,21 +4,14 @@ import "../../style/Dots.scss";
 
 const Ring = () => <div className="ring"></div>;
 
-const getRings = () => {
-  const ringCount = 12;
-  const Rings = [];
-
-  for (let i = 0; i < ringCount; i++) {
-    Rings.push(<Ring key={i} />);
-  }
-
-  return Rings;
-};
-
 const Dots = () => (
-  <Layout title="Dots">
-    <div className="dots">
-      <div className="rings">{getRings()}</div>
+  <Layout className="dots" title="Dots">
+    <div className="rings">
+      {Array(12)
+        .fill(0)
+        .map((item, index) => (
+          <Ring key={index} />
+        ))}
     </div>
   </Layout>
 );

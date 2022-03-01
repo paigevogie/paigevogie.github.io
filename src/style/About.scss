@@ -17,6 +17,7 @@ main.about {
       border: 2px solid $light-grey;
       border-radius: 15px;
       overflow-y: scroll;
+      overflow-x: hidden;
       @include size-min-tablet {
         width: 275px;
         height: 275px;
