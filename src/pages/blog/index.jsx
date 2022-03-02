@@ -33,15 +33,15 @@ const Blog = () => {
 
           return (
             <li>
-              <a href={"/blog/" + node.slug}>{node.frontmatter.title}</a>
-              {!!node?.frontmatter?.date && !!node?.timeToRead && (
-                <p>
+              <a href={"/blog/" + node.slug}>
+                <p>{node.frontmatter.title}</p>
+                {!!node?.frontmatter?.date && !!node?.timeToRead && (
                   <small>
                     {Moment.utc(node.frontmatter.date).format("ll")} |{" "}
                     {node.timeToRead} min read
                   </small>
-                </p>
-              )}
+                )}
+              </a>
             </li>
           );
         })}

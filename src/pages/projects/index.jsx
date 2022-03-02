@@ -6,28 +6,28 @@ const Projects = () => (
   <Layout title="Projects" className="projects">
     <ul>
       <li>
-        <a href="/covid19worldmap">Covid-19 World Map</a>
-        <p>
+        <a href="/covid19worldmap">
+          <p>Covid-19 World Map</p>
           <small>D3 visualizations</small>
-        </p>
+        </a>
       </li>
       <li>
-        <a href="/projects/dots">Dots</a>
-        <p>
+        <a href="/projects/dots">
+          <p>Dots</p>
           <small>CSS animations</small>
-        </p>
+        </a>
       </li>
       <li>
-        <a href="/projects/diagonals">Diagonals</a>
-        <p>
+        <a href="/projects/diagonals">
+          <p>Diagonals</p>
           <small>CSS transforms</small>
-        </p>
+        </a>
       </li>
       <li>
-        <a href="/projects/more-dots">More Dots</a>
-        <p>
+        <a href="/projects/more-dots">
+          <p>More Dots</p>
           <small>Fun with randomness</small>
-        </p>
+        </a>
       </li>
     </ul>
   </Layout>

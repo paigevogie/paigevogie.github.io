@@ -15,16 +15,17 @@
 
       a {
         color: $soft-black;
-        font-weight: 400;
         text-decoration: none;
-        &:hover,
-        &:active {
-          color: $light-grey;
-          text-decoration: none;
+        p {
+          font-weight: 400;
+          margin: 0;
+
+          &:hover,
+          &:active {
+            color: $light-grey;
+            text-decoration: none;
+          }
         }
-      }
-      p {
-        margin: 0;
       }
     }
   }
