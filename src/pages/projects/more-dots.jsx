@@ -18,8 +18,8 @@ const MoreDots = () => {
       <div
         className="dot"
         style={{
-          top: `${Math.round(Math.random() * bodyHeight * 2)}px`,
-          left: `${Math.round(Math.random() * bodyWidth)}px`,
+          top: `${Math.floor(Math.random() * bodyHeight)}px`,
+          left: `${Math.floor(Math.random() * bodyWidth)}px`,
           height: `${size}px`,
           width: `${size}px`,
         }}
@@ -28,12 +28,14 @@ const MoreDots = () => {
   };
 
   return (
-    <Layout className="more-dots" title="More Dots">
-      {Array(400)
-        .fill(0)
-        .map((item, index) => (
-          <Dot key={index} />
-        ))}
+    <Layout title="More Dots">
+      <div className="more-dots">
+        {Array(500)
+          .fill(0)
+          .map((item, index) => (
+            <Dot key={index} />
+          ))}
+      </div>
     </Layout>
   );
 };
