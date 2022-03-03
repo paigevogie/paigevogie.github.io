@@ -100,4 +100,83 @@
         rise 32s linear 25s infinite;
     }
   }
+
+  .fish {
+    position: absolute;
+    top: 75%;
+    left: -100px;
+    transform: rotate(90deg);
+    z-index: z("fish");
+
+    @keyframes wave {
+      0% {
+        margin-top: 0;
+      }
+      50% {
+        margin-top: 50px;
+      }
+      100% {
+        margin-top: 0;
+      }
+    }
+    @keyframes rotate {
+      0% {
+        transform: rotate(90deg);
+      }
+      25% {
+        transform: rotate(130deg);
+      }
+      50% {
+        transform: rotate(90deg);
+      }
+      75% {
+        transform: rotate(50deg);
+      }
+      100% {
+        transform: rotate(90deg);
+      }
+    }
+    @keyframes swim {
+      to {
+        left: calc(100% + 100px);
+      }
+    }
+    animation: wave 5s cubic-bezier(0.5, 0, 0.5, 1) infinite,
+      rotate 5s linear infinite, swim 20s linear infinite;
+
+    .body {
+      border-radius: 100%;
+      height: 30px;
+      width: 30px;
+      background-color: $dark-grey;
+      margin-bottom: -2px;
+    }
+    .tail {
+      border-color: transparent transparent $dark-grey transparent;
+      border-style: solid;
+      border-width: 0 15px 15px 15px;
+      height: 0px;
+      width: 0px;
+      transform-origin: top;
+
+      @keyframes tail {
+        0% {
+          transform: rotateX(0);
+        }
+        25% {
+          transform: rotateX(45deg);
+        }
+        50% {
+          transform: rotateX(0);
+        }
+        75% {
+          transform: rotateX(-45deg);
+        }
+        100% {
+          transform: rotateX(0);
+        }
+      }
+      animation: tail 0.7s linear infinite;
+    }
+  }
 }

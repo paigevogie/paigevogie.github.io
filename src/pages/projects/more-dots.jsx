@@ -35,6 +35,10 @@ const MoreDots = () => {
           .map((item, index) => (
             <Dot key={index} />
           ))}
+        <div className="fish">
+          <div className="body"></div>
+          <div className="tail"></div>
+        </div>
       </div>
     </Layout>
   );
