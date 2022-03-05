@@ -28,8 +28,8 @@ const MoreDots = () => {
   };
 
   return (
-    <Layout title="More Dots">
-      <div className="more-dots">
+    <Layout title="Bubbles">
+      <div className="bubbles">
         {Array(500)
           .fill(0)
           .map((item, index) => (

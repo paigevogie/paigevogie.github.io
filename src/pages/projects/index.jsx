@@ -24,8 +24,8 @@ const Projects = () => (
         </a>
       </li>
       <li>
-        <a href="/projects/more-dots">
-          <p>More Dots</p>
+        <a href="/projects/bubbles">
+          <p>Bubbles</p>
           <small>Fun with randomness</small>
         </a>
       </li>
