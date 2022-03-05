@@ -4,15 +4,16 @@
   nav {
     position: fixed;
     width: 80px;
+    margin: $sizing-XS;
     @include size-min-tablet {
-      margin: $sizing-5XL;
-    }
-    @include size-min-desktop {
       margin: $sizing-7XL;
     }
 
     a {
-      font-size: $font-size-XS;
+      font-size: $font-size-SM;
+      @include size-min-tablet {
+        font-size: $font-size-XS;
+      }
       font-weight: 500;
       text-decoration: none;
       text-transform: uppercase;
@@ -20,8 +21,12 @@
       margin: $sizing-MD;
       white-space: nowrap;
       position: relative;
-      width: $sizing-6XL;
-      height: $sizing-6XL;
+      width: $sizing-7XL;
+      height: $sizing-7XL;
+      @include size-min-tablet {
+        width: $sizing-6XL;
+        height: $sizing-6XL;
+      }
       border: $sizing-3XS solid $soft-black;
       border-radius: 50%;
       display: flex;
