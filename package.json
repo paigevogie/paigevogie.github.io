@@ -1,9 +1,9 @@
 {
   "name": "paigevogie.com",
   "version": "0.1.0",
-  "description": "The blog and portfolio of Paige Vogenthaler.",
+  "description": "The portfolio and blog of Paige Vogie.",
   "private": true,
-  "author": "Paige Vogenthaler",
+  "author": "Paige Vogie",
   "license": "ISC",
   "homepage": "https://paigevogie.com",
   "babel": {

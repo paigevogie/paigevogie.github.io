@@ -3,11 +3,11 @@ import Layout from "../components/Layout";
 
 const Home = () => (
   <Layout
-    title="Home"
+    title="Paige Vogie"
     className="home"
     subtitle={
       <p>
-        Hello! I'm Paige.{" "}
+        Hello!{" "}
         <span role="img" aria-label="waving hand">
           👋
         </span>{" "}

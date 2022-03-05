@@ -32,6 +32,10 @@ const SEO = ({ title, description }) => {
           name: "description",
           content: description || defaultDescription,
         },
+        {
+          name: "robots",
+          content: "index, follow",
+        },
       ]}
     />
   );

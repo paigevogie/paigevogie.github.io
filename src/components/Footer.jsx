@@ -6,7 +6,7 @@ const Footer = () => (
       {/* Email */}
       <li className="email">
         <a
-          href="mailto:paige.vogenthaler@gmail.com"
+          href="mailto:paigevogie@gmail.com"
           target="_blank"
           rel="noopener noreferrer"
         >

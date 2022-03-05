@@ -1,8 +1,8 @@
 module.exports = {
   siteMetadata: {
-    defaultTitle: "paigevogie.com",
-    titleTemplate: "%s | paigevogie.com",
-    defaultDescription: "The portfolio and blog of Paige Vogenthaler.",
+    defaultTitle: "Paige Vogie",
+    titleTemplate: "%s | Paige Vogie",
+    defaultDescription: "The portfolio and blog of Paige Vogie (@paigevogie).",
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -30,8 +30,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `paige-vogenthaler`,
-        short_name: `paige-vogenthaler`,
+        name: `paige-vogie`,
+        short_name: `paige-vogie`,
         start_url: `/`,
         icon: `src/assets/favicon.png`,
       },

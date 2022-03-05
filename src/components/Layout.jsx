@@ -19,7 +19,10 @@ const Layout = ({
 
   return (
     <>
-      <SEO title={title} description={description} />
+      <SEO
+        title={title !== "Paige Vogie" ? title : null}
+        description={description}
+      />
       <Nav />
       <main className={className}>
         <ConditionalWrapper
