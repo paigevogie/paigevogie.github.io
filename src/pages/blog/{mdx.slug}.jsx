@@ -4,7 +4,7 @@ import Layout from "../../components/Layout";
 import { graphql } from "gatsby";
 import { MDXRenderer } from "gatsby-plugin-mdx";
 
-export default ({ data }) => {
+export default ({ data, ...props }) => {
   if (!data?.mdx?.body || !data?.mdx?.frontmatter) return;
   const { body, frontmatter, timeToRead } = data.mdx;
   const { date, title } = frontmatter;
@@ -18,6 +18,7 @@ export default ({ data }) => {
           {Moment.utc(date).format("ll")} | {timeToRead} min read
         </small>
       }
+      {...props}
     >
       <MDXRenderer>{body}</MDXRenderer>
     </Layout>

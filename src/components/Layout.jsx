@@ -13,6 +13,7 @@ const Layout = ({
   children,
   className,
   isArticle = false,
+  path,
 }) => {
   const ConditionalWrapper = ({ condition, wrapper, children }) =>
     condition ? wrapper(children) : children;
@@ -22,6 +23,7 @@ const Layout = ({
       <SEO
         title={title !== "Paige Vogie" ? title : null}
         description={description}
+        path={path}
       />
       <Nav />
       <main className={className}>

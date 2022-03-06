@@ -1,7 +1,7 @@
 import React from "react";
 import Layout from "../components/Layout";
 
-const Home = () => (
+const Home = (props) => (
   <Layout
     title="Paige Vogie"
     className="home"
@@ -14,6 +14,7 @@ const Home = () => (
         Welcome to my site.
       </p>
     }
+    {...props}
   />
 );
 

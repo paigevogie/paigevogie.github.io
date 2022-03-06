@@ -3,6 +3,7 @@ module.exports = {
     defaultTitle: "Paige Vogie",
     titleTemplate: "%s | Paige Vogie",
     defaultDescription: "The portfolio and blog of Paige Vogie (@paigevogie).",
+    siteURL: "https://paigevogie.com",
   },
   plugins: [
     `gatsby-plugin-react-helmet`,

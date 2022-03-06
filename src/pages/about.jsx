@@ -3,7 +3,7 @@ import Layout from "../components/Layout";
 import { Helmet } from "react-helmet";
 import "../style/About.scss";
 
-const About = () => (
+const About = (props) => (
   <Layout
     title="About"
     className="about"
@@ -12,6 +12,7 @@ const About = () => (
         Find me all over the web <b>@paigevogie</b>.
       </p>
     }
+    {...props}
   >
     <Helmet>
       <script

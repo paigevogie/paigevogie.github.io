@@ -4,8 +4,8 @@ import "../../style/Dots.scss";
 
 const Ring = () => <div className="ring"></div>;
 
-const Dots = () => (
-  <Layout className="dots" title="Dots">
+const Dots = (props) => (
+  <Layout className="dots" title="Dots" {...props}>
     <div className="rings">
       {Array(12)
         .fill(0)

@@ -2,8 +2,8 @@ import React from "react";
 import Layout from "../../components/Layout";
 import "../../style/Diagonals.scss";
 
-const Diagonals = () => (
-  <Layout title="Diagonals">
+const Diagonals = (props) => (
+  <Layout title="Diagonals" {...props}>
     <div className="diagonals">
       <div className="diagonal-1"></div>
       <div className="diagonal-2"></div>

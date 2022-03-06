@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../../components/Layout";
-import "../../style/MoreDots.scss";
+import "../../style/Bubbles.scss";
 
-const MoreDots = () => {
+const Bubbles = (props) => {
   const [bodyHeight, setBodyHeight] = useState();
   const [bodyWidth, setBodyWidth] = useState();
 
@@ -12,11 +12,11 @@ const MoreDots = () => {
     setBodyWidth(body.clientWidth);
   }, []);
 
-  const Dot = () => {
+  const Bubble = () => {
     const size = Math.round(Math.random() * 10) + 5;
     return (
       <div
-        className="dot"
+        className="bubble"
         style={{
           top: `${Math.floor(Math.random() * bodyHeight)}px`,
           left: `${Math.floor(Math.random() * bodyWidth)}px`,
@@ -28,12 +28,12 @@ const MoreDots = () => {
   };
 
   return (
-    <Layout title="Bubbles">
+    <Layout title="Bubbles" {...props}>
       <div className="bubbles">
         {Array(500)
           .fill(0)
           .map((item, index) => (
-            <Dot key={index} />
+            <Bubble key={index} />
           ))}
         <div className="fish">
           <div className="body"></div>
@@ -44,4 +44,4 @@ const MoreDots = () => {
   );
 };
 
-export default MoreDots;
+export default Bubbles;

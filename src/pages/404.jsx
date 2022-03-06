@@ -1,7 +1,7 @@
 import React from "react";
 import Layout from "../components/Layout";
 
-const FourZeroFour = () => (
+const FourZeroFour = (props) => (
   <Layout
     title="404"
     subtitle={
@@ -10,6 +10,7 @@ const FourZeroFour = () => (
         <a href="/">homepage</a>.
       </p>
     }
+    {...props}
   />
 );
 

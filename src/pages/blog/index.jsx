@@ -5,7 +5,7 @@ import Layout from "../../components/Layout";
 import "../../style/Blog.scss";
 import { useStaticQuery, graphql } from "gatsby";
 
-const Blog = () => {
+const Blog = (props) => {
   const query = useStaticQuery(
     graphql`
       query {
@@ -26,7 +26,7 @@ const Blog = () => {
   );
 
   return (
-    <Layout title="Blog" className="blog">
+    <Layout title="Blog" className="blog" {...props}>
       <ul>
         {query.allMdx.edges.map(({ node }) => {
           if (!node?.slug || !node?.frontmatter?.title) return;

@@ -2,8 +2,8 @@ import React from "react";
 import Layout from "../../components/Layout";
 import "../../style/Projects.scss";
 
-const Projects = () => (
-  <Layout title="Projects" className="projects">
+const Projects = (props) => (
+  <Layout title="Projects" className="projects" {...props}>
     <ul>
       <li>
         <a href="/covid19worldmap">
