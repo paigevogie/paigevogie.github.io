@@ -12,7 +12,6 @@ const Layout = ({
   description,
   children,
   className,
-  isArticle = false,
   path,
 }) => {
   const ConditionalWrapper = ({ condition, wrapper, children }) =>
@@ -28,7 +27,7 @@ const Layout = ({
       <Nav />
       <main className={className}>
         <ConditionalWrapper
-          condition={isArticle}
+          condition={!!path.match(/\/blog\/[a-z-]*\//)}
           wrapper={(children) => <article>{children}</article>}
         >
           <header>

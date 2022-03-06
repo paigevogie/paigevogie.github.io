@@ -11,7 +11,6 @@ export default ({ data, ...props }) => {
 
   return (
     <Layout
-      isArticle
       title={title}
       subtitle={
         <small>
