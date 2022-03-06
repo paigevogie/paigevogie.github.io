@@ -1,0 +1,41 @@
+@import "./_vars";
+
+.covid-19-world-map {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+  .country-info {
+    margin-bottom: 1em;
+    padding: 1em 2em;
+    border: 1px solid $soft-black;
+    border-radius: 8px;
+
+    .country-name,
+    .country-last-updated {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+  }
+
+  .canvas-container {
+    flex-grow: 1;
+    position: relative;
+
+    .canvas-background {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      border: 1px solid $soft-black;
+      border-radius: 8px;
+      z-index: -1;
+    }
+
+    canvas {
+      cursor: move;
+    }
+  }
+}

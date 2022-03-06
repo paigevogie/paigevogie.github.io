@@ -6,7 +6,7 @@ const Projects = (props) => (
   <Layout title="Projects" className="projects" {...props}>
     <ul>
       <li>
-        <a href="/covid19worldmap">
+        <a href="/projects/covid19worldmap">
           <p>Covid-19 World Map</p>
           <small>D3 visualizations</small>
         </a>
