@@ -30,12 +30,12 @@ const onLoad = () => {
     .select(".country-last-updated")
     .text("Last Updated:");
 
-  const { width, height } = document
-    .querySelector(".canvas-container")
+  const { width, height } = d3
+    .select(".canvas-container")
+    .node()
     .getBoundingClientRect();
   const canvas = d3
-    .select(".canvas-container")
-    .append("canvas")
+    .select("canvas")
     .attr("width", width)
     .attr("height", height);
 
@@ -289,16 +289,24 @@ const Covid19WorldMap = (props) => {
   useEffect(onLoad, []);
 
   return (
-    <Layout title="Covid19WorldMap" className="covid-19-world-map" {...props}>
-      <div class="country-info">
-        <div class="country-name"></div>
-        <div class="country-confirmed"></div>
-        <div class="country-recovered"></div>
-        <div class="country-deaths"></div>
-        <div class="country-last-updated"></div>
+    <Layout
+      title="Covid-19 World Map"
+      subtitle={
+        <p>Drag the globe and highlight a country to view its details.</p>
+      }
+      className="covid-19-world-map"
+      {...props}
+    >
+      <div className="country-info">
+        <div className="country-name"></div>
+        <div className="country-confirmed"></div>
+        <div className="country-recovered"></div>
+        <div className="country-deaths"></div>
+        <div className="country-last-updated"></div>
       </div>
-      <div class="canvas-container">
-        <div class="canvas-background"></div>
+      <div className="canvas-container">
+        <div className="canvas-background"></div>
+        <canvas />
       </div>
     </Layout>
   );
