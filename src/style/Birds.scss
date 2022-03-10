@@ -1,0 +1,64 @@
+.birds {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  .bird {
+    display: flex;
+    position: absolute;
+    top: 25%;
+    right: -100px;
+
+    @keyframes fly {
+      to {
+        top: 75%;
+        right: calc(100% + 100px);
+        transform: scale(2);
+      }
+    }
+
+    animation: fly 20s ease-in infinite;
+
+    .left-wing,
+    .right-wing {
+      height: 15px;
+      width: 15px;
+      border-top: 2px solid $light-grey;
+      border-radius: 47%;
+    }
+
+    @keyframes flapLeft {
+      0% {
+        transform: rotate(0deg);
+      }
+      30% {
+        transform: rotate(25deg) scaleX(1.2);
+      }
+      100% {
+        transform: rotate(0deg);
+      }
+    }
+    @keyframes flapRight {
+      0% {
+        transform: rotate(0deg);
+      }
+      30% {
+        transform: rotate(-25deg) scaleX(1.2);
+      }
+      100% {
+        transform: rotate(0deg);
+      }
+    }
+
+    .left-wing {
+      transform-origin: right;
+      animation: flapLeft 1.5s ease-out infinite;
+    }
+    .right-wing {
+      transform-origin: left;
+      animation: flapRight 1.5s ease-out infinite;
+    }
+  }
+}

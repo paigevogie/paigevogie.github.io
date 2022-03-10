@@ -1,7 +1,6 @@
 import React from "react";
 import Layout from "../components/Layout";
 import { Helmet } from "react-helmet";
-import "../style/About.scss";
 
 const About = (props) => (
   <Layout

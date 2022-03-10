@@ -2,7 +2,6 @@ import React from "react";
 import Moment from "moment";
 
 import Layout from "../../components/Layout";
-import "../../style/Blog.scss";
 import { useStaticQuery, graphql } from "gatsby";
 
 const Blog = (props) => {

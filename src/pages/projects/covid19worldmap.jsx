@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import Layout from "../../components/Layout";
-import "../../style/Covid19WorldMap.scss";
 
 import * as d3 from "d3";
 import * as topojson from "topojson-client";

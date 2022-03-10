@@ -1,6 +1,5 @@
 import React from "react";
 import Layout from "../../components/Layout";
-import "../../style/Projects.scss";
 
 const Projects = (props) => (
   <Layout title="Projects" className="projects" {...props}>
@@ -29,6 +28,12 @@ const Projects = (props) => (
           <small>Fun with randomness</small>
         </a>
       </li>
+      {/*<li>
+        <a href="/projects/birds">
+          <p>Birds</p>
+          <small>Tweet</small>
+        </a>
+      </li>*/}
     </ul>
   </Layout>
 );

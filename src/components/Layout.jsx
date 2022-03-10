@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import Footer from "./Footer";
 import Nav from "./Nav";
 import SEO from "./SEO";
-import "../style/Layout.scss";
 
 const Layout = ({
   title,

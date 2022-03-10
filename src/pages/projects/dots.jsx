@@ -1,6 +1,5 @@
 import React from "react";
 import Layout from "../../components/Layout";
-import "../../style/Dots.scss";
 
 const Ring = () => <div className="ring"></div>;
 

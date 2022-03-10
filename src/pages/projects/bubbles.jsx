@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../../components/Layout";
-import "../../style/Bubbles.scss";
 
 const Bubbles = (props) => {
   const [bodyHeight, setBodyHeight] = useState();

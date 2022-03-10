@@ -1,5 +1,6 @@
 import React from "react";
 import Layout from "../components/Layout";
+import "../style/App.scss";
 
 const Home = (props) => (
   <Layout
