@@ -5,6 +5,8 @@ import Footer from "./Footer";
 import Nav from "./Nav";
 import SEO from "./SEO";
 
+import "../style/App.scss";
+
 const Layout = ({
   title,
   subtitle,
