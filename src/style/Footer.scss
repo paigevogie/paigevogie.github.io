@@ -11,21 +11,21 @@
     align-items: center;
 
     li {
-      padding: $sizing-SM;
+      padding: $sizing-sm;
       transition: transform 0.4s ease 0.1s;
 
       &.github a path {
         fill: none;
         stroke: $soft-black;
-        stroke-width: $sizing-SM;
+        stroke-width: $sizing-sm;
       }
       a {
         display: flex;
         align-items: center;
         justify-content: center;
-        height: $sizing-3XL;
-        width: $sizing-3XL;
-        padding: $sizing-XS;
+        height: $sizing-3xl;
+        width: $sizing-3xl;
+        padding: $sizing-xs;
 
         path {
           fill: $soft-black;
@@ -43,7 +43,7 @@
         &.github path {
           stroke: $light-grey;
           fill: none;
-          stroke-width: $sizing-SM;
+          stroke-width: $sizing-sm;
         }
       }
     }

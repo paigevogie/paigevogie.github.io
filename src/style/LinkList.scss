@@ -6,12 +6,12 @@
     padding: 0;
     margin: 20% 0;
     text-align: right;
-    @include size-min-desktop {
+    @include min-size-lg {
       margin: 20% auto;
     }
 
     li {
-      margin: $sizing-XL 0;
+      margin: $sizing-xl 0;
 
       a {
         color: $soft-black;

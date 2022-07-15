@@ -4,30 +4,30 @@
   nav {
     position: fixed;
     width: 80px;
-    margin: $sizing-XS;
-    @include size-min-tablet {
-      margin: $sizing-7XL;
+    margin: $sizing-xs;
+    @include min-size-md {
+      margin: $sizing-7xl;
     }
 
     a {
-      font-size: $font-size-SM;
-      @include size-min-tablet {
-        font-size: $font-size-XS;
+      font-size: $font-size-sm;
+      @include min-size-md {
+        font-size: $font-size-xs;
       }
       font-weight: 500;
       text-decoration: none;
       text-transform: uppercase;
       color: $soft-black;
-      margin: $sizing-MD;
+      margin: $sizing-md;
       white-space: nowrap;
       position: relative;
-      width: $sizing-7XL;
-      height: $sizing-7XL;
-      @include size-min-tablet {
-        width: $sizing-6XL;
-        height: $sizing-6XL;
+      width: $sizing-7xl;
+      height: $sizing-7xl;
+      @include min-size-md {
+        width: $sizing-6xl;
+        height: $sizing-6xl;
       }
-      border: $sizing-3XS solid $soft-black;
+      border: $sizing-3xs solid $soft-black;
       border-radius: 50%;
       display: flex;
       justify-content: center;
@@ -40,7 +40,7 @@
         bottom: -5px;
         left: 15%;
         width: 0;
-        height: $sizing-2XS;
+        height: $sizing-2xs;
         position: absolute;
         background-color: $light-grey;
         transition: width 0.5s ease 0.1s, background-color 0.8s;

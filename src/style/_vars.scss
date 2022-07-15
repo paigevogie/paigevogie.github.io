@@ -8,31 +8,31 @@ $pink: #ffcaca;
 $emerald: #0d610df0;
 
 // Font Sizes
-$font-size-XS: 11px;
-$font-size-SM: 13px;
-$font-size-MD: 15px;
-$font-size-LG: 16px;
-$font-size-XL: 20px;
-$font-size-2XL: 24px;
-$font-size-3XL: 32px;
-$font-size-4XL: 40px;
-$font-size-5XL: 48px;
-$font-size-6XL: 56px;
+$font-size-xs: 11px;
+$font-size-sm: 13px;
+$font-size-md: 15px;
+$font-size-lg: 16px;
+$font-size-xl: 20px;
+$font-size-2xl: 24px;
+$font-size-3xl: 32px;
+$font-size-4xl: 40px;
+$font-size-5xl: 48px;
+$font-size-6xl: 56px;
 
 // Sizing
-$sizing-3XS: 1px;
-$sizing-2XS: 2px;
-$sizing-XS: 4px;
-$sizing-SM: 8px;
-$sizing-MD: 12px;
-$sizing-LG: 16px;
-$sizing-XL: 24px;
-$sizing-2XL: 32px;
-$sizing-3XL: 40px;
-$sizing-4XL: 48px;
-$sizing-5XL: 56px;
-$sizing-6XL: 64px;
-$sizing-7XL: 72px;
+$sizing-3xs: 1px;
+$sizing-2xs: 2px;
+$sizing-xs: 4px;
+$sizing-sm: 8px;
+$sizing-md: 12px;
+$sizing-lg: 16px;
+$sizing-xl: 24px;
+$sizing-2xl: 32px;
+$sizing-3xl: 40px;
+$sizing-4xl: 48px;
+$sizing-5xl: 56px;
+$sizing-6xl: 64px;
+$sizing-7xl: 72px;
 
 // Z-Indexes
 // list of front to back postitives, e.g Infinity to 1
@@ -88,16 +88,28 @@ $z-indexes-back: ("diagonals", "bubbles", "fish");
 }
 
 // Responsive Media Queries
+$breakpoint-mobile: 640px;
 $breakpoint-tablet: 768px;
 $breakpoint-desktop: 1024px;
+$breakpoint-desktop-xl: 1280px;
 
-@mixin size-min-tablet {
+@mixin min-size-sm {
+  @media screen and (min-width: $breakpoint-mobile) {
+    @content;
+  }
+}
+@mixin min-size-md {
   @media screen and (min-width: $breakpoint-tablet) {
     @content;
   }
 }
-@mixin size-min-desktop {
+@mixin min-size-lg {
   @media screen and (min-width: $breakpoint-desktop) {
+    @content;
+  }
+}
+@mixin min-size-xl {
+  @media screen and (min-width: $breakpoint-desktop-xl) {
     @content;
   }
 }

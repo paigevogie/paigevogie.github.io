@@ -23,7 +23,7 @@
     @include diagonal {
       bottom: 0;
       right: 5vw;
-      border-bottom: $sizing-XS solid $pink;
+      border-bottom: $sizing-xs solid $pink;
       transform-origin: bottom right;
       transform: rotate(5deg);
     }
@@ -32,7 +32,7 @@
     @include diagonal {
       bottom: 0;
       left: 10vw;
-      border-bottom: $sizing-3XS solid $gold;
+      border-bottom: $sizing-3xs solid $gold;
       transform-origin: bottom left;
       transform: rotate(-65deg);
     }
@@ -41,7 +41,7 @@
     @include diagonal {
       bottom: 30vh;
       right: 0;
-      border-bottom: $sizing-2XS solid $emerald;
+      border-bottom: $sizing-2xs solid $emerald;
       transform-origin: bottom right;
       transform: rotate(85deg);
     }
@@ -50,7 +50,7 @@
     @include diagonal {
       top: 0;
       left: 10vw;
-      border-bottom: $sizing-2XS solid $pink;
+      border-bottom: $sizing-2xs solid $pink;
       transform-origin: top left;
       transform: rotate(45deg);
     }
@@ -59,7 +59,7 @@
     @include diagonal {
       bottom: 0;
       right: 0;
-      border-bottom: $sizing-3XS solid $emerald;
+      border-bottom: $sizing-3xs solid $emerald;
       transform-origin: bottom right;
       transform: rotate(20deg);
     }
