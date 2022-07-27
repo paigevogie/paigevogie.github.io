@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet";
 // Had to pull this into it's own component because set state was messing with the other emebeds :)
 const LinkedIn = () => {
   const [showLinkedIn, setShowLinkedIn] = useState(true);
+  // There's probably a better way to do this in react: https://reactjs.org/docs/error-boundaries.html
   useEffect(() => {
     window.addEventListener(
       "error",

@@ -23,7 +23,6 @@ const onLoad = () => {
 
   const $countryName = d3.select(".country-name").text("Country:");
   const $countryConfirmed = d3.select(".country-confirmed").text("Confirmed:");
-  const $countryRecovered = d3.select(".country-recovered").text("Recovered:");
   const $countryDeaths = d3.select(".country-deaths").text("Deaths:");
   const $countryLastUpdated = d3
     .select(".country-last-updated")
@@ -135,13 +134,11 @@ const onLoad = () => {
   const updateCountryInfo = (
     countryName = "",
     countryConfirmed = "",
-    countryRecovered = "",
     countryDeaths = "",
     countryLastUpdated = ""
   ) => {
     $countryName.text(`Country: ${countryName}`);
     $countryConfirmed.text(`Confirmed: ${countryConfirmed}`);
-    $countryRecovered.text(`Recovered: ${countryRecovered}`);
     $countryDeaths.text(`Deaths: ${countryDeaths}`);
     $countryLastUpdated.text(`Last Updated: ${countryLastUpdated}`);
   };
@@ -186,12 +183,11 @@ const onLoad = () => {
     const getValue = (key) => (!!key.value ? key.value.toLocaleString() : "");
 
     if (!!covidCountryCache[covidCountry.cca3]) {
-      const { confirmed, recovered, deaths, lastUpdate } =
+      const { confirmed, deaths, lastUpdate } =
         covidCountryCache[covidCountry.cca3];
       updateCountryInfo(
         enteredCountry.name,
         getValue(confirmed),
-        getValue(recovered),
         getValue(deaths),
         !!moment(lastUpdate).isValid() ? moment(lastUpdate).format("LL") : ""
       );
@@ -200,25 +196,19 @@ const onLoad = () => {
 
     fetch("https://covid19.mathdro.id/api/countries/" + covidCountry.cca3)
       .then((res) => res.json())
-      .then(
-        ({ confirmed = {}, recovered = {}, deaths = {}, lastUpdate = "" }) => {
-          covidCountryCache[covidCountry.cca3] = {
-            confirmed,
-            recovered,
-            deaths,
-            lastUpdate,
-          };
-          updateCountryInfo(
-            enteredCountry.name,
-            getValue(confirmed),
-            getValue(recovered),
-            getValue(deaths),
-            !!moment(lastUpdate).isValid()
-              ? moment(lastUpdate).format("LL")
-              : ""
-          );
-        }
-      );
+      .then(({ confirmed = {}, deaths = {}, lastUpdate = "" }) => {
+        covidCountryCache[covidCountry.cca3] = {
+          confirmed,
+          deaths,
+          lastUpdate,
+        };
+        updateCountryInfo(
+          enteredCountry.name,
+          getValue(confirmed),
+          getValue(deaths),
+          !!moment(lastUpdate).isValid() ? moment(lastUpdate).format("LL") : ""
+        );
+      });
   }
 
   const getCountry = (event) => {
@@ -299,7 +289,6 @@ const Covid19WorldMap = (props) => {
       <div className="country-info">
         <div className="country-name"></div>
         <div className="country-confirmed"></div>
-        <div className="country-recovered"></div>
         <div className="country-deaths"></div>
         <div className="country-last-updated"></div>
       </div>
