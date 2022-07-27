@@ -19,17 +19,7 @@ const About = (props) => (
         src="https://platform.twitter.com/widgets.js"
         charset="utf-8"
       ></script>
-      <script
-        async
-        defer
-        src="https://platform.linkedin.com/badges/js/profile.js"
-      ></script>
       <script async defer src="//assets.pinterest.com/js/pinit.js"></script>
-      <script
-        async
-        defer
-        src="https://www.goodreads.com/review/grid_widget/119223870?cover_size=medium&hide_link=&hide_title=true&num_books=15&order=d&shelf=read&sort=date_read&widget_id="
-      ></script>
     </Helmet>
     <div className="embeds-wrapper">
       <div className="embeds">
@@ -76,22 +66,6 @@ const About = (props) => (
             target="_blank"
             href="https://www.pinterest.com/paigevogie/"
           ></a>
-        </div>
-        <div className="goodreads-embed">
-          <a
-            rel="nofollow"
-            target="_blank"
-            className="logo"
-            href="https://www.goodreads.com/review/list/119223870-paige-vogie?shelf=read&utm_medium=api&utm_source=grid_widget"
-          >
-            <img
-              alt="Goodreads logo"
-              src="https://s.gr-assets.com/images/layout/goodreads_logo_140.png"
-            />
-          </a>
-          <div id="gr_grid_widget_">
-            <div className="gr_grid_container"></div>
-          </div>
         </div>
       </div>
     </div>
