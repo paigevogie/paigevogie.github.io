@@ -1,6 +1,54 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import { Helmet } from "react-helmet";
+
+// Had to pull this into it's own component because set state was messing with the other emebeds :)
+const LinkedIn = () => {
+  const [showLinkedIn, setShowLinkedIn] = useState(true);
+  useEffect(() => {
+    window.addEventListener(
+      "error",
+      (event) => {
+        /* If linkedin errors, safari is preventing cross-site tracking */
+        if (!!event.target && event.target.src.includes("linkedin")) {
+          setShowLinkedIn(false);
+        }
+      },
+      { capture: true }
+    );
+  }, []);
+
+  return (
+    <>
+      <Helmet>
+        <script
+          src="https://platform.linkedin.com/badges/js/profile.js"
+          async
+          defer
+          type="text/javascript"
+        ></script>
+      </Helmet>
+      {showLinkedIn ? (
+        <div
+          className="linkedin-embed badge-base LI-profile-badge"
+          data-locale="en_US"
+          data-size="large"
+          data-theme="light"
+          data-type="HORIZONTAL"
+          data-vanity="paigevogie"
+          data-version="v1"
+        >
+          <a
+            className="badge-base__link LI-simple-link"
+            href="https://www.linkedin.com/in/paigevogie"
+          >
+            Paige Vogie on LinkedIn.
+          </a>
+        </div>
+      ) : null}
+    </>
+  );
+};
 
 const About = (props) => (
   <Layout
@@ -23,15 +71,17 @@ const About = (props) => (
     </Helmet>
     <div className="embeds-wrapper">
       <div className="embeds">
+        {/* Twitter */}
         <div className="twitter-embed">
           <a
-            class="twitter-timeline"
-            target="_blank"
+            className="twitter-timeline"
+            target="_blank noreferrer"
             href="https://twitter.com/paigevogie?ref_src=twsrc%5Etfw"
           >
-            Tweets by paigevogie
+            Paige Vogie on Twitter.
           </a>
         </div>
+        {/* Spotify */}
         <iframe
           title="Spotify Playlist"
           className="spotify-embed"
@@ -40,6 +90,7 @@ const About = (props) => (
           allowFullScreen=""
           allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
         ></iframe>
+        {/* Strava */}
         <iframe
           title="Strava Runs"
           className="strava-embed"
@@ -47,15 +98,18 @@ const About = (props) => (
           frameBorder="0"
           scrolling="yes"
         ></iframe>
+        {/* Pinterest */}
         <div className="pinterest-embed-sm">
           <a
             data-pin-do="embedUser"
             data-pin-board-width="180"
             data-pin-scale-height="90"
             data-pin-scale-width="70"
-            target="_blank"
+            target="_blank noreferrer"
             href="https://www.pinterest.com/paigevogie/"
-          ></a>
+          >
+            Paige Vogie on Pinterest.
+          </a>
         </div>
         <div className="pinterest-embed-lg">
           <a
@@ -63,10 +117,14 @@ const About = (props) => (
             data-pin-board-width="325"
             data-pin-scale-height="240"
             data-pin-scale-width="60"
-            target="_blank"
+            target="_blank noreferrer"
             href="https://www.pinterest.com/paigevogie/"
-          ></a>
+          >
+            Paige Vogie on Pinterest.
+          </a>
         </div>
+        {/* LinkedIn */}
+        <LinkedIn />
       </div>
     </div>
   </Layout>

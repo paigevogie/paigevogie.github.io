@@ -56,7 +56,7 @@ main.about {
         animation-delay: 0.8s;
       }
     }
-    .pinterest-embed-sm,
+    .pinterest-embed-sm span,
     .pinterest-embed-lg span {
       border: none;
       background: none;
@@ -72,30 +72,30 @@ main.about {
         display: block;
       }
     }
-    .goodreads-embed {
-      padding: $sizing-xs;
-      .logo img {
-        width: 100px;
-        margin: $sizing-md $sizing-sm $sizing-sm;
+    .linkedin-embed {
+      & > div {
+        width: 100%;
+        @include min-size-sm {
+          height: 100%;
+        }
       }
-      .gr_grid_container {
+      .profile-badge {
+        overflow-y: scroll;
+        background-color: transparent;
+        box-shadow: none;
         display: flex;
-        flex-wrap: wrap;
-        justify-content: space-evenly;
-
-        .gr_grid_book_container {
-          img {
-            border-radius: 8px;
-            width: 58px;
-            @include min-size-md {
-              width: 80px;
-            }
-          }
+        flex-direction: column;
+        margin-left: 0;
+        width: 100%;
+        @include min-size-sm {
+          height: 100%;
         }
-        .gr_grid_branding,
-        br {
-          display: none;
+        .profile-badge__cta-btn {
+          margin-top: auto;
         }
+      }
+      .badge-base__link {
+        display: none;
       }
     }
   }

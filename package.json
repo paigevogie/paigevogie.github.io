@@ -62,7 +62,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d public",
     "build": "gatsby build && cp ./CNAME public/",
-    "dev": "gatsby develop -p 4000 --open",
+    "dev": "gatsby develop -p 4000",
     "prettier": "npx prettier --write .",
     "prepare": "husky install"
   }
