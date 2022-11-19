@@ -63,25 +63,10 @@ const About = (props) => (
     {...props}
   >
     <Helmet>
-      <script
-        async
-        src="https://platform.twitter.com/widgets.js"
-        charset="utf-8"
-      ></script>
       <script async defer src="//assets.pinterest.com/js/pinit.js"></script>
     </Helmet>
     <div className="embeds-wrapper">
       <div className="embeds">
-        {/* Twitter */}
-        <div className="twitter-embed">
-          <a
-            className="twitter-timeline"
-            target="_blank noreferrer"
-            href="https://twitter.com/paigevogie?ref_src=twsrc%5Etfw"
-          >
-            Paige Vogie on Twitter.
-          </a>
-        </div>
         {/* Spotify */}
         <iframe
           title="Spotify Playlist"
