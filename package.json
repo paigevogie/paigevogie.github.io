@@ -10,7 +10,7 @@
     "**/*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
-    "@mdx-js/mdx": "^1.5.0",
+    "@mdx-js/mdx": "^2.3.0",
     "@mdx-js/react": "^1.5.0",
     "d3": "^7.6.1",
     "mathsass": "^0.10.1",
