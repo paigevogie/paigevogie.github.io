@@ -1,6 +1,7 @@
 import React from "react";
 import Layout from "../../components/Layout";
 import Link from "next/link";
+import styles from "./index.module.scss";
 
 const ListItem = ({ href, title, description }) => (
   <li>
@@ -12,10 +13,10 @@ const ListItem = ({ href, title, description }) => (
 );
 
 const Projects = (props) => (
-  <Layout title="Projects." className="projects" {...props}>
+  <Layout className={styles.projects} title="Projects." {...props}>
     <ul>
       <ListItem
-        href="/projects/covid19worldmap"
+        href="/projects/covid19-world-map"
         title="Covid-19 World Map"
         description="D3 visualizations"
       />
@@ -34,21 +35,21 @@ const Projects = (props) => (
         title="Bubbles"
         description="Fun with randomness"
       />
+      <ListItem
+        href="https://garmin.paigevogie.com"
+        title="Garmin"
+        description="Fitness data"
+      />
       {/* <ListItem
         href="/projects/birds"
         title="Birds"
         description="Tweet"
       /> */}
-      <ListItem
-        href="https://garmin.paigevogie.com"
-        title="Garmin"
-        description="Todo"
-      />
-      <ListItem
+      {/* <ListItem
         href="/projects/blackandwhite"
         title="Black and White"
         description="Todo"
-      />
+      /> */}
     </ul>
   </Layout>
 );

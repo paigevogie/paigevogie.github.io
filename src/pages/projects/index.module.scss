@@ -1,6 +1,8 @@
-@import "./_vars";
+@import "../../styles/_vars.scss";
 
-@mixin LinkList {
+.projects {
+  display: flex;
+  justify-content: center;
   ul {
     list-style-type: none;
     padding: 0;

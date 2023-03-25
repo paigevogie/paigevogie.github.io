@@ -1,6 +1,5 @@
 import React from "react";
 import Head from "next/head";
-import PropTypes from "prop-types";
 
 const config = {
   defaultTitle: "Paige Vogie",
@@ -38,12 +37,6 @@ const SEO = ({ title, description, path }) => {
       <title>{title}</title>
     </Head>
   );
-};
-
-SEO.propTypes = {
-  title: PropTypes.string,
-  description: PropTypes.string,
-  path: PropTypes.string,
 };
 
 export default SEO;

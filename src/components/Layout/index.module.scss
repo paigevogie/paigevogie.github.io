@@ -1,0 +1,20 @@
+@import "../../styles/_vars";
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  text-align: right;
+  margin: $sizing-2xl auto $sizing-md auto;
+  width: calc(#{$embed-size} + #{$sizing-lg});
+  @include min-size-md {
+    width: calc(2 * (#{$embed-size} + #{$sizing-lg}));
+  }
+}
+
+.main {
+  margin: 0 auto;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}

@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import styles from "./index.module.scss";
 
 class Nav extends React.Component {
   state = {
@@ -7,7 +8,7 @@ class Nav extends React.Component {
   };
 
   componentDidMount() {
-    // required for server side
+    // required for ssr
     typeof window !== `undefined` &&
       this.setState({ pathname: window.location.pathname });
   }
@@ -19,7 +20,7 @@ class Nav extends React.Component {
     const { pathname } = state;
 
     return (
-      <nav>
+      <nav className={styles.nav}>
         <Link href="/" className={pathname === "/" ? "active home" : "home"}>
           Home
         </Link>

@@ -1,29 +1,29 @@
-@import "./_vars";
+@import "../../../styles/vars";
 
 .covid-19-world-map {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
 
-  .country-info {
+  [class="country-info"] {
     margin-bottom: 1em;
     padding: 1em 2em;
     border: 1px solid $soft-black;
     border-radius: 8px;
 
-    .country-name,
-    .country-last-updated {
+    [class="country-name"],
+    [class="country-last-updated"] {
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
     }
   }
 
-  .canvas-container {
+  [class="canvas-container"] {
     flex-grow: 1;
     position: relative;
 
-    .canvas-background {
+    [class="canvas-background"] {
       position: absolute;
       top: 0;
       right: 0;

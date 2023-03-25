@@ -1,0 +1,44 @@
+@import "../../styles/vars";
+
+.nav {
+  display: flex;
+  a {
+    font-size: $font-size-sm;
+    font-weight: 500;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: $soft-black;
+    margin: $sizing-xs;
+    white-space: nowrap;
+    position: relative;
+    width: $sizing-7xl;
+    height: $sizing-7xl;
+    border: $sizing-3xs solid $soft-black;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: rotate(-12deg);
+
+    &:after {
+      content: "";
+      bottom: -5px;
+      left: 25%;
+      width: 0;
+      height: $sizing-3xs;
+      position: absolute;
+      background-color: $light-grey;
+      transition: width 0.5s ease 0.1s, background-color 0.8s;
+    }
+    &[class*="active"]:after {
+      width: 50%;
+      background-color: $soft-black;
+    }
+    &:hover:after {
+      background-color: $light-grey;
+    }
+    &:hover:not(.active):after {
+      width: 50%;
+    }
+  }
+}

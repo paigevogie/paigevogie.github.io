@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import Layout from "../../components/Layout";
+import Layout from "../../../components/Layout";
+import styles from "./index.module.scss";
 
 import * as d3 from "d3";
 import * as topojson from "topojson-client";
@@ -283,7 +284,7 @@ const Covid19WorldMap = (props) => {
       subtitle={
         <p>Drag the globe and highlight a country to view its details.</p>
       }
-      className="covid-19-world-map"
+      className={styles["covid-19-world-map"]}
       {...props}
     >
       <div className="country-info">
