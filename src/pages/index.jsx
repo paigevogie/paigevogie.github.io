@@ -4,27 +4,29 @@ import GitHub from "../components/GitHub";
 import Spotify from "../components/Spotify";
 import Strava from "../components/Strava";
 import Pinterest from "../components/Pinterest";
+import styles from "./index.module.scss";
 
 const Home = (props) => (
-  <Layout
-    title="Hello!"
-    className="home"
-    subtitle={
-      <p>
-        Find me all over the web <b>@paigevogie</b>.
-      </p>
-    }
-    {...props}
-  >
-    <div className="embeds-wrapper">
-      <div className="embeds">
-        <Spotify />
-        <Strava />
-        <GitHub />
-        <Pinterest />
+  <div>
+    <Layout
+      title="Hello!"
+      subtitle={
+        <p>
+          Find me all over the web <b>@paigevogie</b>.
+        </p>
+      }
+      {...props}
+    >
+      <div className={styles.embeds}>
+        <div>
+          <Spotify />
+          <Strava />
+          <GitHub />
+          <Pinterest />
+        </div>
       </div>
-    </div>
-  </Layout>
+    </Layout>
+  </div>
 );
 
 export default Home;

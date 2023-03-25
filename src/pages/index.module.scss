@@ -1,0 +1,114 @@
+@import "../styles/_vars.scss";
+
+$embed-size-sm: 300px;
+$embed-size-lg: 350px;
+
+.embeds {
+  display: flex;
+  justify-content: center;
+  > div {
+    display: flex;
+    flex-direction: column;
+    @include min-size-xl {
+      justify-content: flex-start;
+      flex-basis: calc(2 * (#{$embed-size-lg} + #{$sizing-lg}));
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+    // Embed
+    [class*="-embed"] {
+      margin: $sizing-sm;
+      width: $embed-size-sm;
+      height: $embed-size-sm;
+      border: 1px solid $light-grey;
+      border-radius: 15px;
+      overflow: hidden;
+      @include min-size-sm {
+        width: $embed-size-lg;
+        height: $embed-size-lg;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      opacity: 0;
+      animation: fadeIn 2s forwards;
+      &:nth-child(1) {
+        animation-delay: 1s;
+      }
+      &:nth-child(2) {
+        animation-delay: 0.1s;
+      }
+      &:nth-child(3) {
+        animation-delay: 0s;
+      }
+      &:nth-child(4) {
+        animation-delay: 0.5s;
+      }
+      &:nth-child(5) {
+        animation-delay: 0.8s;
+      }
+    }
+    // GitHub
+    [class="github-embed"] {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px;
+      font-size: $font-size-sm;
+      line-height: 1.3;
+      @include min-size-sm {
+        padding: 20px;
+        font-size: $font-size-md;
+      }
+      img {
+        border-radius: 100%;
+        height: 75px;
+        width: 75px;
+        @include min-size-sm {
+          height: 125px;
+          width: 125px;
+        }
+      }
+      > div {
+        @include min-size-sm {
+          width: 75%;
+        }
+      }
+      a {
+        text-decoration: none;
+        font-weight: 500;
+        color: $soft-black;
+      }
+      svg {
+        width: 16px;
+        height: 16px;
+        @include min-size-sm {
+          width: 32px;
+          height: 32px;
+        }
+      }
+    }
+    // Pinterest
+    [class^="pinterest-embed"] span {
+      border: none;
+      background: none;
+    }
+    [class^="pinterest-embed-sm"] {
+      @include min-size-sm {
+        display: none;
+      }
+    }
+    [class^="pinterest-embed-lg"] {
+      display: none;
+      @include min-size-sm {
+        display: block;
+      }
+    }
+  }
+}

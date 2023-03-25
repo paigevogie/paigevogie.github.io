@@ -3,10 +3,10 @@ import Layout from "../components/Layout";
 
 const FourZeroFour = (props) => (
   <Layout
-    title="404"
+    title="404 :("
     subtitle={
       <p>
-        Sorry, this page doesn't exist. Head back to the{" "}
+        Sorry, this page doesn't exist. Please head back to the{" "}
         <a href="/">homepage</a>.
       </p>
     }

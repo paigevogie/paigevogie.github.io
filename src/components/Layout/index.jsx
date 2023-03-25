@@ -1,9 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import Footer from "./Footer";
-import Nav from "./Nav";
-import SEO from "./SEO";
+import Footer from "../Footer";
+import Nav from "../Nav";
+import SEO from "../SEO";
+import styles from "./index.module.scss";
 
 const Layout = ({
   title,
@@ -19,7 +20,7 @@ const Layout = ({
       description={description}
       path={path}
     />
-    <main className={className}>
+    <main className={`${styles.main} ${className ? className : ""}`}>
       <header>
         <Nav />
         <div>

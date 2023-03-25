@@ -1,4 +1,4 @@
-@import "./_vars";
+@import "../../../styles/vars";
 
 @mixin diagonal {
   position: absolute;
@@ -19,7 +19,7 @@
   overflow: hidden;
   z-index: z("diagonals");
 
-  .diagonal-1 {
+  [class="diagonal-1"] {
     @include diagonal {
       bottom: 0;
       right: 5vw;
@@ -28,7 +28,7 @@
       transform: rotate(5deg);
     }
   }
-  .diagonal-2 {
+  [class="diagonal-2"] {
     @include diagonal {
       bottom: 0;
       left: 10vw;
@@ -37,7 +37,7 @@
       transform: rotate(-65deg);
     }
   }
-  .diagonal-3 {
+  [class="diagonal-3"] {
     @include diagonal {
       bottom: 30vh;
       right: 0;
@@ -46,7 +46,7 @@
       transform: rotate(85deg);
     }
   }
-  .diagonal-4 {
+  [class="diagonal-4"] {
     @include diagonal {
       top: 0;
       left: 10vw;
@@ -55,7 +55,7 @@
       transform: rotate(45deg);
     }
   }
-  .diagonal-5 {
+  [class="diagonal-5"] {
     @include diagonal {
       bottom: 0;
       right: 0;

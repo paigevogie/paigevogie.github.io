@@ -1,11 +1,9 @@
 import React from "react";
-import Head from "next/head";
+import Script from "next/script";
 
 const Pinterest = () => (
   <>
-    <Head>
-      <script async defer src="//assets.pinterest.com/js/pinit.js"></script>
-    </Head>
+    <Script src="//assets.pinterest.com/js/pinit.js" />
     <div className="pinterest-embed-sm">
       <a
         data-pin-do="embedUser"

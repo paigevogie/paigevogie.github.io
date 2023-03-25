@@ -1,8 +1,9 @@
 import React from "react";
+import styles from "./index.module.scss";
 
 const Footer = () => (
-  <footer>
-    <ul className="footer">
+  <footer className={styles.footer}>
+    <ul>
       {/* Resume */}
       <li className="resume">
         <a

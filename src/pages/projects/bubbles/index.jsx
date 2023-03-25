@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Layout from "../../components/Layout";
+import Layout from "../../../components/Layout";
+import styles from "./index.module.scss";
 
 const Bubbles = (props) => {
   const [bodyHeight, setBodyHeight] = useState();
@@ -28,7 +29,7 @@ const Bubbles = (props) => {
 
   return (
     <Layout title="Bubbles" {...props}>
-      <div className="bubbles">
+      <div className={styles.bubbles}>
         {Array(500)
           .fill(0)
           .map((item, index) => (
