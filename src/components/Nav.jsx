@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 class Nav extends React.Component {
   state = {
@@ -19,18 +20,12 @@ class Nav extends React.Component {
 
     return (
       <nav>
-        <a href="/" className={pathname === "/" ? "active home" : "home"}>
+        <Link href="/" className={pathname === "/" ? "active home" : "home"}>
           Home
-        </a>
-        <a href="/about/" className={getClassName("about")}>
-          About
-        </a>
-        <a href="/blog/" className={getClassName("blog")}>
-          Blog
-        </a>
-        <a href="/projects/" className={getClassName("projects")}>
+        </Link>
+        <Link href="/projects/" className={getClassName("projects")}>
           Projects
-        </a>
+        </Link>
       </nav>
     );
   }

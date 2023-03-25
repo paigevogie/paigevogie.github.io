@@ -2,13 +2,7 @@
 
 @mixin Nav {
   nav {
-    position: fixed;
-    width: 80px;
-    margin: $sizing-xs;
-    @include min-size-md {
-      margin: $sizing-7xl;
-    }
-
+    display: flex;
     a {
       font-size: $font-size-sm;
       @include min-size-md {
@@ -18,7 +12,7 @@
       text-decoration: none;
       text-transform: uppercase;
       color: $soft-black;
-      margin: $sizing-md;
+      margin: $sizing-xs;
       white-space: nowrap;
       position: relative;
       width: $sizing-7xl;
