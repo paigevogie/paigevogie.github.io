@@ -1,0 +1,62 @@
+@import "../../styles/_vars.scss";
+
+.libby-embed {
+  overflow: hidden;
+
+  > a {
+    @include link;
+    padding: $sizing-md;
+    font-weight: 500;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    height: 20%;
+
+    svg {
+      border-radius: 100%;
+      height: $sizing-xl;
+      width: $sizing-xl;
+    }
+  }
+
+  ul {
+    margin: 0;
+    padding: 0 $sizing-md $sizing-md;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    height: 80%;
+
+    li {
+      margin-bottom: $sizing-md;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+      a {
+        @include link;
+        display: flex;
+        flex-direction: row;
+
+        img {
+          height: $sizing-5xl;
+          width: $sizing-5xl;
+          min-width: $sizing-5xl;
+          min-height: $sizing-5xl;
+          border-radius: $sizing-xs;
+        }
+        > div {
+          margin-left: $sizing-md;
+          > div {
+            display: flex;
+            align-items: center;
+            font-weight: 400;
+          }
+        }
+      }
+    }
+  }
+}

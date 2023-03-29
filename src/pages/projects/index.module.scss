@@ -4,7 +4,7 @@
   display: flex;
   justify-content: center;
   ul {
-    list-style-type: none;
+    list-style: none;
     padding: 0;
     margin: 20% 0;
     text-align: right;
@@ -16,16 +16,16 @@
       margin: $sizing-xl 0;
 
       a {
-        color: $soft-black;
-        text-decoration: none;
-        p {
-          font-weight: 400;
-          margin: 0;
-
+        @include link {
+          p {
+            font-weight: 400;
+            margin: 0;
+          }
           &:hover,
           &:active {
-            color: $light-grey;
-            text-decoration: none;
+            small {
+              color: $soft-black;
+            }
           }
         }
       }

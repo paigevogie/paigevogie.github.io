@@ -1,7 +1,8 @@
 import React from "react";
+import styles from "./index.module.scss";
 
 const Spotify = () => (
-  <div className="spotify-embed">
+  <div className={styles["spotify-embed"]}>
     <iframe
       title="Spotify Playlist"
       src="https://open.spotify.com/embed/playlist/7i09qruRU3qtgh9lU0ypqc?utm_source=generator"

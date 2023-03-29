@@ -16,6 +16,11 @@ const Projects = (props) => (
   <Layout className={styles.projects} title="Projects." {...props}>
     <ul>
       <ListItem
+        href="/projects/bubbles"
+        title="Bubbles"
+        description="Fun with randomness"
+      />
+      <ListItem
         href="/projects/covid19-world-map"
         title="Covid-19 World Map"
         description="D3 visualizations"
@@ -25,30 +30,10 @@ const Projects = (props) => (
         title="Dots"
         description="CSS animations"
       />
-      <ListItem
-        href="/projects/diagonals"
-        title="Diagonals"
-        description="CSS transforms"
-      />
-      <ListItem
-        href="/projects/bubbles"
-        title="Bubbles"
-        description="Fun with randomness"
-      />
-      <ListItem
+      {/* <ListItem
         href="https://garmin.paigevogie.com"
         title="Garmin"
         description="Fitness data"
-      />
-      {/* <ListItem
-        href="/projects/birds"
-        title="Birds"
-        description="Tweet"
-      /> */}
-      {/* <ListItem
-        href="/projects/blackandwhite"
-        title="Black and White"
-        description="Todo"
       /> */}
     </ul>
   </Layout>

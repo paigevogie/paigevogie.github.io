@@ -1,10 +1,11 @@
 import React from "react";
 import Script from "next/script";
+import styles from "./index.module.scss";
 
 const Pinterest = () => (
   <>
     <Script beforeInteractive src="//assets.pinterest.com/js/pinit.js" />
-    <div className="pinterest-embed">
+    <div className={styles["pinterest-embed"]}>
       <a
         data-pin-do="embedUser"
         data-pin-board-width="280"

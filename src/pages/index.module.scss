@@ -19,7 +19,7 @@
       height: $embed-size;
       border: 1px solid $light-grey;
       border-radius: 15px;
-      overflow: hidden;
+      font-size: $font-size-md;
       @keyframes fadeIn {
         from {
           opacity: 0;
@@ -45,38 +45,6 @@
       &:nth-child(5) {
         animation-delay: 0.8s;
       }
-    }
-    // GitHub
-    [class="github-embed"] {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      line-height: 1.3;
-      padding: 20px;
-      font-size: $font-size-md;
-      img {
-        border-radius: 100%;
-        height: 115px;
-        width: 115px;
-      }
-      > div {
-        width: 75%;
-      }
-      a {
-        text-decoration: none;
-        font-weight: 500;
-        color: $soft-black;
-      }
-      svg {
-        width: 32px;
-        height: 32px;
-      }
-    }
-    // Pinterest
-    [class="pinterest-embed"] span {
-      border: none;
-      background: none;
     }
   }
 }
