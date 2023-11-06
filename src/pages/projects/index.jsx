@@ -21,11 +21,6 @@ const Projects = (props) => (
         description="Fun with randomness"
       />
       <ListItem
-        href="/projects/covid19-world-map"
-        title="Covid-19 World Map"
-        description="D3 visualizations"
-      />
-      <ListItem
         href="/projects/dots"
         title="Dots"
         description="CSS animations"

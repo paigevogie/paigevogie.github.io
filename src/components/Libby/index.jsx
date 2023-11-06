@@ -2,12 +2,7 @@ import React from "react";
 import styles from "./index.module.scss";
 
 const LibbySvg = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 1024 1024"
-    data-access="visual"
-    aria-hidden="true"
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
     <title>Libby</title>
     <g class="mascot-symbol" fill="none" fill-rule="evenodd">
       <path class="field" fill="#631A35" d="M0 0h1024v1024H0z"></path>

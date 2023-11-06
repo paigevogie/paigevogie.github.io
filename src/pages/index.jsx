@@ -1,7 +1,6 @@
 import React from "react";
 import Layout from "../components/Layout";
 import GitHub from "../components/GitHub";
-import Spotify from "../components/Spotify";
 import Strava from "../components/Strava";
 import Pinterest from "../components/Pinterest";
 import Libby from "../components/Libby";
@@ -20,7 +19,7 @@ export async function getServerSideProps({ res }) {
       githubData: await getGithubData(),
       libbyData: await getLibbyData(),
       // stravaData: await getStravaData(),
-      // stravaData: JSON.parse(fs.readFileSync("./data/stravaData.json")),
+      // stravaData: JSON.parse(fs.readFileSync("./data/stravaActivities.json")),
     },
   };
 }
@@ -37,10 +36,9 @@ const Home = ({ githubData, stravaData, libbyData, ...props }) => (
   >
     <div className={styles.embeds}>
       <div>
-        <Spotify />
         <Strava {...{ stravaData }} />
-        <GitHub {...{ githubData }} />
         <Libby {...{ libbyData }} />
+        <GitHub {...{ githubData }} />
         <Pinterest />
       </div>
     </div>

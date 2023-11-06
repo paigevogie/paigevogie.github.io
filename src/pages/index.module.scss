@@ -8,7 +8,7 @@
     flex-direction: column;
     @include min-size-md {
       justify-content: flex-start;
-      flex-basis: calc(2 * (#{$embed-size} + #{$sizing-lg}));
+      flex-basis: calc((2 * #{$embed-size}) + (4 * #{$sizing-sm}));
       flex-direction: row;
       flex-wrap: wrap;
     }

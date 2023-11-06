@@ -1,5 +1,4 @@
 import React from "react";
-import Footer from "../Footer";
 import Nav from "../Nav";
 import SEO from "../SEO";
 import styles from "./index.module.scss";
@@ -28,7 +27,6 @@ const Layout = ({
     <main className={`${styles.main} ${className ? className : ""}`}>
       {children}
     </main>
-    <Footer />
   </>
 );
 

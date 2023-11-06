@@ -50,24 +50,48 @@ export const getStravaData = async () => {
       fs.writeFileSync("./data/stravaToken.json", JSON.stringify(stravaToken));
     }
 
-    const dataResponse = await fetch(
+    const headers = {
+      headers: {
+        Authorization: `Bearer ${stravaToken.access_token}`,
+      },
+    };
+
+    const athleteResponse = await fetch(
       "https://www.strava.com/api/v3/athlete/activities",
-      {
-        headers: {
-          Authorization: `Bearer ${stravaToken.access_token}`,
-        },
-      }
+      headers
     );
 
-    if (dataResponse.status !== 200) {
-      throw new Error("Token data response status: " + dataResponse.status);
+    if (athleteResponse.status !== 200) {
+      throw new Error("Athlete response status: " + athleteResponse.status);
     }
 
-    const stravaData = await dataResponse.json();
+    const atheleteData = await athleteResponse.json();
 
-    fs.writeFileSync("./data/stravaData.json", JSON.stringify(stravaData));
+    fs.writeFileSync("./data/stravaData.json", JSON.stringify(atheleteData));
 
-    return stravaData;
+    const activitiesData = await Promise.all(
+      atheleteData.slice(0, 25).map(async (activity) => {
+        const activityResponse = await fetch(
+          `https://www.strava.com/api/v3/activities/${activity.id}`,
+          headers
+        );
+
+        if (activityResponse.status !== 200) {
+          throw new Error(
+            "Activity response status: " + activityResponse.status
+          );
+        }
+
+        return await activityResponse.json();
+      })
+    );
+
+    fs.writeFileSync(
+      "./data/stravaActivities.json",
+      JSON.stringify(activitiesData)
+    );
+
+    return activitiesData;
   } catch (err) {
     console.error("Error fetching Strava data", err);
   }

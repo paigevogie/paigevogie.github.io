@@ -8,7 +8,6 @@
     padding: $sizing-md;
     font-weight: 500;
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
     align-items: center;
     background-color: #ffffff;
@@ -39,7 +38,6 @@
       a {
         @include link;
         display: flex;
-        flex-direction: row;
 
         img {
           height: $sizing-5xl;
@@ -47,6 +45,7 @@
           min-width: $sizing-5xl;
           min-height: $sizing-5xl;
           border-radius: $sizing-xs;
+          object-fit: cover;
         }
         > div {
           margin-left: $sizing-md;
