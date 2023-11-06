@@ -31,3 +31,33 @@ body,
     margin: 0;
   }
 }
+
+// TODO: figure out why this doesn't work in linkedin embed module
+.linkedin-embed {
+  overflow: hidden;
+
+  .profile-badge {
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    margin-left: 0;
+    width: 100%;
+    height: 100%;
+
+    .profile-badge__header {
+      background-color: transparent;
+      padding: 20px 16px;
+    }
+
+    .profile-badge__content-profile-image {
+      margin: 0 0 8px 0;
+    }
+
+    .profile-badge__cta-btn {
+      margin-top: 12px;
+    }
+
+    .profile-badge__content-profile-name-link {
+      font-weight: 400;
+    }
+  }
+}

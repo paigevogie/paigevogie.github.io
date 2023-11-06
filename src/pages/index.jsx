@@ -2,10 +2,10 @@ import React from "react";
 import Layout from "../components/Layout";
 import GitHub from "../components/GitHub";
 import Strava from "../components/Strava";
-import Pinterest from "../components/Pinterest";
 import Libby from "../components/Libby";
+import LinkedIn from "../components/LinkedIn";
 import styles from "./index.module.scss";
-import { getGithubData, getStravaData, getLibbyData } from "../service";
+import { getGithubData, getLibbyData, getLinkedInData } from "../service";
 
 export async function getServerSideProps({ res }) {
   res.setHeader(
@@ -18,13 +18,20 @@ export async function getServerSideProps({ res }) {
     props: {
       githubData: await getGithubData(),
       libbyData: await getLibbyData(),
+      linkedInData: await getLinkedInData(),
       // stravaData: await getStravaData(),
       // stravaData: JSON.parse(fs.readFileSync("./data/stravaActivities.json")),
     },
   };
 }
 
-const Home = ({ githubData, stravaData, libbyData, ...props }) => (
+const Home = ({
+  githubData,
+  stravaData,
+  libbyData,
+  linkedInData,
+  ...props
+}) => (
   <Layout
     title="Hello!"
     subtitle={
@@ -39,7 +46,7 @@ const Home = ({ githubData, stravaData, libbyData, ...props }) => (
         <Strava {...{ stravaData }} />
         <Libby {...{ libbyData }} />
         <GitHub {...{ githubData }} />
-        <Pinterest />
+        <LinkedIn {...{ linkedInData }} />
       </div>
     </div>
   </Layout>
