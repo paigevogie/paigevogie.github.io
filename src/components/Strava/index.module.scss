@@ -44,9 +44,20 @@
       }
 
       > div {
-        margin-left: $sizing-md;
+        margin: 0 $sizing-md;
         display: flex;
-        align-items: center;
+        flex-direction: column;
+        width: 100%;
+        > div:first-child {
+          font-weight: 400;
+          line-height: 1.25;
+          text-overflow: ellipsis;
+        }
+        > div:last-child {
+          display: flex;
+          justify-content: space-between;
+          font-size: $font-size-sm;
+        }
       }
     }
   }

@@ -5,7 +5,12 @@ import Strava from "../components/Strava";
 import Libby from "../components/Libby";
 import LinkedIn from "../components/LinkedIn";
 import styles from "./index.module.scss";
-import { getGithubData, getLibbyData, getLinkedInData } from "../service";
+import {
+  getGithubData,
+  getLibbyData,
+  getLinkedInData,
+  getStravaData,
+} from "../service";
 import { config } from "../components/SEO";
 
 export async function getServerSideProps({ res }) {
@@ -20,7 +25,7 @@ export async function getServerSideProps({ res }) {
       githubData: await getGithubData(),
       libbyData: await getLibbyData(),
       linkedInData: await getLinkedInData(),
-      // stravaData: await getStravaData(),
+      stravaData: await getStravaData(),
       // stravaData: JSON.parse(fs.readFileSync("./data/stravaActivities.json")),
     },
   };
