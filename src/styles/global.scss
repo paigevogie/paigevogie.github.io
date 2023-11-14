@@ -17,18 +17,32 @@ body,
   flex-direction: column;
 
   h1,
-  b {
-    font-weight: 400;
-  }
   h2,
   h3,
   h4,
   h5,
-  h6 {
+  h6,
+  p {
     font-weight: 300;
-  }
-  h1 {
     margin: 0;
+  }
+  b,
+  a {
+    font-weight: 400;
+  }
+  a,
+  a:visited {
+    &:not(.profile-badge__cta-btn) {
+      color: $soft-black;
+      text-decoration: none;
+
+      &:hover,
+      &:active {
+        color: $light-grey;
+        text-decoration: none;
+        cursor: pointer;
+      }
+    }
   }
 }
 

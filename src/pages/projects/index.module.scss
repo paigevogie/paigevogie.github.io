@@ -15,16 +15,14 @@
       margin: $sizing-xl 0;
 
       a {
-        @include link {
-          p {
-            font-weight: 400;
-            margin: 0;
-          }
-          &:hover,
-          &:active {
-            small {
-              color: $soft-black;
-            }
+        p {
+          font-weight: 400;
+          margin: 0;
+        }
+        &:hover,
+        &:active {
+          small {
+            color: $soft-black;
           }
         }
       }

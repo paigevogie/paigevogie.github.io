@@ -10,10 +10,11 @@ const Layout = ({
   children,
   className,
   path,
+  seoTitle,
 }) => (
   <>
     <SEO
-      title={title !== "Paige Vogie" ? title : null}
+      title={!!seoTitle ? seoTitle : title}
       description={description}
       path={path}
     />

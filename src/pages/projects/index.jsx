@@ -13,7 +13,12 @@ const ListItem = ({ href, title, description }) => (
 );
 
 const Projects = (props) => (
-  <Layout className={styles.projects} title="Projects." {...props}>
+  <Layout
+    className={styles.projects}
+    title="Projects."
+    seoTitle="Projects"
+    {...props}
+  >
     <ul>
       <ListItem
         href="/projects/bubbles"

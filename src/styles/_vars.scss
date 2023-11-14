@@ -116,16 +116,3 @@ $breakpoint-desktop-xl: 1280px;
     @content;
   }
 }
-
-@mixin link {
-  color: $soft-black;
-  text-decoration: none;
-
-  &:hover,
-  &:active {
-    color: $light-grey;
-    text-decoration: none;
-  }
-
-  @content;
-}

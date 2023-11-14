@@ -6,6 +6,7 @@ import Libby from "../components/Libby";
 import LinkedIn from "../components/LinkedIn";
 import styles from "./index.module.scss";
 import { getGithubData, getLibbyData, getLinkedInData } from "../service";
+import { config } from "../components/SEO";
 
 export async function getServerSideProps({ res }) {
   res.setHeader(
@@ -34,6 +35,7 @@ const Home = ({
 }) => (
   <Layout
     title="Hello!"
+    seoTitle={config.defaultTitle}
     subtitle={
       <p>
         Find me all over the web <b>@paigevogie</b>.
