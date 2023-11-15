@@ -6,4 +6,7 @@ module.exports = {
     fiber: false,
     includePaths: [path.join(__dirname, "styles")],
   },
+  serverRuntimeConfig: {
+    PROJECT_ROOT: __dirname,
+  },
 };

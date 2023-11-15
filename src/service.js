@@ -1,4 +1,10 @@
+import fs, { promises as fsp } from "fs";
+import path from "path";
 import { Octokit } from "octokit";
+import { kv } from "@vercel/kv";
+import { WritableStream } from "stream/web";
+import getConfig from "next/config";
+const { serverRuntimeConfig } = getConfig();
 
 export const getLibbyData = async () => {
   try {
@@ -6,6 +12,7 @@ export const getLibbyData = async () => {
     return await response.json();
   } catch (error) {
     console.error("Error fetching Libby data:", error);
+    return {};
   }
 };
 
@@ -22,78 +29,7 @@ export const getGithubData = async () => {
     }
   } catch (error) {
     console.error("Error fetching Github data:", error);
-  }
-};
-
-export const getStravaData = async () => {
-  try {
-    const fs = require("fs");
-    let stravaToken = JSON.parse(fs.readFileSync("./data/stravaToken.json"));
-    const isExpired = Date.now() / 1000 > stravaToken.expires_at;
-
-    if (isExpired) {
-      const tokenResponse = await fetch(
-        `https://www.strava.com/oauth/token?client_id=${process.env.STRAVA_CLIENT_ID}&client_secret=${process.env.STRAVA_CLIENT_SECRET}&refresh_token=${stravaToken.refresh_token}&grant_type=refresh_token`,
-        {
-          method: "POST",
-        }
-      );
-
-      if (tokenResponse.status !== 200) {
-        throw new Error(
-          "Token refresh response status: " + tokenResponse.status
-        );
-      }
-
-      stravaToken = await tokenResponse.json();
-
-      fs.writeFileSync("./data/stravaToken.json", JSON.stringify(stravaToken));
-    }
-
-    const headers = {
-      headers: {
-        Authorization: `Bearer ${stravaToken.access_token}`,
-      },
-    };
-
-    const athleteResponse = await fetch(
-      "https://www.strava.com/api/v3/athlete/activities",
-      headers
-    );
-
-    if (athleteResponse.status !== 200) {
-      throw new Error("Athlete response status: " + athleteResponse.status);
-    }
-
-    const atheleteData = await athleteResponse.json();
-
-    fs.writeFileSync("./data/stravaData.json", JSON.stringify(atheleteData));
-
-    const activitiesData = await Promise.all(
-      atheleteData.slice(0, 25).map(async (activity) => {
-        const activityResponse = await fetch(
-          `https://www.strava.com/api/v3/activities/${activity.id}`,
-          headers
-        );
-
-        if (activityResponse.status !== 200) {
-          throw new Error(
-            "Activity response status: " + activityResponse.status
-          );
-        }
-
-        return await activityResponse.json();
-      })
-    );
-
-    fs.writeFileSync(
-      "./data/stravaActivities.json",
-      JSON.stringify(activitiesData)
-    );
-
-    return activitiesData;
-  } catch (err) {
-    console.error("Error fetching Strava data", err);
+    return {};
   }
 };
 
@@ -116,12 +52,165 @@ export const getLinkedInData = async () => {
       "https://badges.linkedin.com/profile?locale=en_US&badgetype=VERTICAL&badgetheme=light&uid=56368&version=v1&maxsize=large&trk=profile-badge&vanityname=paigevogie"
     );
 
-    console.log(`LinkedIn status ${response.status}: ${response.statusText}`);
+    console.info(`LinkedIn status ${response.status}: ${response.statusText}`);
+    response.status === 200 && console.log("LinkedIn Response", response);
 
-    return response.status === 200 ? await response.json() : fallback;
+    return response.status === 200 ? response : fallback;
   } catch (error) {
     console.error("Error fetching LinkedIn data:", error);
 
     return fallback;
+  }
+};
+
+const getStravaToken = async () => {
+  try {
+    const stravaToken = await kv.get("strava_token");
+    const isExpired = Date.now() / 1000 > stravaToken.expires_at;
+
+    if (!stravaToken || isExpired) {
+      const tokenResponse = await fetch(
+        `https://www.strava.com/oauth/token?client_id=${process.env.STRAVA_CLIENT_ID}&client_secret=${process.env.STRAVA_CLIENT_SECRET}&refresh_token=${stravaToken.refresh_token}&grant_type=refresh_token`,
+        {
+          method: "POST",
+        }
+      );
+
+      if (tokenResponse.status !== 200) {
+        throw new Error(
+          `Token refresh response status ${tokenResponse.status}: ${tokenResponse.statusText}`
+        );
+      }
+
+      const newStravaToken = await tokenResponse.json();
+      console.info("New strava token:", newStravaToken);
+      await kv.set("strava_token", newStravaToken);
+
+      return newStravaToken;
+    }
+
+    return stravaToken;
+  } catch (err) {
+    console.error(`Error getting strava token: ${err}`);
+  }
+};
+
+const getStravaMap = async ({ map, id }) => {
+  try {
+    if (!map.summary_polyline) {
+      return null;
+    }
+
+    const MAP_STYLE = "streets-v12";
+    const TOKEN = process.env.MAPBOX_TOKEN || "";
+    const DIMENSIONS = "100x100";
+    const STROKE_WIDTH = 3;
+    const STROKE_COLOR = "FC5200";
+    const STROKE_OPACITY = 1;
+    const PADDING = 25;
+
+    const mapResponse = await fetch(
+      `https://api.mapbox.com/styles/v1/mapbox/${MAP_STYLE}/static/path-${STROKE_WIDTH}+${STROKE_COLOR}-${STROKE_OPACITY}(${encodeURIComponent(
+        map.summary_polyline
+      )})/auto/${DIMENSIONS}?padding=${PADDING}&access_token=${TOKEN}`
+    );
+
+    const fileName = `${id}.png`;
+    const dir = path.join(serverRuntimeConfig.PROJECT_ROOT, `./tmp`);
+    const filePath = `${dir}/${fileName}`;
+
+    !fs.existsSync(dir) && (await fsp.mkdir(dir));
+
+    // There's probably a better way to do this
+    const stream = new WritableStream({
+      write(chunk) {
+        const dest = fs.createWriteStream(filePath);
+        dest.write(chunk);
+      },
+    });
+    await mapResponse.body.pipeTo(stream);
+    const image = await fsp.readFile(filePath);
+
+    const response = await fetch(
+      `${process.env.HOST}/api/upload?filename=${fileName}`,
+      {
+        method: "POST",
+        body: image,
+      }
+    );
+    const { url } = await response.json();
+
+    await fsp.rm(filePath);
+
+    return url;
+  } catch (err) {
+    console.error(`Error getting Strava map id ${id}: ${err}`);
+    return null;
+  }
+};
+
+export const getStravaData = async () => {
+  try {
+    const stravaData = await kv.get("strava_data");
+    const isToday =
+      new Date().setHours(0, 0, 0, 0) ===
+      new Date(stravaData?.timestamp).setHours(0, 0, 0, 0);
+    if (isToday) {
+      console.info("Returning cached strava data");
+      return stravaData.activitiesData;
+    }
+
+    const headers = {
+      headers: {
+        Authorization: `Bearer ${(await getStravaToken()).access_token}`,
+      },
+    };
+
+    const athleteResponse = await fetch(
+      "https://www.strava.com/api/v3/athlete/activities",
+      headers
+    );
+
+    if (athleteResponse.status !== 200) {
+      throw new Error(
+        `Athlete response status ${athleteResponse.status}: ${athleteResponse.statusText}`
+      );
+    }
+
+    const athleteData = await athleteResponse.json();
+    const SIZE = 10;
+
+    const activitiesData = await Promise.all(
+      athleteData.slice(0, SIZE).map(async (activity) => {
+        if (!activity.map?.summary_polyline && activity.total_photo_count > 0) {
+          const activityResponse = await fetch(
+            `https://www.strava.com/api/v3/activities/${activity.id}`,
+            headers
+          );
+
+          if (activityResponse.status !== 200) {
+            throw new Error(
+              `Athlete response status ${activityResponse.status}: ${activityResponse.statusText}`
+            );
+          }
+
+          const { photos } = await activityResponse.json();
+          activity.photos = photos;
+        }
+
+        if (activity.map?.summary_polyline && !activity.map.url) {
+          activity.map.url = await getStravaMap(activity);
+        }
+
+        return activity;
+      })
+    );
+
+    await kv.set("strava_data", { activitiesData, timestamp: Date.now() });
+
+    return activitiesData;
+  } catch (err) {
+    console.error("Error fetching Strava data", err);
+    return [];
   }
 };

@@ -56,17 +56,19 @@ const NewStrava = ({ stravaData }) => (
     </div>
     <ul>
       {stravaData.map(
-        ({ map, photos, name, distance, elapsed_time, start_date_local }) => (
-          <li>
-            <img
-              src={
-                map?.summary_polyline
-                  ? `https://api.mapbox.com/styles/v1/mapbox/${MAP_STYLE}/static/path-${STROKE_WIDTH}+${STROKE_COLOR}-${STROKE_OPACITY}(${encodeURIComponent(
-                      map.summary_polyline
-                    )})/auto/${DIMENSIONS}?padding=${PADDING}&access_token=${TOKEN}`
-                  : photos.primary?.urls["100"]
-              }
-            />
+        ({
+          map,
+          photos,
+          name,
+          distance,
+          elapsed_time,
+          start_date_local,
+          id,
+        }) => (
+          <li key={id}>
+            {(!!map?.url || !!photos) && (
+              <img src={map?.url || photos?.primary?.urls["100"]} />
+            )}
             <div>
               <div>{name}</div>
               <div>
@@ -94,4 +96,4 @@ const Strava = () => (
   </div>
 );
 
-export default Strava;
+export default NewStrava;

@@ -19,14 +19,12 @@ export async function getServerSideProps({ res }) {
     "public, s-maxage=3600, stale-while-revalidate=59"
   );
 
-  const fs = require("fs");
   return {
     props: {
       githubData: await getGithubData(),
       libbyData: await getLibbyData(),
       linkedInData: await getLinkedInData(),
       stravaData: await getStravaData(),
-      // stravaData: JSON.parse(fs.readFileSync("./data/stravaActivities.json")),
     },
   };
 }
