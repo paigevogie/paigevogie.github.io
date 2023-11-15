@@ -16,7 +16,6 @@
     "mathsass": "^0.10.1",
     "moment": "^2.29.4",
     "next": "^13.2.4",
-    "octokit": "^2.0.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "topojson-client": "^3.1.0",

@@ -8,6 +8,11 @@ const { serverRuntimeConfig } = getConfig();
 export const getLibbyData = async () => {
   try {
     const response = await fetch(process.env.LIBBY_URL);
+
+    if (response.status !== 200) {
+      throw Error(`Libby Response ${response.status}: ${response.statusText}`);
+    }
+
     return await response.json();
   } catch (error) {
     console.error("Error fetching Libby data:", error);
@@ -17,17 +22,13 @@ export const getLibbyData = async () => {
 
 export const getGithubData = async () => {
   try {
-    const githubResponse = await fetch(
-      "https://api.github.com/users/paigevogie"
-    );
+    const response = await fetch("https://api.github.com/users/paigevogie");
 
-    if (githubResponse.status === 200) {
-      return await githubResponse.json();
-    } else {
-      throw Error(
-        `Github Response ${githubResponse.status}: ${githubResponse.statusText}`
-      );
+    if (response.status !== 200) {
+      throw Error(`Github Response ${response.status}: ${response.statusText}`);
     }
+
+    return await response.json();
   } catch (error) {
     console.error("Error fetching Github data:", error);
     return {};
@@ -54,9 +55,8 @@ export const getLinkedInData = async () => {
     );
 
     console.info(`LinkedIn status ${response.status}: ${response.statusText}`);
-    response.status === 200 && console.log("LinkedIn Response", response);
 
-    return response.status === 200 ? response : fallback;
+    return response.status === 200 ? response.body : fallback;
   } catch (error) {
     console.error("Error fetching LinkedIn data:", error);
 
@@ -84,8 +84,9 @@ const getStravaToken = async () => {
       }
 
       const newStravaToken = await tokenResponse.json();
-      console.info("New strava token:", newStravaToken);
       await kv.set("strava_token", newStravaToken);
+
+      console.info("New strava token:", newStravaToken);
 
       return newStravaToken;
     }
@@ -98,23 +99,26 @@ const getStravaToken = async () => {
 
 const getStravaMap = async ({ map, id }) => {
   try {
-    if (!map.summary_polyline) {
-      return null;
-    }
-
     const MAP_STYLE = "streets-v12";
-    const TOKEN = process.env.MAPBOX_TOKEN || "";
     const DIMENSIONS = "100x100";
-    const STROKE_WIDTH = 3;
+    const STROKE_WIDTH = 2;
     const STROKE_COLOR = "FC5200";
     const STROKE_OPACITY = 1;
-    const PADDING = 25;
+    const PADDING = 8;
 
     const mapResponse = await fetch(
       `https://api.mapbox.com/styles/v1/mapbox/${MAP_STYLE}/static/path-${STROKE_WIDTH}+${STROKE_COLOR}-${STROKE_OPACITY}(${encodeURIComponent(
         map.summary_polyline
-      )})/auto/${DIMENSIONS}?padding=${PADDING}&access_token=${TOKEN}`
+      )})/auto/${DIMENSIONS}?padding=${PADDING}&access_token=${
+        process.env.MAPBOX_TOKEN
+      }`
     );
+
+    if (mapResponse.status !== 200) {
+      throw Error(
+        `Mapbox Response ${mapResponse.status}: ${mapResponse.statusText}`
+      );
+    }
 
     const fileName = `${id}.png`;
     const dir = path.join(serverRuntimeConfig.PROJECT_ROOT, `./tmp`);
@@ -139,6 +143,11 @@ const getStravaMap = async ({ map, id }) => {
         body: image,
       }
     );
+
+    if (response.status !== 200) {
+      throw Error(`Upload Response ${response.status}: ${response.statusText}`);
+    }
+
     const { url } = await response.json();
 
     await fsp.rm(filePath);
