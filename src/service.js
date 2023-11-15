@@ -1,6 +1,5 @@
 import fs, { promises as fsp } from "fs";
 import path from "path";
-import { Octokit } from "octokit";
 import { kv } from "@vercel/kv";
 import { WritableStream } from "stream/web";
 import getConfig from "next/config";
@@ -18,14 +17,16 @@ export const getLibbyData = async () => {
 
 export const getGithubData = async () => {
   try {
-    const githubResponse = await new Octokit({
-      auth: process.env.GITHUB_TOKEN,
-    }).request("GET /users/paigevogie");
+    const githubResponse = await fetch(
+      "https://api.github.com/users/paigevogie"
+    );
 
     if (githubResponse.status === 200) {
-      return githubResponse.data;
+      return await githubResponse.json();
     } else {
-      throw Error("Github Response: " + githubResponse);
+      throw Error(
+        `Github Response ${githubResponse.status}: ${githubResponse.statusText}`
+      );
     }
   } catch (error) {
     console.error("Error fetching Github data:", error);
