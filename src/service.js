@@ -1,17 +1,19 @@
 import fs, { promises as fsp } from "fs";
 import path from "path";
 import { kv } from "@vercel/kv";
-import { WritableStream } from "stream/web";
-import getConfig from "next/config";
-const { serverRuntimeConfig } = getConfig();
+import { Readable } from "stream";
+import { finished } from "stream/promises";
+
+const handleResponseError = (response, type) => {
+  if (response.status !== 200) {
+    throw Error(`${type} Response ${response.status}: ${response.statusText}`);
+  }
+};
 
 export const getLibbyData = async () => {
   try {
     const response = await fetch(process.env.LIBBY_URL);
-
-    if (response.status !== 200) {
-      throw Error(`Libby Response ${response.status}: ${response.statusText}`);
-    }
+    handleResponseError(response, "Libby");
 
     return await response.json();
   } catch (error) {
@@ -23,10 +25,7 @@ export const getLibbyData = async () => {
 export const getGithubData = async () => {
   try {
     const response = await fetch("https://api.github.com/users/paigevogie");
-
-    if (response.status !== 200) {
-      throw Error(`Github Response ${response.status}: ${response.statusText}`);
-    }
+    handleResponseError(response, "Github");
 
     return await response.json();
   } catch (error) {
@@ -53,13 +52,11 @@ export const getLinkedInData = async () => {
     const response = await fetch(
       "https://badges.linkedin.com/profile?locale=en_US&badgetype=VERTICAL&badgetheme=light&uid=56368&version=v1&maxsize=large&trk=profile-badge&vanityname=paigevogie"
     );
-
     console.info(`LinkedIn status ${response.status}: ${response.statusText}`);
 
     return response.status === 200 ? response.body : fallback;
   } catch (error) {
     console.error("Error fetching LinkedIn data:", error);
-
     return fallback;
   }
 };
@@ -76,12 +73,7 @@ const getStravaToken = async () => {
           method: "POST",
         }
       );
-
-      if (tokenResponse.status !== 200) {
-        throw new Error(
-          `Token refresh response status ${tokenResponse.status}: ${tokenResponse.statusText}`
-        );
-      }
+      handleResponseError(tokenResponse, "Token Refresh");
 
       const newStravaToken = await tokenResponse.json();
       await kv.set("strava_token", newStravaToken);
@@ -113,27 +105,19 @@ const getStravaMap = async ({ map, id }) => {
         process.env.MAPBOX_TOKEN
       }`
     );
+    handleResponseError(mapResponse, "Mapbox");
 
-    if (mapResponse.status !== 200) {
-      throw Error(
-        `Mapbox Response ${mapResponse.status}: ${mapResponse.statusText}`
-      );
-    }
-
+    // Followed this example to write body to file
+    // https://stackoverflow.com/questions/37614649/how-can-i-download-and-save-a-file-using-the-fetch-api-node-js
     const fileName = `${id}.png`;
-    const dir = path.join(serverRuntimeConfig.PROJECT_ROOT, `./tmp`);
+    const dir = path.join(process.cwd(), `./tmp`);
     const filePath = `${dir}/${fileName}`;
 
-    !fs.existsSync(dir) && (await fsp.mkdir(dir));
+    if (!fs.existsSync(dir)) await fsp.mkdir(dir);
 
-    // There's probably a better way to do this
-    const stream = new WritableStream({
-      write(chunk) {
-        const dest = fs.createWriteStream(filePath);
-        dest.write(chunk);
-      },
-    });
-    await mapResponse.body.pipeTo(stream);
+    const fileStream = fs.createWriteStream(filePath);
+    await finished(Readable.fromWeb(mapResponse.body).pipe(fileStream));
+
     const image = await fsp.readFile(filePath);
 
     const response = await fetch(
@@ -143,10 +127,7 @@ const getStravaMap = async ({ map, id }) => {
         body: image,
       }
     );
-
-    if (response.status !== 200) {
-      throw Error(`Upload Response ${response.status}: ${response.statusText}`);
-    }
+    handleResponseError(response, "Upload");
 
     const { url } = await response.json();
 
@@ -180,12 +161,7 @@ export const getStravaData = async () => {
       "https://www.strava.com/api/v3/athlete/activities",
       headers
     );
-
-    if (athleteResponse.status !== 200) {
-      throw new Error(
-        `Athlete response status ${athleteResponse.status}: ${athleteResponse.statusText}`
-      );
-    }
+    handleResponseError(athleteResponse, "Athlete");
 
     const athleteData = await athleteResponse.json();
     const SIZE = 10;
@@ -197,12 +173,7 @@ export const getStravaData = async () => {
             `https://www.strava.com/api/v3/activities/${activity.id}`,
             headers
           );
-
-          if (activityResponse.status !== 200) {
-            throw new Error(
-              `Athlete response status ${activityResponse.status}: ${activityResponse.statusText}`
-            );
-          }
+          handleResponseError(activityResponse, `Activity ${activity.id}`);
 
           const { photos } = await activityResponse.json();
           activity.photos = photos;
