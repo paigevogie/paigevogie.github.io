@@ -41,7 +41,7 @@ $embed-size: 300px;
 // list of front to back postitives, e.g Infinity to 1
 $z-indexes-front: ();
 // list of front to back negatives, e.g. -1 to -Infinity
-$z-indexes-back: ("diagonals", "bubbles", "fish");
+$z-indexes-back: ("bubbles", "fish");
 @function z($name) {
   @if index($z-indexes-front, $name) {
     @return (length($z-indexes-front) - index($z-indexes-front, $name)) + 1;

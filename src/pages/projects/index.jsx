@@ -1,16 +1,19 @@
-import React from "react";
 import Layout from "../../components/Layout";
 import Link from "next/link";
 import styles from "./index.module.scss";
 
-const ListItem = ({ href, title, description }) => (
-  <li>
-    <Link href={href}>
-      <p>{title}</p>
-      <small>{description}</small>
-    </Link>
-  </li>
-);
+const projectsList = [
+  {
+    title: "Bubbles",
+    href: "/projects/bubbles",
+    description: "Fun with randomness",
+  },
+  {
+    title: "Dots",
+    href: "/projects/dots",
+    description: "CSS animations",
+  },
+];
 
 const Projects = (props) => (
   <Layout
@@ -20,21 +23,14 @@ const Projects = (props) => (
     {...props}
   >
     <ul>
-      <ListItem
-        href="/projects/bubbles"
-        title="Bubbles"
-        description="Fun with randomness"
-      />
-      <ListItem
-        href="/projects/dots"
-        title="Dots"
-        description="CSS animations"
-      />
-      {/* <ListItem
-        href="https://garmin.paigevogie.com"
-        title="Garmin"
-        description="Fitness data"
-      /> */}
+      {projectsList.map(({ href, title, description }) => (
+        <li>
+          <Link href={href}>
+            <p>{title}</p>
+            <small>{description}</small>
+          </Link>
+        </li>
+      ))}
     </ul>
   </Layout>
 );

@@ -1,4 +1,3 @@
-import React from "react";
 import Nav from "../Nav";
 import SEO from "../SEO";
 import styles from "./index.module.scss";

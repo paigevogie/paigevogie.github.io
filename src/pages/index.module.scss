@@ -3,6 +3,7 @@
 .embeds {
   display: flex;
   justify-content: center;
+
   > div {
     display: flex;
     flex-direction: column;
@@ -12,7 +13,7 @@
       flex-direction: row;
       flex-wrap: wrap;
     }
-    // Embed
+
     [class*="-embed"] {
       margin: $sizing-sm;
       width: $embed-size;
@@ -20,31 +21,6 @@
       border: 1px solid $light-grey;
       border-radius: 15px;
       font-size: $font-size-md;
-      // @keyframes fadeIn {
-      //   from {
-      //     opacity: 0;
-      //   }
-      //   to {
-      //     opacity: 1;
-      //   }
-      // }
-      // opacity: 0;
-      // animation: fadeIn 2s forwards;
-      // &:nth-child(1) {
-      //   animation-delay: 1s;
-      // }
-      // &:nth-child(2) {
-      //   animation-delay: 0.1s;
-      // }
-      // &:nth-child(3) {
-      //   animation-delay: 0s;
-      // }
-      // &:nth-child(4) {
-      //   animation-delay: 0.5s;
-      // }
-      // &:nth-child(5) {
-      //   animation-delay: 0.8s;
-      // }
     }
   }
 }

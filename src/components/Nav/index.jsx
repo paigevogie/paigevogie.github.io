@@ -1,35 +1,27 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import styles from "./index.module.scss";
 
-class Nav extends React.Component {
-  state = {
-    pathname: "/",
-  };
+const Nav = () => {
+  const [pathname, setPathname] = useState("");
 
-  componentDidMount() {
-    // required for ssr
-    typeof window !== `undefined` &&
-      this.setState({ pathname: window.location.pathname });
-  }
+  useEffect(() => {
+    setPathname(window.location.pathname);
+  }, []);
 
-  getClassName = (path) => (this.state.pathname.includes(path) ? "active" : "");
-
-  render() {
-    const { getClassName, state } = this;
-    const { pathname } = state;
-
-    return (
-      <nav className={styles.nav}>
-        <Link href="/" className={pathname === "/" ? "active home" : "home"}>
-          Home
-        </Link>
-        <Link href="/projects/" className={getClassName("projects")}>
-          Projects
-        </Link>
-      </nav>
-    );
-  }
-}
+  return (
+    <nav className={styles.nav}>
+      <Link href="/" className={pathname === "/" ? "active" : ""}>
+        Home
+      </Link>
+      <Link
+        href="/projects"
+        className={pathname.includes("projects") ? "active" : ""}
+      >
+        Projects
+      </Link>
+    </nav>
+  );
+};
 
 export default Nav;
