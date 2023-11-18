@@ -54,7 +54,13 @@ export const getLinkedInData = async () => {
     );
     console.info(`LinkedIn status ${response.status}: ${response.statusText}`);
 
-    return response.status === 200 ? response.body : fallback;
+    if (response.status === 200) {
+      const data = response.json();
+      console.info("LinkedIn Response:", data);
+      return data;
+    }
+
+    return fallback;
   } catch (error) {
     console.error("Error fetching LinkedIn data:", error);
     return fallback;
