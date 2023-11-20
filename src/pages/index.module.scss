@@ -15,12 +15,16 @@
     }
 
     [class*="-embed"] {
-      margin: $sizing-sm;
+      margin: $sizing-sm 0;
       width: $embed-size;
       height: $embed-size;
       border: 1px solid $light-grey;
       border-radius: 15px;
       font-size: $font-size-md;
+
+      @include min-size-md {
+        margin: $sizing-sm;
+      }
     }
   }
 }

@@ -4,15 +4,38 @@
   display: flex;
   justify-content: space-between;
   text-align: right;
-  margin: $sizing-2xl auto $sizing-md auto;
-  width: calc(#{$embed-size} + #{$sizing-lg});
+  margin: $sizing-lg auto $sizing-md auto;
+  width: $embed-size;
+
   @include min-size-md {
-    width: calc(2 * (#{$embed-size} + #{$sizing-lg}));
+    margin: $sizing-xl auto $sizing-md auto;
+    width: calc(2 * (#{$embed-size} + #{$sizing-sm}));
+  }
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    h1 {
+      font-size: $font-size-2xl;
+      margin-bottom: $sizing-xs !important;
+      @include min-size-md {
+        font-size: $font-size-3xl;
+      }
+    }
+
+    p {
+      font-size: $font-size-sm;
+      line-height: 1.25;
+      @include min-size-md {
+        font-size: $font-size-md;
+      }
+    }
   }
 }
 
 .main {
   margin: 0 auto;
   flex-grow: 1;
-  padding-bottom: $sizing-2xl;
 }

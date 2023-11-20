@@ -9,7 +9,7 @@ import {
   getLibbyData,
   getLinkedInData,
   getStravaData,
-} from "../service";
+} from "../service/homeService";
 import { config } from "../components/SEO";
 
 export async function getServerSideProps({ res }) {
@@ -43,15 +43,14 @@ const Home = ({
         Find me all over the web <b>@paigevogie</b>.
       </p>
     }
+    className={styles.embeds}
     {...props}
   >
-    <div className={styles.embeds}>
-      <div>
-        <Strava {...{ stravaData }} />
-        <Libby {...{ libbyData }} />
-        <GitHub {...{ githubData }} />
-        <LinkedIn {...{ linkedInData }} />
-      </div>
+    <div>
+      <Strava {...{ stravaData }} />
+      <Libby {...{ libbyData }} />
+      <GitHub {...{ githubData }} />
+      <LinkedIn {...{ linkedInData }} />
     </div>
   </Layout>
 );

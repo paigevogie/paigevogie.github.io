@@ -28,17 +28,15 @@ const Bubbles = (props) => {
   };
 
   return (
-    <Layout title="Bubbles" {...props}>
-      <div className={styles.bubbles}>
-        {Array(500)
-          .fill(0)
-          .map((item, index) => (
-            <Bubble key={index} />
-          ))}
-        <div className="fish">
-          <div className="body"></div>
-          <div className="tail"></div>
-        </div>
+    <Layout title="Bubbles" className={styles.bubbles} {...props}>
+      {Array(500)
+        .fill(0)
+        .map((item, index) => (
+          <Bubble key={index} />
+        ))}
+      <div className="fish">
+        <div className="body"></div>
+        <div className="tail"></div>
       </div>
     </Layout>
   );

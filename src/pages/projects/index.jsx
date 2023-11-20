@@ -13,18 +13,18 @@ const projectsList = [
     href: "/projects/dots",
     description: "CSS animations",
   },
+  {
+    title: "Training Log",
+    href: "/projects/training-log",
+    description: "Data visualization",
+  },
 ];
 
 const Projects = (props) => (
-  <Layout
-    className={styles.projects}
-    title="Projects."
-    seoTitle="Projects"
-    {...props}
-  >
+  <Layout className={styles.projects} title="Projects" {...props}>
     <ul>
       {projectsList.map(({ href, title, description }) => (
-        <li>
+        <li key={href}>
           <Link href={href}>
             <p>{title}</p>
             <small>{description}</small>
