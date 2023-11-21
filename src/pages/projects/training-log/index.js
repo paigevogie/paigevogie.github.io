@@ -10,6 +10,7 @@ import {
   endOfWeek,
   format,
   isSameMonth,
+  differenceInCalendarWeeks,
 } from "date-fns";
 import { utcToZonedTime } from "date-fns-tz";
 
@@ -36,6 +37,31 @@ const TrainingLog = (props) => {
 
   const [activityType, setActivityType] = useState(RUN);
   const [displayUnit, setDisplayUnit] = useState(DISTANCE);
+  const [activities, setActivities] = useState(props.activities);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const loadMore = async () => {
+    console.log("CURRENT PAGE", currentPage + 1);
+    const newActivities = await (
+      await fetch(`/api/activities?page=${currentPage + 1}`)
+    ).json();
+
+    setActivities([...activities, ...newActivities]);
+    setCurrentPage(currentPage + 1);
+  };
+
+  const activitiesDateFormat = "MMM-d-yyyy";
+  const activitiesObj = activities
+    .filter(({ type }) =>
+      activityType === "All" ? true : type === activityType
+    )
+    .reduce((acc, activity) => {
+      const date = format(new Date(activity.start_date), activitiesDateFormat);
+      acc[date] = acc[date] || [];
+      acc[date].push(activity);
+
+      return acc;
+    }, {});
 
   const today = utcToZonedTime(new Date(), "America/Chicago");
 
@@ -71,19 +97,6 @@ const TrainingLog = (props) => {
     return week;
   };
 
-  const activitiesDateFormat = "MMM-d-yyyy";
-  const activities = props.activities
-    .filter(({ type }) =>
-      activityType === "All" ? true : type === activityType
-    )
-    .reduce((acc, activity) => {
-      const date = format(new Date(activity.start_date), activitiesDateFormat);
-      acc[date] = acc[date] || [];
-      acc[date].push(activity);
-
-      return acc;
-    }, {});
-
   const formatDistance = (distance, decimals = 1) =>
     `${
       Math.floor((distance / 1609) * Math.pow(10, decimals)) /
@@ -109,7 +122,7 @@ const TrainingLog = (props) => {
   const getWeekTotal = (referenceDate) => {
     const week = getWeek(referenceDate);
     const total = week.reduce((acc, day) => {
-      const activityArr = activities[format(day, activitiesDateFormat)];
+      const activityArr = activitiesObj[format(day, activitiesDateFormat)];
       if (!!activityArr) {
         activityArr.forEach(({ distance, moving_time, suffer_score }) => {
           switch (displayUnit) {
@@ -149,6 +162,12 @@ const TrainingLog = (props) => {
     }
   };
 
+  const getNumWeeks = () =>
+    differenceInCalendarWeeks(
+      today,
+      new Date(activities[activities.length - 1].start_date)
+    );
+
   return (
     <Layout title="Training Log" className={styles.trainingLog} {...props}>
       <div className={styles.header}>
@@ -176,7 +195,7 @@ const TrainingLog = (props) => {
           ))}
         </div>
       </div>
-      {[...Array(12)].map((week, weekIndex) => {
+      {[...Array(getNumWeeks())].map((week, weekIndex) => {
         const referenceDate = addWeeks(today, -weekIndex);
         const startDate = startOfWeek(referenceDate, weekOptions);
         const endDate = endOfWeek(referenceDate, weekOptions);
@@ -210,27 +229,33 @@ const TrainingLog = (props) => {
                   ${isToday(day) ? styles.today : ""}
                 `}
               >
-                {!!activities[format(day, activitiesDateFormat)] &&
-                  activities[format(day, activitiesDateFormat)].map(
-                    (activity) => (
-                      <Fragment key={activity.id}>
+                {!!activitiesObj[format(day, activitiesDateFormat)] &&
+                  activitiesObj[format(day, activitiesDateFormat)]
+                    .slice(0, 2)
+                    .map((activity) => (
+                      <Fragment key={activity.start_date + activity.id}>
                         <div className={styles.displayUnitContainer}>
                           <small className={styles.displayUnit}>
                             {getActivityDisplayUnit(activity)}
                             {displayUnit === DISTANCE && <span>&nbsp;mi</span>}
                           </small>
                         </div>
-                        <small className={styles.activityName}>
-                          {activity.name}
-                        </small>
+                        {activitiesObj[format(day, activitiesDateFormat)]
+                          .length === 1 && (
+                          <small className={styles.activityName}>
+                            {activity.name}
+                          </small>
+                        )}
                       </Fragment>
-                    )
-                  )}
+                    ))}
               </div>
             ))}
           </div>
         );
       })}
+      <div className={styles.loadMoreContainer}>
+        <button onClick={loadMore}>Load More</button>
+      </div>
     </Layout>
   );
 };
