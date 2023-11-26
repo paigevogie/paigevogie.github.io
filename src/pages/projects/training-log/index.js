@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect, useRef } from "react";
 import Layout from "../../../components/Layout";
 import styles from "./index.module.scss";
 import { getStravaActivities } from "../../../service/stravaService";
@@ -6,13 +6,13 @@ import {
   startOfWeek,
   addDays,
   addWeeks,
-  getYear,
   endOfWeek,
   format,
   isSameMonth,
   differenceInCalendarWeeks,
 } from "date-fns";
 import { utcToZonedTime } from "date-fns-tz";
+import throttle from "lodash.throttle";
 
 export async function getServerSideProps({ res }) {
   res.setHeader(
@@ -39,9 +39,32 @@ const TrainingLog = (props) => {
   const [displayUnit, setDisplayUnit] = useState(DISTANCE);
   const [activities, setActivities] = useState(props.activities);
   const [currentPage, setCurrentPage] = useState(1);
+  const [topWeek, setTopWeek] = useState(null);
+  const headerRef = useRef();
+  const weeksRef = useRef();
+
+  useEffect(() => {
+    const onScroll = () => {
+      [...weeksRef.current.children].every((child) => {
+        const top = child.getBoundingClientRect().top;
+        const offset = headerRef.current.offsetHeight;
+        if (top - offset > 0) {
+          setTopWeek(child);
+          return false;
+        } else {
+          return true;
+        }
+      });
+    };
+
+    document.addEventListener("scroll", onScroll);
+    onScroll();
+
+    return () =>
+      document.removeEventListener("scroll", throttle(onScroll, 100));
+  }, []);
 
   const loadMore = async () => {
-    console.log("CURRENT PAGE", currentPage + 1);
     const newActivities = await (
       await fetch(`/api/activities?page=${currentPage + 1}`)
     ).json();
@@ -80,16 +103,7 @@ const TrainingLog = (props) => {
 
   const weekOptions = { weekStartsOn: 1 };
 
-  const header = [
-    getYear(today),
-    "Mon",
-    "Tues",
-    "Wed",
-    "Thurs",
-    "Fri",
-    "Sat",
-    "Sun",
-  ];
+  const header = [null, "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"];
 
   const getWeek = (date) => {
     const tmpDate = startOfWeek(date, weekOptions);
@@ -170,24 +184,31 @@ const TrainingLog = (props) => {
 
   return (
     <Layout title="Training Log" className={styles.trainingLog} {...props}>
-      <div className={styles.header}>
+      <div className={styles.header} ref={headerRef}>
         <div className={styles.controlsContainer}>
-          <select
-            value={activityType}
-            onChange={(e) => setActivityType(e.target.value)}
-          >
-            <option value={RUN}>{RUN}</option>
-            <option value={WALK}>{WALK}</option>
-            <option value={ALL}>{ALL}</option>
-          </select>
-          <select
-            value={displayUnit}
-            onChange={(e) => setDisplayUnit(e.target.value)}
-          >
-            <option value={DISTANCE}>{DISTANCE}</option>
-            <option value={TIME}>{TIME}</option>
-            <option value={RELATIVE_EFFORT}>{RELATIVE_EFFORT}</option>
-          </select>
+          <div>
+            <select
+              value={activityType}
+              onChange={(e) => setActivityType(e.target.value)}
+            >
+              <option value={RUN}>{RUN}</option>
+              <option value={WALK}>{WALK}</option>
+              <option value={ALL}>{ALL}</option>
+            </select>
+            <select
+              value={displayUnit}
+              onChange={(e) => setDisplayUnit(e.target.value)}
+            >
+              <option value={DISTANCE}>{DISTANCE}</option>
+              <option value={TIME}>{TIME}</option>
+              <option value={RELATIVE_EFFORT}>{RELATIVE_EFFORT}</option>
+            </select>
+          </div>
+          {topWeek && (
+            <div>
+              {format(new Date(topWeek.getAttribute("data-value")), "MMM yyy")}
+            </div>
+          )}
         </div>
         <div className={styles.daysContainer}>
           {header.map((day) => (
@@ -195,64 +216,69 @@ const TrainingLog = (props) => {
           ))}
         </div>
       </div>
-      {[...Array(getNumWeeks())].map((week, weekIndex) => {
-        const referenceDate = addWeeks(today, -weekIndex);
-        const startDate = startOfWeek(referenceDate, weekOptions);
-        const endDate = endOfWeek(referenceDate, weekOptions);
-        const startDateFormatted = format(startDate, "MMM d");
-        const endDateFormatted = format(
-          endDate,
-          isSameMonth(startDate, endDate) ? "d" : "MMM d"
-        );
+      <div ref={weeksRef}>
+        {[...Array(getNumWeeks())].map((week, weekIndex) => {
+          const referenceDate = addWeeks(today, -weekIndex);
+          const startDate = startOfWeek(referenceDate, weekOptions);
+          const endDate = endOfWeek(referenceDate, weekOptions);
+          const startDateFormatted = format(startDate, "MMM d");
+          const endDateFormatted = format(
+            endDate,
+            isSameMonth(startDate, endDate) ? "d" : "MMM d"
+          );
 
-        return (
-          <div
-            className={styles.week}
-            key={`${startDateFormatted} – ${endDateFormatted}`}
-          >
-            <div>
-              <div>{`${startDateFormatted} – ${endDateFormatted}`}</div>
-              <div className={styles.totalContainer}>
-                <small>Total {displayUnit}</small>
-                <div>
-                  {getWeekTotal(referenceDate)}
-                  {displayUnit === DISTANCE && <span>&nbsp;mi</span>}
+          return (
+            <div
+              className={styles.week}
+              key={`${startDateFormatted} – ${endDateFormatted}`}
+              data-value={startDate}
+            >
+              <div>
+                <div>{`${startDateFormatted} – ${endDateFormatted}`}</div>
+                <div className={styles.totalContainer}>
+                  <small>Total {displayUnit}</small>
+                  <div>
+                    {getWeekTotal(referenceDate)}
+                    {displayUnit === DISTANCE && <span>&nbsp;mi</span>}
+                  </div>
                 </div>
               </div>
-            </div>
-            {getWeek(referenceDate).map((day) => (
-              <div
-                key={day}
-                className={`
+              {getWeek(referenceDate).map((day) => (
+                <div
+                  key={day}
+                  className={`
                   ${styles.day} 
                   ${!isFuture(day) ? styles.dayPlaceholder : ""} 
                   ${isToday(day) ? styles.today : ""}
                 `}
-              >
-                {!!activitiesObj[format(day, activitiesDateFormat)] &&
-                  activitiesObj[format(day, activitiesDateFormat)]
-                    .slice(0, 2)
-                    .map((activity) => (
-                      <Fragment key={activity.start_date + activity.id}>
-                        <div className={styles.displayUnitContainer}>
-                          <small className={styles.displayUnit}>
-                            {getActivityDisplayUnit(activity)}
-                            {displayUnit === DISTANCE && <span>&nbsp;mi</span>}
-                          </small>
-                        </div>
-                        {activitiesObj[format(day, activitiesDateFormat)]
-                          .length === 1 && (
-                          <small className={styles.activityName}>
-                            {activity.name}
-                          </small>
-                        )}
-                      </Fragment>
-                    ))}
-              </div>
-            ))}
-          </div>
-        );
-      })}
+                >
+                  {!!activitiesObj[format(day, activitiesDateFormat)] &&
+                    activitiesObj[format(day, activitiesDateFormat)]
+                      .slice(0, 2)
+                      .map((activity) => (
+                        <Fragment key={activity.start_date + activity.id}>
+                          <div className={styles.displayUnitContainer}>
+                            <small className={styles.displayUnit}>
+                              {getActivityDisplayUnit(activity)}
+                              {displayUnit === DISTANCE && (
+                                <span>&nbsp;mi</span>
+                              )}
+                            </small>
+                          </div>
+                          {activitiesObj[format(day, activitiesDateFormat)]
+                            .length === 1 && (
+                            <small className={styles.activityName}>
+                              {activity.name}
+                            </small>
+                          )}
+                        </Fragment>
+                      ))}
+                </div>
+              ))}
+            </div>
+          );
+        })}
+      </div>
       <div className={styles.loadMoreContainer}>
         <button onClick={loadMore}>Load More</button>
       </div>
