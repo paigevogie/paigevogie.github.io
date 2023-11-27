@@ -1,4 +1,4 @@
-import Layout from "../../../components/Layout";
+import Layout from "../../components/Layout";
 import styles from "./index.module.scss";
 
 const Ring = () => <div className="ring"></div>;

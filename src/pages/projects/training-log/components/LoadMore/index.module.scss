@@ -1,0 +1,15 @@
+@import "../../../../styles/_vars";
+
+.loadMoreContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: $sizing-lg 0;
+  button {
+    padding: $sizing-md;
+    border: 1px solid $light-grey;
+    border-radius: 0;
+    background-color: white;
+    cursor: pointer;
+  }
+}

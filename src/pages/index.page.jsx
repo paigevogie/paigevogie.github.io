@@ -1,8 +1,8 @@
-import Layout from "../components/Layout";
-import GitHub from "../components/GitHub";
-import Strava from "../components/Strava";
-import Libby from "../components/Libby";
-import LinkedIn from "../components/LinkedIn";
+import Layout from "./components/Layout";
+import GitHub from "./components/GitHub";
+import Strava from "./components/Strava";
+import Libby from "./components/Libby";
+import LinkedIn from "./components/LinkedIn";
 import styles from "./index.module.scss";
 import {
   getGithubData,
@@ -10,7 +10,7 @@ import {
   getLinkedInData,
   getStravaData,
 } from "../service/homeService";
-import { config } from "../components/SEO";
+import { config } from "./components/SEO";
 
 export async function getServerSideProps({ res }) {
   res.setHeader(
