@@ -78,15 +78,12 @@ const Weeks = ({
           >
             <div>
               <div>{`${startDateFormatted} – ${endDateFormatted}`}</div>
-              <div className={styles.totalContainer}>
-                <small>Total {displayUnit}</small>
-                <div>
-                  {getTotal(
-                    getWeek(referenceDate),
-                    filteredActivities,
-                    displayUnit
-                  )}
-                </div>
+              <div>
+                {getTotal(
+                  getWeek(referenceDate),
+                  filteredActivities,
+                  displayUnit
+                )}
               </div>
             </div>
             {getWeek(referenceDate).map((day) => (

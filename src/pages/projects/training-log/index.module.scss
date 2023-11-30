@@ -2,8 +2,5 @@
 
 .trainingLog {
   width: 100%;
-
-  @include min-size-md {
-    padding: 0 $sizing-xl;
-  }
+  max-width: 1000px;
 }

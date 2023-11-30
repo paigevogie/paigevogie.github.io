@@ -34,28 +34,11 @@
       right: 0;
       justify-content: space-between;
       font-size: $font-size-sm;
-      padding: 6px $sizing-xs;
-
-      .totalContainer small {
-        display: none;
-      }
+      padding: 6px 0;
 
       @include min-size-md {
-        position: unset;
-        flex-direction: column;
         font-size: unset;
-        padding: 0;
-
-        .totalContainer {
-          flex-grow: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-
-          small {
-            display: block;
-          }
-        }
+        padding: $sizing-sm 0;
       }
     }
 
@@ -65,23 +48,10 @@
       justify-content: center;
       align-items: center;
     }
-
-    .totalContainer {
-      > small {
-        margin-bottom: $sizing-xs;
-      }
-    }
   }
 
   .day {
     position: relative;
-
-    &:first-child {
-      display: none;
-      @include min-size-md {
-        display: flex;
-      }
-    }
 
     .displayUnit {
       border-radius: 50%;

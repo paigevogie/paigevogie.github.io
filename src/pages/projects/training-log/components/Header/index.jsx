@@ -86,11 +86,9 @@ const Header = ({
         ) : null}
       </div>
       <div className={styles.daysContainer}>
-        {[null, "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"].map(
-          (day) => (
-            <div key={day}>{day}</div>
-          )
-        )}
+        {["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"].map((day) => (
+          <div key={day}>{day}</div>
+        ))}
       </div>
     </div>
   );

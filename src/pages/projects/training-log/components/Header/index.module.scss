@@ -12,11 +12,6 @@
     justify-content: space-between;
     align-items: center;
 
-    @include min-size-md {
-      padding: $sizing-lg 0;
-      flex-direction: row-reverse;
-    }
-
     select {
       appearance: none;
       border: 1px solid $light-grey;
@@ -33,9 +28,8 @@
       @include min-size-md {
         width: 140px;
         padding: $sizing-sm $sizing-lg;
-        margin-right: $sizing-lg;
+        margin-right: $sizing-md;
         font-size: $font-size-md;
-        text-align-last: left;
       }
 
       &:not(:disabled) {
@@ -54,8 +48,6 @@
       text-align: right;
 
       @include min-size-md {
-        text-align: left;
-        margin: 0 $sizing-md;
         font-size: $font-size-xl;
       }
 
@@ -81,6 +73,7 @@
     > div {
       flex: 1;
       text-align: center;
+      justify-content: center;
       font-size: 0;
 
       &::first-letter {
@@ -90,23 +83,7 @@
       @include min-size-md {
         display: flex;
         align-items: center;
-        font-size: $font-size-lg;
-      }
-
-      &:not(:first-child) {
-        justify-content: center;
-
-        @include min-size-md {
-          font-size: $font-size-sm;
-        }
-      }
-
-      &:first-child {
-        display: none;
-
-        @include min-size-md {
-          display: flex;
-        }
+        font-size: $font-size-sm;
       }
     }
   }
