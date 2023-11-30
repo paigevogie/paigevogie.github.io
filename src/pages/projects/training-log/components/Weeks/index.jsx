@@ -11,6 +11,7 @@ import {
 import throttle from "lodash.throttle";
 import {
   DISTANCE,
+  COUNT,
   getActivityDisplayUnit,
   getTotal,
   getWeek,
@@ -27,7 +28,7 @@ const Weeks = ({
   displayUnit,
   activities,
   setTopWeek,
-  activitiesObj,
+  filteredActivities,
 }) => {
   useEffect(() => {
     const updateTopWeek = () => {
@@ -80,7 +81,11 @@ const Weeks = ({
               <div className={styles.totalContainer}>
                 <small>Total {displayUnit}</small>
                 <div>
-                  {getTotal(getWeek(referenceDate), activitiesObj, displayUnit)}
+                  {getTotal(
+                    getWeek(referenceDate),
+                    filteredActivities,
+                    displayUnit
+                  )}
                 </div>
               </div>
             </div>
@@ -93,18 +98,25 @@ const Weeks = ({
                   ${isToday(day) ? styles.today : ""}
                 `}
               >
-                {!!activitiesObj[format(day, activitiesDateFormat)] &&
-                  activitiesObj[format(day, activitiesDateFormat)]
+                {!!filteredActivities[format(day, activitiesDateFormat)] &&
+                  filteredActivities[format(day, activitiesDateFormat)]
                     .slice(0, 2)
                     .map((activity) => (
                       <Fragment key={activity.start_date + activity.id}>
                         <div className={styles.displayUnitContainer}>
-                          <small className={styles.displayUnit}>
+                          <small
+                            className={`${styles.displayUnit} ${
+                              displayUnit === COUNT &&
+                              activity.totalSteps > activity.dailyStepGoal
+                                ? styles.goal
+                                : ""
+                            }`}
+                          >
                             {getActivityDisplayUnit(displayUnit, activity)}
                             {displayUnit === DISTANCE && <span>&nbsp;mi</span>}
                           </small>
                         </div>
-                        {activitiesObj[format(day, activitiesDateFormat)]
+                        {filteredActivities[format(day, activitiesDateFormat)]
                           .length === 1 && (
                           <small className={styles.activityName}>
                             {activity.name}

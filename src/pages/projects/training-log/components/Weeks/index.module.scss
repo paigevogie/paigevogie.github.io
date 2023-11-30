@@ -94,6 +94,10 @@
       height: 25px;
       font-size: $font-size-xs !important;
 
+      &.goal {
+        background-color: rgb(214, 237, 214);
+      }
+
       @include min-size-md {
         width: 40px;
         height: 40px;

@@ -2,11 +2,14 @@ import styles from "./index.module.scss";
 import { format } from "date-fns";
 import {
   ALL,
+  STEPS,
   DISTANCE,
   TIME,
   RELATIVE_EFFORT,
+  COUNT,
   getMonth,
   getTotal,
+  getStepsStreak,
 } from "../../utils";
 
 const Header = ({
@@ -16,7 +19,7 @@ const Header = ({
   displayUnit,
   setDisplayUnit,
   topWeek,
-  activitiesObj,
+  filteredActivities,
   activities,
 }) => {
   const getActivityTypes = () => {
@@ -26,14 +29,24 @@ const Header = ({
     return Object.keys(types);
   };
 
+  const onActivityTypeChange = (e) => {
+    const { value } = e.target;
+
+    if (value === STEPS) {
+      setDisplayUnit(COUNT);
+    } else if (activityType === STEPS && value !== STEPS) {
+      setDisplayUnit(DISTANCE);
+    }
+
+    setActivityType(value);
+  };
+
   return (
     <div className={styles.header} ref={headerRef}>
       <div className={styles.controlsContainer}>
         <div>
-          <select
-            value={activityType}
-            onChange={(e) => setActivityType(e.target.value)}
-          >
+          <select value={activityType} onChange={onActivityTypeChange}>
+            <option value={STEPS}>{STEPS}</option>
             {getActivityTypes().map((type) => (
               <option key={type} value={type}>
                 {type}
@@ -44,13 +57,20 @@ const Header = ({
           <select
             value={displayUnit}
             onChange={(e) => setDisplayUnit(e.target.value)}
+            disabled={displayUnit === COUNT}
           >
             <option value={DISTANCE}>{DISTANCE}</option>
             <option value={TIME}>{TIME}</option>
             <option value={RELATIVE_EFFORT}>{RELATIVE_EFFORT}</option>
+            {displayUnit === COUNT && <option value={COUNT}>{COUNT}</option>}
           </select>
         </div>
-        {topWeek && (
+        {displayUnit === COUNT ? (
+          <div className={styles.topWeek}>
+            <div>Day Streak</div>
+            <div>{getStepsStreak(filteredActivities)}</div>
+          </div>
+        ) : topWeek ? (
           <div className={styles.topWeek}>
             <div>
               {format(new Date(topWeek.getAttribute("data-value")), "MMM yyy")}
@@ -58,12 +78,12 @@ const Header = ({
             <div>
               {getTotal(
                 getMonth(new Date(topWeek?.getAttribute("data-value"))),
-                activitiesObj,
+                filteredActivities,
                 displayUnit
               )}
             </div>
           </div>
-        )}
+        ) : null}
       </div>
       <div className={styles.daysContainer}>
         {[null, "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"].map(

@@ -25,7 +25,6 @@
       font-size: $font-size-xs;
       color: $soft-black;
       font-weight: 300;
-      cursor: pointer;
       min-width: 50px;
       padding: $sizing-sm $sizing-xs;
       margin-right: $sizing-sm;
@@ -37,6 +36,10 @@
         margin-right: $sizing-lg;
         font-size: $font-size-md;
         text-align-last: left;
+      }
+
+      &:not(:disabled) {
+        cursor: pointer;
       }
 
       &:focus {
