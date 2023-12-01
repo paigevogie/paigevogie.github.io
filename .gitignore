@@ -7,4 +7,3 @@ data/*
 tmp/
 data.json
 local.**
-requirements.txt
