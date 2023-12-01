@@ -6,6 +6,8 @@ import {
   getStravaActivity,
 } from "./stravaService";
 
+const STRAVA_DATA = "strava_data";
+
 export const getLibbyData = async () => {
   try {
     const response = await fetch(process.env.LIBBY_URL);
@@ -59,7 +61,7 @@ export const getLinkedInData = async () => {
 
 export const getStravaData = async () => {
   try {
-    const stravaData = await kv.get("strava_data");
+    const stravaData = await kv.get(STRAVA_DATA);
     const isToday =
       new Date().setHours(0, 0, 0, 0) ===
       new Date(stravaData?.timestamp).setHours(0, 0, 0, 0);
@@ -86,7 +88,7 @@ export const getStravaData = async () => {
       })
     );
 
-    await kv.set("strava_data", { activitiesData, timestamp: Date.now() });
+    await kv.set(STRAVA_DATA, { activitiesData, timestamp: Date.now() });
 
     return activitiesData;
   } catch (err) {

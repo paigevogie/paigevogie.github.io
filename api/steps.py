@@ -4,7 +4,8 @@ from json import dumps
 from os import getenv
 from dotenv import load_dotenv
 from http.server import HTTPServer
-from datetime import datetime
+from datetime import datetime, timedelta
+from pytz import timezone
 # https://github.com/cyberjunky/python-garminconnect
 from garminconnect import (
     Garmin,
@@ -20,20 +21,29 @@ load_dotenv(".env")
 load_dotenv(".env.local")
 
 
-def getData(dates):
+def getData():
   try:
     api = Garmin(getenv('GARMIN_USERNAME'), getenv('GARMIN_PASSWORD'))
     api.login()
-    data = {}
 
+    # pulling data for last three days
+    i=0
+    dates = []
+    while i < 3:
+      date = (datetime.now(timezone('US/Central')).date() - timedelta(days=i)).isoformat()
+      dates.append(date)
+      i+=1
+
+    data = {}
     for date in dates:
       data[date] = api.get_stats_and_body(date)
 
     filteredData = {}
     for date in data:
-      filteredData[date] = {}
-      filteredData[date]['totalSteps'] = data[date]['totalSteps']
-      filteredData[date]['dailyStepGoal'] = data[date]['dailyStepGoal']
+      filteredData[date] = [{
+        'totalSteps': data[date]['totalSteps'],
+        'dailyStepGoal': data[date]['dailyStepGoal']
+      }]
 
     sortedData = dict(sorted(
       filteredData.items(),
@@ -63,12 +73,7 @@ class Handler(BaseHTTPRequestHandler):
       self.send_response(200)
       self.send_header('Content-type', 'application/json')
       self.end_headers()
-      data = getData([
-        datetime(2023, 11, 29).date().isoformat(),
-        datetime(2023, 11, 30).date().isoformat()
-        ])
-
-      self.wfile.write(dumps(data).encode())
+      self.wfile.write(dumps(getData()).encode())
     except Exception as err:
       logger.error('Error on do_GET: %s', err)
       self.do_SERVER_ERROR()

@@ -12,7 +12,7 @@ import LoadMore from "./components/LoadMore";
 export async function getServerSideProps({ res }) {
   res.setHeader(
     "Cache-Control",
-    "public, s-maxage=3600, stale-while-revalidate=59"
+    "public, s-maxage=60, stale-while-revalidate=59"
   );
 
   return {

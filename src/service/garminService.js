@@ -1,3 +1,13 @@
 import { kv } from "@vercel/kv";
 
-export const getGarminData = async () => await kv.get("garmin_data");
+const GARMIN_DATA = "garmin_data";
+
+export const getGarminData = async () => await kv.get(GARMIN_DATA);
+
+export const updateGarminData = async (newData) => {
+  const data = await kv.get(GARMIN_DATA);
+  const mergedData = { ...data, ...newData };
+
+  await kv.set(GARMIN_DATA, mergedData);
+  return mergedData;
+};
