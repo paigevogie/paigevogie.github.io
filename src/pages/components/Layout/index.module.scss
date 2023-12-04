@@ -4,11 +4,11 @@
   display: flex;
   justify-content: space-between;
   text-align: right;
-  margin: $sizing-lg auto $sizing-md auto;
+  margin: $sizing-lg auto;
   width: $embed-size;
 
   @include min-size-md {
-    margin: $sizing-xl auto $sizing-md auto;
+    margin: $sizing-xl auto $sizing-lg auto;
     width: calc(2 * (#{$embed-size} + #{$sizing-sm}));
   }
 

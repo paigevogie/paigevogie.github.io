@@ -35,7 +35,10 @@
       &:not(:disabled) {
         cursor: pointer;
       }
-
+      &:disabled {
+        background-color: #f4f4f4;
+        color: $medium-grey;
+      }
       &:focus {
         outline: none;
       }
@@ -52,7 +55,7 @@
       }
 
       > div:first-child {
-        font-size: $font-size-xs;
+        font-size: $font-size-2xs;
         @include min-size-md {
           font-size: $font-size-sm;
         }
@@ -77,7 +80,7 @@
       font-size: 0;
 
       &::first-letter {
-        font-size: $font-size-xs;
+        font-size: $font-size-2xs;
       }
 
       @include min-size-md {

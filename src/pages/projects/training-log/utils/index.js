@@ -11,10 +11,20 @@ import { utcToZonedTime } from "date-fns-tz";
 export const ALL = "All";
 export const STEPS = "Steps";
 export const RUN = "Run";
+
 export const DISTANCE = "Distance";
 export const TIME = "Time";
 export const RELATIVE_EFFORT = "Relative Effort";
+export const PACE = "Pace";
 export const COUNT = "Count";
+
+export const DISPLAY_UNITS = {
+  DISTANCE,
+  TIME,
+  PACE,
+  RELATIVE_EFFORT,
+  COUNT,
+};
 
 const formatTotalTime = (totalSeconds) => {
   const hours = Math.floor(totalSeconds / (60 * 60));
@@ -42,19 +52,42 @@ const formatSteps = (steps) => `${Math.floor(Number(steps) / 100) / 10}K`;
 
 const formatTotalSteps = (steps) => `${Math.floor(Number(steps) / 1000)}K`;
 
+const formatPace = (metersPerSecond) => {
+  if (!metersPerSecond) return 0;
+
+  const minutes = Math.floor(26.8224 / metersPerSecond);
+  const seconds = `${
+    Math.round(1609.344 / metersPerSecond) - minutes * 60
+  }`.padStart(2, "0");
+
+  return `${minutes}:${seconds}`;
+};
+
+const formatTotalPace = (metersPerSecond, days, filteredActivities) => {
+  const { length } = days
+    .map((day) => filteredActivities[format(day, activitiesDateFormat)])
+    .flat()
+    .filter((activity) => !!activity?.average_speed);
+  const pace = formatPace(metersPerSecond / length);
+
+  return `${pace} /mi`;
+};
+
 export const getActivityDisplayUnit = (
   displayUnit,
-  { distance, moving_time, suffer_score, totalSteps }
+  { distance, moving_time, suffer_score = 0, totalSteps = 0, average_speed = 0 }
 ) => {
   switch (displayUnit) {
     case DISTANCE:
       return formatDistance(distance);
     case TIME:
       return formatTime(moving_time);
+    case PACE:
+      return formatPace(average_speed);
     case RELATIVE_EFFORT:
-      return suffer_score || 0;
+      return suffer_score;
     case COUNT:
-      return formatSteps(totalSteps || 0);
+      return formatSteps(totalSteps);
   }
 };
 
@@ -99,7 +132,13 @@ export const getTotal = (days, filteredActivities, displayUnit) => {
     const activityArr = filteredActivities[format(day, activitiesDateFormat)];
     if (!!activityArr) {
       activityArr.forEach(
-        ({ distance, moving_time, suffer_score, totalSteps }) => {
+        ({
+          distance,
+          moving_time,
+          suffer_score = 0,
+          totalSteps = 0,
+          average_speed = 0,
+        }) => {
           switch (displayUnit) {
             case DISTANCE:
               acc += distance;
@@ -107,11 +146,14 @@ export const getTotal = (days, filteredActivities, displayUnit) => {
             case TIME:
               acc += moving_time;
               break;
+            case PACE:
+              acc += average_speed;
+              break;
             case RELATIVE_EFFORT:
-              acc += suffer_score || 0;
+              acc += suffer_score;
               break;
             case COUNT:
-              acc += totalSteps || 0;
+              acc += totalSteps;
           }
         }
       );
@@ -126,6 +168,8 @@ export const getTotal = (days, filteredActivities, displayUnit) => {
       return formatTotalTime(total);
     case RELATIVE_EFFORT:
       return total;
+    case PACE:
+      return formatTotalPace(total, days, filteredActivities);
     case COUNT:
       return formatTotalSteps(total);
   }

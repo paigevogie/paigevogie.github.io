@@ -2,12 +2,13 @@
 
 .nav {
   display: flex;
+
   a {
-    font-size: 11px;
+    font-size: $font-size-xs;
     text-decoration: none;
     text-transform: uppercase;
     color: $soft-black;
-    margin: $sizing-2xs;
+    margin-right: 6px;
     white-space: nowrap;
     position: relative;
     width: 68px;

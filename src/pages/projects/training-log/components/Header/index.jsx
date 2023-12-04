@@ -4,8 +4,7 @@ import {
   ALL,
   STEPS,
   DISTANCE,
-  TIME,
-  RELATIVE_EFFORT,
+  DISPLAY_UNITS,
   COUNT,
   getMonth,
   getTotal,
@@ -59,15 +58,18 @@ const Header = ({
             onChange={(e) => setDisplayUnit(e.target.value)}
             disabled={displayUnit === COUNT}
           >
-            <option value={DISTANCE}>{DISTANCE}</option>
-            <option value={TIME}>{TIME}</option>
-            <option value={RELATIVE_EFFORT}>{RELATIVE_EFFORT}</option>
-            {displayUnit === COUNT && <option value={COUNT}>{COUNT}</option>}
+            {Object.keys(DISPLAY_UNITS).map((key) =>
+              DISPLAY_UNITS[key] !== COUNT || displayUnit === COUNT ? (
+                <option key={DISPLAY_UNITS[key]} value={DISPLAY_UNITS[key]}>
+                  {DISPLAY_UNITS[key]}
+                </option>
+              ) : null
+            )}
           </select>
         </div>
         {displayUnit === COUNT ? (
           <div className={styles.topWeek}>
-            <div>Day Streak</div>
+            <div>Streak</div>
             <div>{getStepsStreak(filteredActivities)}</div>
           </div>
         ) : topWeek ? (
