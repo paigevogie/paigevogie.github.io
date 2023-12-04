@@ -2,7 +2,6 @@ import { useState, useRef } from "react";
 import { format } from "date-fns";
 import styles from "./index.module.scss";
 import { getStravaActivities } from "../../../service/stravaService";
-import { getGarminData } from "../../../service/garminService";
 import { ALL, STEPS, COUNT, activitiesDateFormat } from "./utils";
 import Layout from "../../components/Layout";
 import Header from "./components/Header";
@@ -12,13 +11,13 @@ import LoadMore from "./components/LoadMore";
 export async function getServerSideProps({ res }) {
   res.setHeader(
     "Cache-Control",
-    "public, s-maxage=60, stale-while-revalidate=59"
+    "public, s-maxage=600, stale-while-revalidate=59"
   );
 
   return {
     props: {
       activities: await getStravaActivities(75),
-      steps: await getGarminData(),
+      steps: await (await fetch(`${process.env.HOST}/api/steps`)).json(),
     },
   };
 }

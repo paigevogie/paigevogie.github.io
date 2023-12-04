@@ -47,8 +47,7 @@ def getData():
 
     sortedData = dict(sorted(
       filteredData.items(),
-      key = lambda x:datetime.strptime(x[0], '%Y-%m-%d'),
-      reverse=True
+      key = lambda x:datetime.strptime(x[0], '%Y-%m-%d')
     ))
 
     return sortedData
