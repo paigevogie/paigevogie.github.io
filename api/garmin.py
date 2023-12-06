@@ -42,7 +42,10 @@ def getData():
     for date in data:
       filteredData[date] = [{
         'totalSteps': data[date]['totalSteps'],
-        'dailyStepGoal': data[date]['dailyStepGoal']
+        'dailyStepGoal': data[date]['dailyStepGoal'],
+        'moderateIntensityMinutes': data[date]['moderateIntensityMinutes'],
+        'vigorousIntensityMinutes': data[date]['vigorousIntensityMinutes'],
+        'intensityMinutesGoal': data[date]['intensityMinutesGoal']
       }]
 
     sortedData = dict(sorted(
@@ -86,4 +89,4 @@ def startServer(server_class=HTTPServer, handler_class=Handler, port=8008):
   print('Starting httpd on port', port)
   httpd.serve_forever()
 
-# startServer()
+startServer()
