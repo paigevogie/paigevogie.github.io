@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@/styles/*": ["./pages/styles/*"],
+      "@/service/*": ["./pages/service/*"]
+    }
+  }
+}

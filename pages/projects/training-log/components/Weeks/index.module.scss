@@ -1,0 +1,122 @@
+.week {
+  position: relative;
+  display: flex;
+  border-bottom: 1px solid $lightest-grey;
+  padding: $sizing-sm 0;
+  height: 95px;
+
+  @include min-size-md {
+    padding: $sizing-md;
+    height: 145px;
+  }
+
+  > div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    &:first-child {
+      position: absolute;
+      flex-direction: row;
+      top: 0;
+      left: 0;
+      right: 0;
+      justify-content: space-between;
+      font-size: $font-size-sm;
+      padding: 6px 0;
+
+      @include min-size-md {
+        font-size: unset;
+        padding: $sizing-sm 0;
+      }
+    }
+
+    .displayUnitContainer {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .day {
+    position: relative;
+
+    .displayUnit {
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      white-space: nowrap;
+      background-color: $lightest-grey;
+      width: 30px;
+      height: 30px;
+      font-size: $font-size-2xs !important;
+
+      &.goal {
+        background-color: rgb(214, 237, 214);
+      }
+
+      @include min-size-md {
+        width: 40px;
+        height: 40px;
+        font-size: $font-size-sm !important;
+      }
+
+      span {
+        display: none;
+        @include min-size-md {
+          display: inline;
+        }
+      }
+    }
+
+    .activityName {
+      display: none;
+      @include min-size-md {
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        text-align: center;
+        line-height: 1.25;
+      }
+    }
+    &.today .activityName {
+      bottom: $sizing-lg;
+    }
+
+    &.dayPlaceholder::before {
+      content: " ";
+      height: 4px;
+      width: 4px;
+      border-radius: 50%;
+      background-color: $light-grey;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: -1;
+
+      @include min-size-md {
+        height: 5px;
+        width: 5px;
+      }
+    }
+
+    &.today::after {
+      content: " ";
+      height: 0;
+      width: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-bottom: 8px solid $medium-grey;
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+}

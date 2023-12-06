@@ -1,0 +1,61 @@
+.libby-embed {
+  overflow: hidden;
+
+  > a {
+    padding: $sizing-md;
+    font-weight: 400;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    height: 20%;
+
+    svg {
+      border-radius: 100%;
+      height: $sizing-xl;
+      width: $sizing-xl;
+    }
+  }
+
+  ul {
+    margin: 0;
+    padding: 0 $sizing-md $sizing-md;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    height: 80%;
+
+    li {
+      margin-bottom: $sizing-md;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+      a {
+        display: flex;
+
+        img {
+          height: $sizing-5xl;
+          width: $sizing-5xl;
+          min-width: $sizing-5xl;
+          min-height: $sizing-5xl;
+          border-radius: $sizing-xs;
+          object-fit: cover;
+        }
+        > div {
+          margin-left: $sizing-md;
+          display: flex;
+          flex-direction: column;
+          > div {
+            line-height: 1.25;
+          }
+          > small {
+            font-weight: 300;
+            font-size: $font-size-sm;
+          }
+        }
+      }
+    }
+  }
+}

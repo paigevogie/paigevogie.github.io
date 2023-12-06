@@ -1,0 +1,29 @@
+.projects {
+  display: flex;
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 20% 0;
+    text-align: right;
+    @include min-size-lg {
+      margin: 20% auto;
+    }
+
+    li {
+      margin: $sizing-xl 0;
+
+      a {
+        p {
+          font-weight: 400;
+          margin: 0;
+        }
+        &:hover,
+        &:active {
+          small {
+            color: $soft-black;
+          }
+        }
+      }
+    }
+  }
+}

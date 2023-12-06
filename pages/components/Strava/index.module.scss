@@ -1,0 +1,62 @@
+.strava-embed {
+  overflow: hidden;
+
+  > div {
+    height: 20%;
+    padding: $sizing-md;
+    display: flex;
+
+    a {
+      height: 100%;
+      display: flex;
+      align-items: center;
+
+      svg {
+        height: 40%;
+      }
+    }
+  }
+
+  ul {
+    margin: 0;
+    padding: 0 $sizing-md $sizing-md;
+    height: 80%;
+    overflow-y: scroll;
+    list-style: none;
+
+    li {
+      display: flex;
+      margin-bottom: $sizing-md;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      img {
+        height: $sizing-5xl;
+        width: $sizing-5xl;
+        min-width: $sizing-5xl;
+        min-height: $sizing-5xl;
+        border-radius: $sizing-xs;
+        object-fit: cover;
+      }
+
+      > div {
+        margin: 0 $sizing-md;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        > div:first-child {
+          font-weight: 400;
+          line-height: 1.25;
+          text-overflow: ellipsis;
+        }
+        > div:last-child {
+          display: flex;
+          justify-content: space-between;
+          font-size: $font-size-sm;
+        }
+      }
+    }
+  }
+}

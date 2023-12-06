@@ -1,1 +1,1 @@
-The portfolio and blog of Paige Vogie (@paigevogie).
+The personal website of Paige Vogie (@paigevogie).
