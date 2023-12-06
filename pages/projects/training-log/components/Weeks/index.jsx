@@ -11,7 +11,7 @@ import {
 import throttle from "lodash.throttle";
 import {
   DISTANCE,
-  COUNT,
+  STEPS,
   getActivityDisplayUnit,
   getTotal,
   getWeek,
@@ -26,6 +26,7 @@ const Weeks = ({
   headerRef,
   weeksRef,
   displayUnit,
+  activityType,
   activities,
   setTopWeek,
   filteredActivities,
@@ -82,7 +83,8 @@ const Weeks = ({
                 {getTotal(
                   getWeek(referenceDate),
                   filteredActivities,
-                  displayUnit
+                  displayUnit,
+                  activityType
                 )}
               </div>
             </div>
@@ -103,13 +105,17 @@ const Weeks = ({
                         <div className={styles.displayUnitContainer}>
                           <small
                             className={`${styles.displayUnit} ${
-                              displayUnit === COUNT &&
+                              activityType === STEPS &&
                               activity.totalSteps > activity.dailyStepGoal
                                 ? styles.goal
                                 : ""
                             }`}
                           >
-                            {getActivityDisplayUnit(displayUnit, activity)}
+                            {getActivityDisplayUnit(
+                              displayUnit,
+                              activityType,
+                              activity
+                            )}
                             {displayUnit === DISTANCE && <span>&nbsp;mi</span>}
                           </small>
                         </div>

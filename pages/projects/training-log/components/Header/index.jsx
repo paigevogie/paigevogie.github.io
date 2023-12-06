@@ -3,6 +3,7 @@ import { format } from "date-fns";
 import {
   ALL,
   STEPS,
+  STATS,
   DISTANCE,
   DISPLAY_UNITS,
   COUNT,
@@ -29,15 +30,15 @@ const Header = ({
   };
 
   const onActivityTypeChange = (e) => {
-    const { value } = e.target;
+    const { value: newActivityType } = e.target;
 
-    if (value === STEPS) {
+    if (STATS.includes(newActivityType)) {
       setDisplayUnit(COUNT);
-    } else if (activityType === STEPS && value !== STEPS) {
+    } else if (!STATS.includes(newActivityType) && displayUnit === COUNT) {
       setDisplayUnit(DISTANCE);
     }
 
-    setActivityType(value);
+    setActivityType(newActivityType);
   };
 
   return (
@@ -45,7 +46,11 @@ const Header = ({
       <div className={styles.controlsContainer}>
         <div>
           <select value={activityType} onChange={onActivityTypeChange}>
-            <option value={STEPS}>{STEPS}</option>
+            {STATS.map((stat) => (
+              <option key={stat} value={stat}>
+                {stat}
+              </option>
+            ))}
             {getActivityTypes().map((type) => (
               <option key={type} value={type}>
                 {type}
@@ -58,16 +63,16 @@ const Header = ({
             onChange={(e) => setDisplayUnit(e.target.value)}
             disabled={displayUnit === COUNT}
           >
-            {Object.keys(DISPLAY_UNITS).map((key) =>
-              DISPLAY_UNITS[key] !== COUNT || displayUnit === COUNT ? (
-                <option key={DISPLAY_UNITS[key]} value={DISPLAY_UNITS[key]}>
-                  {DISPLAY_UNITS[key]}
+            {DISPLAY_UNITS.map((unit) =>
+              unit !== COUNT || displayUnit === COUNT ? (
+                <option key={unit} value={unit}>
+                  {unit}
                 </option>
               ) : null
             )}
           </select>
         </div>
-        {displayUnit === COUNT ? (
+        {activityType === STEPS ? (
           <div className={styles.topWeek}>
             <div>Streak</div>
             <div>{getStepsStreak(filteredActivities)}</div>
@@ -81,7 +86,8 @@ const Header = ({
               {getTotal(
                 getMonth(new Date(topWeek?.getAttribute("data-value"))),
                 filteredActivities,
-                displayUnit
+                displayUnit,
+                activityType
               )}
             </div>
           </div>

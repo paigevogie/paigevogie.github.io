@@ -89,4 +89,4 @@ def startServer(server_class=HTTPServer, handler_class=Handler, port=8008):
   print('Starting httpd on port', port)
   httpd.serve_forever()
 
-startServer()
+# startServer()

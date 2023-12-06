@@ -2,7 +2,13 @@ import { useState, useRef } from "react";
 import { format } from "date-fns";
 import styles from "./index.module.scss";
 import { getStravaActivities } from "@/service/stravaService";
-import { ALL, STEPS, COUNT, activitiesDateFormat } from "./utils";
+import {
+  ALL,
+  STEPS,
+  INTENSITY_MINUTES,
+  COUNT,
+  activitiesDateFormat,
+} from "./utils";
 import Layout from "../../components/Layout";
 import Header from "./components/Header";
 import Weeks from "./components/Weeks";
@@ -17,7 +23,7 @@ export async function getServerSideProps({ res }) {
   return {
     props: {
       activities: await getStravaActivities(75),
-      steps: await (await fetch(`${process.env.HOST}/api/steps`)).json(),
+      stats: await (await fetch(`${process.env.HOST}/api/stats`)).json(),
     },
   };
 }
@@ -31,23 +37,22 @@ const TrainingLog = (props) => {
   const headerRef = useRef();
   const weeksRef = useRef();
 
-  const filteredActivities =
-    activityType === STEPS
-      ? props.steps
-      : activities
-          .filter(({ type }) =>
-            activityType === ALL ? true : type === activityType
-          )
-          .reduce((acc, activity) => {
-            const date = format(
-              new Date(activity.start_date),
-              activitiesDateFormat
-            );
-            acc[date] = acc[date] || [];
-            acc[date].push(activity);
+  const filteredActivities = [STEPS, INTENSITY_MINUTES].includes(activityType)
+    ? props.stats
+    : activities
+        .filter(({ type }) =>
+          activityType === ALL ? true : type === activityType
+        )
+        .reduce((acc, activity) => {
+          const date = format(
+            new Date(activity.start_date),
+            activitiesDateFormat
+          );
+          acc[date] = acc[date] || [];
+          acc[date].push(activity);
 
-            return acc;
-          }, {});
+          return acc;
+        }, {});
 
   return (
     <Layout title="Training Log" className={styles.trainingLog} {...props}>
@@ -68,6 +73,7 @@ const TrainingLog = (props) => {
           headerRef,
           weeksRef,
           displayUnit,
+          activityType,
           activities,
           setTopWeek,
           filteredActivities,
