@@ -1,5 +1,7 @@
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 html,
 body,
@@ -7,39 +9,35 @@ body,
   height: 100%;
   min-height: 100%;
   width: 100%;
-  margin: 0;
   color: $soft-black;
-  font-weight: 300;
-  font-family: Helvetica Neue, "nimbus-sans", Helvetica, Arial, sans-serif;
+  font-family: Helvetica, Arial, sans-serif;
   display: flex;
   flex-direction: column;
-
+}
+#__next {
+  padding: $sizing-sm;
+}
+body {
+  small {
+    font-weight: 300;
+    font-size: $font-size-sm;
+    display: block;
+  }
+  button {
+    color: $soft-black;
+  }
   h1,
   h2,
   h3,
   h4,
   h5,
-  h6,
-  p {
-    font-weight: 300;
-    margin: 0;
-  }
-  small {
-    font-weight: 300;
-    font-size: $font-size-sm;
-  }
-  button {
-    font-weight: 300;
-    color: $soft-black;
-  }
-  b,
-  a {
+  h6 {
     font-weight: 400;
   }
   a,
   a:visited {
     &:not(.profile-badge__cta-btn) {
-      color: $soft-black;
+      color: unset;
       text-decoration: none;
 
       &:hover,
@@ -51,42 +49,56 @@ body,
     }
   }
   select {
-    font-family: Helvetica Neue, "nimbus-sans", Helvetica, Arial, sans-serif;
+    font-family: Helvetica, Arial, sans-serif;
   }
-}
-#__next {
-  padding: $sizing-sm;
 }
 
 // TODO: figure out why this doesn't work in linkedin embed module
 .linkedin-embed {
   overflow: hidden;
 
+  .sr-only {
+    display: none;
+  }
+
   .profile-badge {
-    box-shadow: none;
-    -webkit-box-shadow: none;
-    margin-left: 0;
     width: 100%;
     height: 100%;
+    padding: $sizing-xl $sizing-lg;
 
-    [class^="profile-badge"] {
-      padding-bottom: 0;
+    .profile-badge__header icon {
+      color: #0a66c2;
+      display: inline-block;
+      width: 84px;
     }
-    .profile-badge__header {
-      background-color: transparent;
-      padding: 20px 16px;
-    }
-    .profile-badge__content-profile-image {
-      margin: 0 0 8px 0;
+    .profile-badge__content {
+      .profile-badge__content-profile-image {
+        margin: $sizing-lg 0;
+        height: $sizing-5xl;
+        width: $sizing-5xl;
+        border-radius: 50%;
+      }
+      h3 {
+        margin-bottom: $sizing-xs;
+      }
+      h4 {
+        font-weight: 300;
+        font-size: $font-size-md;
+      }
     }
     .profile-badge__cta-btn {
-      margin-top: 12px;
-    }
-    .profile-badge__content-profile-name-link {
-      font-weight: 400;
-    }
-    .profile-badge__cta-btn.profile-badge__cta-btn--light:hover {
-      box-shadow: inset 0 0 0 1px #0a66c2;
+      display: inline-block;
+      margin-top: $sizing-md;
+      padding: $sizing-sm $sizing-lg;
+      color: #0a66c2;
+      border: 1px solid #0a66c2;
+      border-radius: $sizing-xl;
+      cursor: pointer;
+      text-decoration: none;
+
+      &:hover {
+        background-color: rgba(112, 181, 249, 0.15);
+      }
     }
   }
 }

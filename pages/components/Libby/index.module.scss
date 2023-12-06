@@ -2,7 +2,7 @@
   overflow: hidden;
 
   > a {
-    padding: $sizing-md;
+    padding: $sizing-lg;
     font-weight: 400;
     display: flex;
     justify-content: space-between;
@@ -19,7 +19,7 @@
 
   ul {
     margin: 0;
-    padding: 0 $sizing-md $sizing-md;
+    padding: 0 $sizing-lg $sizing-md;
     list-style: none;
     display: flex;
     flex-direction: column;

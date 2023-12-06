@@ -12,6 +12,9 @@
   }
   > div {
     width: 75%;
+    small:first-of-type {
+      margin-top: $sizing-xs;
+    }
   }
   a {
     text-decoration: none;

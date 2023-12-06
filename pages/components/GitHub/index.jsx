@@ -16,8 +16,8 @@ const GitHub = ({ githubData }) => {
         <a href={html_url} target="_blank">
           {login}
         </a>
-        <div>{bio}</div>
-        <div>{location}</div>
+        <small>{bio}</small>
+        <small>{location}</small>
       </div>
       <a href={html_url} target="_blank">
         <svg focusable="false" role="img" viewBox="0 0 16 16">

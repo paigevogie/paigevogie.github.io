@@ -60,16 +60,16 @@ const Strava = ({ stravaData }) => {
             id,
           }) => (
             <li key={id}>
-              {(!!map?.url || !!photos) && (
+              {/* {(!!map?.url || !!photos) && (
                 <img src={map?.url || photos?.primary?.urls["100"]} />
-              )}
+              )} */}
               <div>
                 <div>{name}</div>
-                <div>
+                <small>
                   <div>{`${new Date(start_date_local).toDateString()}`}</div>
                   <div>{`${Math.round((distance / 1609) * 100) / 100} mi`}</div>
                   <div>{`${formatTime(moving_time)}`}</div>
-                </div>
+                </small>
               </div>
             </li>
           )

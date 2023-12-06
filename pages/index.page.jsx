@@ -39,7 +39,7 @@ const Home = ({
     title="Hello!"
     seoTitle={config.defaultTitle}
     subtitle={
-      <p>
+      <p className={styles.subtitle}>
         Find me all over the web <b>@paigevogie</b>.
       </p>
     }

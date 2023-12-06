@@ -74,14 +74,14 @@ const Header = ({
         </div>
         {activityType === STEPS ? (
           <div className={styles.topWeek}>
-            <div>Streak</div>
+            <small>Streak</small>
             <div>{getStepsStreak(filteredActivities)}</div>
           </div>
         ) : topWeek ? (
           <div className={styles.topWeek}>
-            <div>
+            <small>
               {format(new Date(topWeek.getAttribute("data-value")), "MMM yyy")}
-            </div>
+            </small>
             <div>
               {getTotal(
                 getMonth(new Date(topWeek?.getAttribute("data-value"))),
@@ -95,7 +95,7 @@ const Header = ({
       </div>
       <div className={styles.daysContainer}>
         {["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"].map((day) => (
-          <div key={day}>{day}</div>
+          <small key={day}>{day}</small>
         ))}
       </div>
     </div>

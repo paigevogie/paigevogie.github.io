@@ -18,7 +18,7 @@
       font-size: $font-size-xs;
       color: $soft-black;
       font-weight: 300;
-      min-width: 50px;
+      width: 90px;
       padding: $sizing-sm $sizing-xs;
       margin-right: $sizing-sm;
       text-align-last: center;
@@ -71,7 +71,7 @@
       padding: $sizing-lg;
     }
 
-    > div {
+    > small {
       flex: 1;
       text-align: center;
       justify-content: center;

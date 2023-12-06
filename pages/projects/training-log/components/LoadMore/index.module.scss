@@ -1,13 +1,23 @@
 .loadMoreContainer {
   width: 100%;
+  height: 95px;
   display: flex;
   justify-content: center;
-  padding: $sizing-lg 0;
+
   button {
-    padding: $sizing-md;
+    padding: $sizing-sm $sizing-xs;
     border: 1px solid $light-grey;
     border-radius: 0;
     background-color: white;
     cursor: pointer;
+    font-weight: 300;
+    width: 90px;
+    margin: auto;
+
+    @include min-size-md {
+      width: 140px;
+      padding: $sizing-sm $sizing-lg;
+      font-size: $font-size-md;
+    }
   }
 }

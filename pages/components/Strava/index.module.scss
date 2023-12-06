@@ -3,23 +3,22 @@
 
   > div {
     height: 20%;
-    padding: $sizing-md;
+    padding: $sizing-lg;
     display: flex;
 
     a {
-      height: 100%;
       display: flex;
       align-items: center;
 
       svg {
-        height: 40%;
+        height: 20px;
       }
     }
   }
 
   ul {
     margin: 0;
-    padding: 0 $sizing-md $sizing-md;
+    padding: 0 $sizing-lg $sizing-md;
     height: 80%;
     overflow-y: scroll;
     list-style: none;
@@ -42,7 +41,6 @@
       }
 
       > div {
-        margin: 0 $sizing-md;
         display: flex;
         flex-direction: column;
         width: 100%;
@@ -51,10 +49,11 @@
           line-height: 1.25;
           text-overflow: ellipsis;
         }
-        > div:last-child {
+        > small:last-child {
           display: flex;
           justify-content: space-between;
           font-size: $font-size-sm;
+          margin-top: $sizing-2xs;
         }
       }
     }

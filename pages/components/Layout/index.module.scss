@@ -17,7 +17,6 @@
 
     h1 {
       font-size: $font-size-2xl;
-      margin-bottom: $sizing-xs !important;
       @include min-size-md {
         font-size: $font-size-3xl;
       }
