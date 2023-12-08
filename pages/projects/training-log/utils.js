@@ -20,7 +20,7 @@ export const RELATIVE_EFFORT = "Relative Effort";
 export const PACE = "Pace";
 export const COUNT = "Count";
 
-export const DISPLAY_UNITS = [DISTANCE, TIME, PACE, RELATIVE_EFFORT, COUNT];
+export const DISPLAY_UNITS = [DISTANCE, TIME, PACE, COUNT];
 
 const formatTotalTime = (totalSeconds) => {
   const hours = Math.floor(totalSeconds / (60 * 60));
@@ -146,7 +146,8 @@ export const getTotal = (
   days,
   filteredActivities,
   displayUnit,
-  activityType
+  activityType,
+  showMiles = true
 ) => {
   const total = days.reduce((acc, day) => {
     const activityArr = filteredActivities[format(day, activitiesDateFormat)];
@@ -195,7 +196,7 @@ export const getTotal = (
 
   switch (displayUnit) {
     case DISTANCE:
-      return formatDistance(total, 1, true);
+      return formatDistance(total, 1, showMiles);
     case TIME:
       return formatTotalTime(total);
     case RELATIVE_EFFORT:

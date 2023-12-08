@@ -12,6 +12,7 @@ import throttle from "lodash.throttle";
 import {
   DISTANCE,
   STEPS,
+  RUN,
   getActivityDisplayUnit,
   getTotal,
   getWeek,
@@ -21,6 +22,7 @@ import {
   weekOptions,
   activitiesDateFormat,
 } from "../../utils";
+import config from "../../config";
 
 const Weeks = ({
   headerRef,
@@ -70,6 +72,16 @@ const Weeks = ({
           endDate,
           isSameMonth(startDate, endDate) ? "d" : "MMM d"
         );
+        const isRunAndDistance =
+          activityType === RUN && displayUnit === DISTANCE;
+        const total = getTotal(
+          getWeek(referenceDate),
+          filteredActivities,
+          displayUnit,
+          activityType,
+          !isRunAndDistance
+        );
+        const { weeklyDistanceGoal } = config;
 
         return (
           <div
@@ -77,14 +89,28 @@ const Weeks = ({
             key={`${startDateFormatted} – ${endDateFormatted}`}
             data-value={startDate}
           >
-            <div>
+            <div className={styles.weekDetails}>
               <div>{`${startDateFormatted} – ${endDateFormatted}`}</div>
-              <div>
-                {getTotal(
-                  getWeek(referenceDate),
-                  filteredActivities,
-                  displayUnit,
-                  activityType
+              <div className={styles.weekTotal}>
+                {isRunAndDistance ? (
+                  <>
+                    <div>
+                      {`${total} mi`}
+                      <span> / {weeklyDistanceGoal} mi</span>
+                    </div>
+                    <div className={styles.distanceGoal}>
+                      <div
+                        style={{
+                          width:
+                            total < weeklyDistanceGoal
+                              ? `${(total / weeklyDistanceGoal) * 100}%`
+                              : "100%",
+                        }}
+                      />
+                    </div>
+                  </>
+                ) : (
+                  total
                 )}
               </div>
             </div>
@@ -100,33 +126,39 @@ const Weeks = ({
                 {!!filteredActivities[format(day, activitiesDateFormat)] &&
                   filteredActivities[format(day, activitiesDateFormat)]
                     .slice(0, 2)
-                    .map((activity) => (
-                      <Fragment key={activity.start_date + activity.id}>
-                        <div className={styles.displayUnitContainer}>
-                          <small
-                            className={`${styles.displayUnit} ${
-                              activityType === STEPS &&
-                              activity.totalSteps > activity.dailyStepGoal
-                                ? styles.goal
-                                : ""
-                            }`}
-                          >
-                            {getActivityDisplayUnit(
-                              displayUnit,
-                              activityType,
-                              activity
-                            )}
-                            {displayUnit === DISTANCE && <span>&nbsp;mi</span>}
-                          </small>
-                        </div>
-                        {filteredActivities[format(day, activitiesDateFormat)]
-                          .length === 1 && (
-                          <small className={styles.activityName}>
-                            {activity.name}
-                          </small>
-                        )}
-                      </Fragment>
-                    ))}
+                    .map((activity) => {
+                      const display = getActivityDisplayUnit(
+                        displayUnit,
+                        activityType,
+                        activity
+                      );
+
+                      return !!display ? (
+                        <Fragment key={activity.start_date + activity.id}>
+                          <div className={styles.displayUnitContainer}>
+                            <small
+                              className={`${styles.displayUnit} ${
+                                activityType === STEPS &&
+                                activity.totalSteps > activity.dailyStepGoal
+                                  ? styles.goal
+                                  : ""
+                              }`}
+                            >
+                              {display}
+                              {displayUnit === DISTANCE && (
+                                <span>&nbsp;mi</span>
+                              )}
+                            </small>
+                          </div>
+                          {filteredActivities[format(day, activitiesDateFormat)]
+                            .length === 1 && (
+                            <small className={styles.activityName}>
+                              {activity.name}
+                            </small>
+                          )}
+                        </Fragment>
+                      ) : null;
+                    })}
               </div>
             ))}
           </div>

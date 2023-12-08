@@ -16,7 +16,7 @@
     flex-direction: column;
     justify-content: center;
 
-    &:first-child {
+    &.weekDetails {
       position: absolute;
       flex-direction: row;
       top: 0;
@@ -29,6 +29,36 @@
       @include min-size-md {
         font-size: unset;
         padding: $sizing-sm 0;
+      }
+
+      .weekTotal {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+
+        > div:first-child span {
+          font-size: $font-size-3xs;
+
+          @include min-size-md {
+            font-size: $font-size-xs;
+          }
+        }
+
+        .distanceGoal {
+          width: 75px;
+          height: 3px;
+          background-color: $lightest-grey;
+          margin-top: $sizing-2xs;
+
+          @include min-size-md {
+            width: 100px;
+          }
+
+          > div {
+            height: 100%;
+            background-color: $green;
+          }
+        }
       }
     }
 
@@ -64,13 +94,12 @@
         font-size: $font-size-2xs;
 
         &.goal {
-          background-color: rgb(214, 237, 214);
+          background-color: $green;
         }
 
         @include min-size-md {
           width: 40px;
           height: 40px;
-          // font-size: $font-size-sm;
         }
 
         span {
