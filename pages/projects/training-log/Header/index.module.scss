@@ -18,7 +18,7 @@
       font-size: $font-size-xs;
       color: $soft-black;
       font-weight: 300;
-      width: 90px;
+      width: 70px;
       padding: $sizing-sm $sizing-xs;
       margin-right: $sizing-sm;
       text-align-last: center;
@@ -57,34 +57,6 @@
         @include min-size-md {
           font-size: $font-size-sm;
         }
-      }
-    }
-  }
-
-  .daysContainer {
-    display: flex;
-    border-top: 1px solid $lightest-grey;
-    border-bottom: 1px solid $lightest-grey;
-    padding: $sizing-sm 0;
-
-    @include min-size-md {
-      padding: $sizing-lg;
-    }
-
-    > small {
-      flex: 1;
-      text-align: center;
-      justify-content: center;
-      font-size: 0;
-
-      &::first-letter {
-        font-size: $font-size-2xs;
-      }
-
-      @include min-size-md {
-        display: flex;
-        align-items: center;
-        font-size: $font-size-sm;
       }
     }
   }

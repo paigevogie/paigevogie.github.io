@@ -5,8 +5,29 @@ import {
   startOfMonth,
   isSameMonth,
   subDays,
+  startOfYear,
+  addMonths,
 } from "date-fns";
 import { utcToZonedTime } from "date-fns-tz";
+
+export const CALENDAR = "Calendar";
+export const CHART = "Chart";
+
+export const DAYS = ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"];
+export const MONTHS = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
 
 export const ALL = "All";
 export const RUN = "Run";
@@ -22,33 +43,45 @@ export const COUNT = "Count";
 
 export const DISPLAY_UNITS = [DISTANCE, TIME, PACE, COUNT];
 
-const formatTotalTime = (totalSeconds) => {
+const formatTotalTime = (totalSeconds, showUnit = true) => {
   const hours = Math.floor(totalSeconds / (60 * 60));
   const minutes = Math.floor((totalSeconds - hours * 60 * 60) / 60);
 
-  return `${`${hours > 0 ? `${hours}h ` : ""}`}${minutes}m`;
+  const roundedHours = Math.floor((totalSeconds * 10) / (60 * 60)) / 10;
+
+  return showUnit
+    ? `${`${hours > 0 ? `${hours}h ` : ""}`}${minutes}m`
+    : roundedHours;
 };
 
-const formatDistance = (distance, decimals = 1, showMiles = false) =>
-  `${
+const formatDistance = (distance, decimals = 1, showMiles = false) => {
+  const formattedDistance =
     Math.floor((distance / 1609) * Math.pow(10, decimals)) /
-    Math.pow(10, decimals)
-  }${showMiles ? " mi" : ""}`;
+    Math.pow(10, decimals);
 
-const formatTime = (totalSeconds) => {
+  return showMiles ? `${formattedDistance} mi` : formattedDistance;
+};
+
+const formatTime = (totalSeconds, showUnit = true) => {
   const hours = Math.floor(totalSeconds / (60 * 60));
   const minutes = `${Math.floor(
     (totalSeconds - hours * 60 * 60) / 60
   )}`.padStart(2, "0");
 
-  return `${`${hours}:`}${minutes}`;
+  const totalMinutes = Math.floor(totalSeconds / 60);
+
+  return showUnit ? `${`${hours}:`}${minutes}` : totalMinutes;
 };
 
-const formatSteps = (steps) => `${Math.floor(Number(steps) / 100) / 10}K`;
+const formatSteps = (steps, showUnit = true) =>
+  `${Math.floor(Number(steps) / 100) / 10}${showUnit ? "K" : ""}`;
 
-const formatTotalSteps = (steps) => `${Math.floor(Number(steps) / 1000)}K`;
+const formatTotalSteps = (steps) =>
+  steps < 1000000
+    ? `${Math.floor(Number(steps) / 1000)}K`
+    : steps.toLocaleString();
 
-const formatPace = (metersPerSecond) => {
+const formatPace = (metersPerSecond, showUnit = true) => {
   if (!metersPerSecond) return 0;
 
   const minutes = Math.floor(26.8224 / metersPerSecond);
@@ -56,17 +89,24 @@ const formatPace = (metersPerSecond) => {
     Math.round(1609.344 / metersPerSecond) - minutes * 60
   }`.padStart(2, "0");
 
-  return `${minutes}:${seconds}`;
+  const roundedMinutes = Math.floor((26.8224 * 10) / metersPerSecond) / 10;
+
+  return showUnit ? `${minutes}:${seconds}` : roundedMinutes;
 };
 
-const formatTotalPace = (metersPerSecond, days, filteredActivities) => {
+const formatTotalPace = (
+  metersPerSecond,
+  days,
+  filteredActivities,
+  showUnit = true
+) => {
   const { length } = days
     .map((day) => filteredActivities[format(day, activitiesDateFormat)])
     .flat()
     .filter((activity) => !!activity?.average_speed);
-  const pace = formatPace(metersPerSecond / length);
+  const pace = formatPace(metersPerSecond / length, showUnit);
 
-  return `${pace} /mi`;
+  return showUnit ? `${pace} /mi` : pace;
 };
 
 const formatIntensityMinutes = (moderate, vigorous) => 2 * vigorous + moderate;
@@ -82,21 +122,22 @@ export const getActivityDisplayUnit = (
     average_speed = 0,
     moderateIntensityMinutes = 0,
     vigorousIntensityMinutes = 0,
-  }
+  },
+  showUnit = true
 ) => {
   switch (displayUnit) {
     case DISTANCE:
-      return formatDistance(distance);
+      return formatDistance(distance, 1, showUnit);
     case TIME:
-      return formatTime(moving_time);
+      return formatTime(moving_time, showUnit);
     case PACE:
-      return formatPace(average_speed);
+      return formatPace(average_speed, showUnit);
     case RELATIVE_EFFORT:
       return suffer_score;
     case COUNT:
       switch (activityType) {
         case STEPS:
-          return formatSteps(totalSteps);
+          return formatSteps(totalSteps, showUnit);
         case INTENSITY_MINUTES:
           return formatIntensityMinutes(
             moderateIntensityMinutes,
@@ -140,6 +181,20 @@ export const getMonth = (date) => {
   return month;
 };
 
+export const getYear = (date) => {
+  const year = [];
+  let tmpDate = startOfYear(date);
+
+  while (!isSameMonth(date, tmpDate)) {
+    year.push(getMonth(tmpDate));
+    tmpDate = addMonths(tmpDate, 1);
+  }
+
+  year.push(getMonth(tmpDate));
+
+  return year;
+};
+
 export const activitiesDateFormat = "yyyy-MM-dd";
 
 export const getTotal = (
@@ -147,7 +202,7 @@ export const getTotal = (
   filteredActivities,
   displayUnit,
   activityType,
-  showMiles = true
+  showUnit = true
 ) => {
   const total = days.reduce((acc, day) => {
     const activityArr = filteredActivities[format(day, activitiesDateFormat)];
@@ -196,19 +251,19 @@ export const getTotal = (
 
   switch (displayUnit) {
     case DISTANCE:
-      return formatDistance(total, 1, showMiles);
+      return formatDistance(total, 1, showUnit);
     case TIME:
-      return formatTotalTime(total);
+      return formatTotalTime(total, showUnit);
     case RELATIVE_EFFORT:
       return total;
     case PACE:
-      return formatTotalPace(total, days, filteredActivities);
+      return formatTotalPace(total, days, filteredActivities, showUnit);
     case COUNT:
       switch (activityType) {
         case STEPS:
-          return formatTotalSteps(total);
+          return showUnit ? formatTotalSteps(total) : total;
         case INTENSITY_MINUTES:
-          return total;
+          return showUnit ? total.toLocaleString() : total;
       }
   }
 };

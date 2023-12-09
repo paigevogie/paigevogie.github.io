@@ -3,6 +3,8 @@ import { format } from "date-fns";
 import styles from "./index.module.scss";
 import { getStravaActivities } from "@/service/stravaService";
 import {
+  CALENDAR,
+  CHART,
   ALL,
   STEPS,
   INTENSITY_MINUTES,
@@ -10,9 +12,9 @@ import {
   activitiesDateFormat,
 } from "./utils";
 import Layout from "../../components/Layout";
-import Header from "./components/Header";
-import Weeks from "./components/Weeks";
-import LoadMore from "./components/LoadMore";
+import Header from "./Header";
+import Calendar from "./Calendar";
+import Chart from "./Chart";
 
 export async function getServerSideProps({ res }) {
   res.setHeader(
@@ -22,20 +24,24 @@ export async function getServerSideProps({ res }) {
 
   return {
     props: {
-      activities: await getStravaActivities(75),
+      activities: [
+        ...(await getStravaActivities(200)),
+        ...(await getStravaActivities(200, 2)),
+      ],
       stats: await (await fetch(`${process.env.HOST}/api/stats`)).json(),
     },
   };
 }
 
 const TrainingLog = (props) => {
+  const [view, setView] = useState(CALENDAR);
   const [activityType, setActivityType] = useState(STEPS);
   const [displayUnit, setDisplayUnit] = useState(COUNT);
   const [activities, setActivities] = useState(props.activities);
   const [topWeek, setTopWeek] = useState(null);
 
   const headerRef = useRef();
-  const weeksRef = useRef();
+  const calendarRef = useRef();
 
   const filteredActivities = [STEPS, INTENSITY_MINUTES].includes(activityType)
     ? props.stats
@@ -66,20 +72,39 @@ const TrainingLog = (props) => {
           topWeek,
           filteredActivities,
           activities,
+          view,
+          setView,
         }}
       />
-      <Weeks
-        {...{
-          headerRef,
-          weeksRef,
-          displayUnit,
-          activityType,
-          activities,
-          setTopWeek,
-          filteredActivities,
-        }}
-      />
-      <LoadMore {...{ activities, setActivities }} />
+      {(() => {
+        switch (view) {
+          case CALENDAR:
+            return (
+              <Calendar
+                {...{
+                  headerRef,
+                  calendarRef,
+                  displayUnit,
+                  activityType,
+                  activities,
+                  setTopWeek,
+                  filteredActivities,
+                  setActivities,
+                }}
+              />
+            );
+          case CHART:
+            return (
+              <Chart
+                {...{
+                  activityType,
+                  displayUnit,
+                  filteredActivities,
+                }}
+              />
+            );
+        }
+      })()}
     </Layout>
   );
 };

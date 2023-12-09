@@ -1,6 +1,8 @@
 import styles from "./index.module.scss";
-import { format } from "date-fns";
+import { format, getYear as getYearFromDate } from "date-fns";
 import {
+  CALENDAR,
+  CHART,
   ALL,
   STEPS,
   STATS,
@@ -10,7 +12,9 @@ import {
   getMonth,
   getTotal,
   getStepsStreak,
-} from "../../utils";
+  getYear,
+  today,
+} from "../utils";
 
 const Header = ({
   headerRef,
@@ -21,6 +25,8 @@ const Header = ({
   topWeek,
   filteredActivities,
   activities,
+  view,
+  setView,
 }) => {
   const getActivityTypes = () => {
     const types = {};
@@ -45,6 +51,10 @@ const Header = ({
     <div className={styles.header} ref={headerRef}>
       <div className={styles.controlsContainer}>
         <div>
+          <select value={view} onChange={(e) => setView(e.target.value)}>
+            <option value={CALENDAR}>{CALENDAR}</option>
+            <option value={CHART}>{CHART}</option>
+          </select>
           <select value={activityType} onChange={onActivityTypeChange}>
             {STATS.map((stat) => (
               <option key={stat} value={stat}>
@@ -72,31 +82,43 @@ const Header = ({
             )}
           </select>
         </div>
-        {activityType === STEPS ? (
-          <div className={styles.topWeek}>
-            <small>Streak</small>
-            <div>{getStepsStreak(filteredActivities)}</div>
-          </div>
-        ) : topWeek ? (
-          <div className={styles.topWeek}>
-            <small>
-              {format(new Date(topWeek.getAttribute("data-value")), "MMM yyy")}
-            </small>
-            <div>
-              {getTotal(
-                getMonth(new Date(topWeek?.getAttribute("data-value"))),
-                filteredActivities,
-                displayUnit,
-                activityType
-              )}
-            </div>
-          </div>
-        ) : null}
-      </div>
-      <div className={styles.daysContainer}>
-        {["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"].map((day) => (
-          <small key={day}>{day}</small>
-        ))}
+        <div className={styles.topWeek}>
+          {view === CALENDAR && activityType === STEPS ? (
+            <>
+              <small>Streak</small>
+              <div>{getStepsStreak(filteredActivities)}</div>
+            </>
+          ) : view === CALENDAR && topWeek ? (
+            <>
+              <small>
+                {format(
+                  new Date(topWeek.getAttribute("data-value")),
+                  "MMM yyy"
+                )}
+              </small>
+              <div>
+                {getTotal(
+                  getMonth(new Date(topWeek?.getAttribute("data-value"))),
+                  filteredActivities,
+                  displayUnit,
+                  activityType
+                )}
+              </div>
+            </>
+          ) : view === CHART ? (
+            <>
+              <small>{getYearFromDate(today)} Total</small>
+              <div>
+                {getTotal(
+                  getYear(today).flat(),
+                  filteredActivities,
+                  displayUnit,
+                  activityType
+                )}
+              </div>
+            </>
+          ) : null}
+        </div>
       </div>
     </div>
   );

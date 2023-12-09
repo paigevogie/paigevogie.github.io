@@ -1,3 +1,35 @@
+.calendarHeader {
+  position: sticky;
+  top: 48px;
+  z-index: 1;
+  background-color: white;
+  display: flex;
+  border-top: 1px solid $lightest-grey;
+  border-bottom: 1px solid $lightest-grey;
+  padding: $sizing-sm 0;
+
+  @include min-size-md {
+    padding: $sizing-lg;
+  }
+
+  > small {
+    flex: 1;
+    text-align: center;
+    justify-content: center;
+    font-size: 0;
+
+    &::first-letter {
+      font-size: $font-size-2xs;
+    }
+
+    @include min-size-md {
+      display: flex;
+      align-items: center;
+      font-size: $font-size-sm;
+    }
+  }
+}
+
 .week {
   position: relative;
   display: flex;
@@ -156,6 +188,30 @@
       bottom: 0;
       left: 50%;
       transform: translateX(-50%);
+    }
+  }
+}
+
+.loadMoreContainer {
+  width: 100%;
+  height: 95px;
+  display: flex;
+  justify-content: center;
+
+  button {
+    padding: $sizing-sm $sizing-xs;
+    border: 1px solid $light-grey;
+    border-radius: 0;
+    background-color: white;
+    cursor: pointer;
+    font-weight: 300;
+    width: 90px;
+    margin: auto;
+
+    @include min-size-md {
+      width: 140px;
+      padding: $sizing-sm $sizing-lg;
+      font-size: $font-size-md;
     }
   }
 }
