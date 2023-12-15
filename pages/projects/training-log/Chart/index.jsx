@@ -1,4 +1,4 @@
-import "chart.js/auto";
+import ChartJS from "chart.js/auto";
 import { Bar } from "react-chartjs-2";
 import styles from "./index.module.scss";
 import {
@@ -13,28 +13,19 @@ import {
   TIME,
   PACE,
   RELATIVE_EFFORT,
-  getYear,
+  getGroup,
   getTotal,
+  WEEK,
+  MONTH,
+  weekOptions,
 } from "../utils";
-import { format } from "date-fns";
+import { format, isSameMonth } from "date-fns";
 
-const Chart = ({ activityType, displayUnit, filteredActivities }) => {
-  // TODO: toggle between week, month, and year
-  // const week = getWeek(today);
-  // const data = week.map((day) =>
-  //   getActivityDisplayUnit(
-  //     displayUnit,
-  //     activityType,
-  //     // TODO: handle multiple activities
-  //     filteredActivities[format(day, activitiesDateFormat)]?.[0] || {},
-  //     false
-  //   )
-  // );
-
-  const year = getYear(today);
-  const data = year.map((month) =>
-    getTotal(month, filteredActivities, displayUnit, activityType, false)
-  );
+const Chart = ({ activityType, displayUnit, filteredActivities, groupBy }) => {
+  const getData = () =>
+    getGroup(today, groupBy).map((group) =>
+      getTotal(group, filteredActivities, displayUnit, activityType, false)
+    );
 
   const getLabel = () => {
     switch (displayUnit) {
@@ -51,20 +42,65 @@ const Chart = ({ activityType, displayUnit, filteredActivities }) => {
     }
   };
 
+  const getLabels = () => {
+    switch (groupBy) {
+      case WEEK:
+        return getGroup(today, groupBy).map(
+          (group) =>
+            `${format(group[0], "MMM d")} – ${format(
+              group[6],
+              isSameMonth(group[0], group[6], weekOptions) ? "d" : "MMM d"
+            )}`
+        );
+      case MONTH:
+        return MONTHS;
+    }
+  };
+
+  // https://www.chartjs.org/docs/latest/configuration/
   const chartData = {
-    labels: MONTHS,
+    labels: getLabels(),
     datasets: [
       {
-        data,
+        data: getData(),
         label: getLabel(),
         backgroundColor: "#97ead0",
       },
     ],
   };
 
+  const options = {
+    animation: false,
+    plugins: {
+      legend: {
+        display: false,
+      },
+      tooltip: {
+        cornerRadius: 0,
+        padding: 8,
+        titleColor: "#323232",
+        titleFont: {
+          weight: "normal",
+        },
+        titleMarginBottom: 2,
+        bodyColor: "#323232",
+        backgroundColor: "#ededed",
+        displayColors: false,
+        xAlign: "center",
+        yAlign: "bottom",
+      },
+    },
+  };
+
+  ChartJS.defaults.font.size = 10;
+  ChartJS.defaults.font.family = "Helvetica, Arial, sans-serif";
+  ChartJS.defaults.font.weight = "lighter";
+  ChartJS.defaults.color = "#323232";
+  ChartJS.defaults.borderColor = "#ededed";
+
   return (
     <div className={styles.charts}>
-      <Bar data={chartData} />
+      <Bar data={chartData} options={options} />
     </div>
   );
 };

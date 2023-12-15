@@ -9,10 +9,11 @@ import {
   DISTANCE,
   DISPLAY_UNITS,
   COUNT,
+  GROUP_BY,
   getMonth,
   getTotal,
   getStepsStreak,
-  getYear,
+  getGroup,
   today,
 } from "../utils";
 
@@ -27,6 +28,8 @@ const Header = ({
   activities,
   view,
   setView,
+  groupBy,
+  setGroupBy,
 }) => {
   const getActivityTypes = () => {
     const types = {};
@@ -81,6 +84,18 @@ const Header = ({
               ) : null
             )}
           </select>
+          {view === CHART && (
+            <select
+              value={groupBy}
+              onChange={(e) => setGroupBy(e.target.value)}
+            >
+              {GROUP_BY.map((group) => (
+                <option key={group} value={group}>
+                  {group}
+                </option>
+              ))}
+            </select>
+          )}
         </div>
         <div className={styles.topWeek}>
           {view === CALENDAR && activityType === STEPS ? (
@@ -110,7 +125,7 @@ const Header = ({
               <small>{getYearFromDate(today)} Total</small>
               <div>
                 {getTotal(
-                  getYear(today).flat(),
+                  getGroup(today).flat(),
                   filteredActivities,
                   displayUnit,
                   activityType

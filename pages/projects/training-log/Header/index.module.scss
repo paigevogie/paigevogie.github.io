@@ -8,7 +8,6 @@
     padding: $sizing-sm 0;
     display: flex;
     justify-content: space-between;
-    align-items: center;
 
     select {
       appearance: none;
@@ -20,13 +19,13 @@
       font-weight: 300;
       width: 70px;
       padding: $sizing-sm $sizing-xs;
-      margin-right: $sizing-sm;
+      margin: 0 $sizing-sm $sizing-sm 0;
       text-align-last: center;
 
       @include min-size-md {
         width: 140px;
         padding: $sizing-sm $sizing-lg;
-        margin-right: $sizing-md;
+        margin: 0 $sizing-md $sizing-md 0;
         font-size: $font-size-md;
       }
 
@@ -47,6 +46,7 @@
 
     > div:last-child {
       text-align: right;
+      min-width: 70px;
 
       @include min-size-md {
         font-size: $font-size-xl;

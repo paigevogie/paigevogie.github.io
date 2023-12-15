@@ -7,6 +7,8 @@ import {
   subDays,
   startOfYear,
   addMonths,
+  isSameWeek,
+  addWeeks,
 } from "date-fns";
 import { utcToZonedTime } from "date-fns-tz";
 
@@ -40,8 +42,11 @@ export const TIME = "Time";
 export const RELATIVE_EFFORT = "Relative Effort";
 export const PACE = "Pace";
 export const COUNT = "Count";
-
 export const DISPLAY_UNITS = [DISTANCE, TIME, PACE, COUNT];
+
+export const WEEK = "Week";
+export const MONTH = "Month";
+export const GROUP_BY = [WEEK, MONTH];
 
 const formatTotalTime = (totalSeconds, showUnit = true) => {
   const hours = Math.floor(totalSeconds / (60 * 60));
@@ -181,18 +186,27 @@ export const getMonth = (date) => {
   return month;
 };
 
-export const getYear = (date) => {
-  const year = [];
-  let tmpDate = startOfYear(date);
+export const getGroup = (date, type = WEEK) => {
+  const group = [];
+  let tmpDate =
+    type === WEEK
+      ? startOfWeek(startOfYear(date), weekOptions)
+      : startOfYear(date);
 
-  while (!isSameMonth(date, tmpDate)) {
-    year.push(getMonth(tmpDate));
-    tmpDate = addMonths(tmpDate, 1);
+  while (
+    type === WEEK
+      ? !isSameWeek(date, tmpDate, weekOptions)
+      : !isSameMonth(date, tmpDate)
+  ) {
+    group.push(type === WEEK ? getWeek(tmpDate) : getMonth(tmpDate));
+
+    tmpDate =
+      type === WEEK ? addWeeks(tmpDate, 1, weekOptions) : addMonths(tmpDate, 1);
   }
 
-  year.push(getMonth(tmpDate));
+  group.push(type === WEEK ? getWeek(tmpDate) : getMonth(tmpDate));
 
-  return year;
+  return group;
 };
 
 export const activitiesDateFormat = "yyyy-MM-dd";

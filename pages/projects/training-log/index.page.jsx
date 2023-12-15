@@ -10,6 +10,7 @@ import {
   INTENSITY_MINUTES,
   COUNT,
   activitiesDateFormat,
+  WEEK,
 } from "./utils";
 import Layout from "../../components/Layout";
 import Header from "./Header";
@@ -37,6 +38,7 @@ const TrainingLog = (props) => {
   const [view, setView] = useState(CALENDAR);
   const [activityType, setActivityType] = useState(STEPS);
   const [displayUnit, setDisplayUnit] = useState(COUNT);
+  const [groupBy, setGroupBy] = useState(WEEK);
   const [activities, setActivities] = useState(props.activities);
   const [topWeek, setTopWeek] = useState(null);
 
@@ -74,6 +76,8 @@ const TrainingLog = (props) => {
           activities,
           view,
           setView,
+          groupBy,
+          setGroupBy,
         }}
       />
       {(() => {
@@ -100,6 +104,7 @@ const TrainingLog = (props) => {
                   activityType,
                   displayUnit,
                   filteredActivities,
+                  groupBy,
                 }}
               />
             );
