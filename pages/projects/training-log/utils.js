@@ -4,6 +4,7 @@ import {
   format,
   startOfMonth,
   isSameMonth,
+  isBefore,
   subDays,
   startOfYear,
   addMonths,
@@ -44,9 +45,10 @@ export const PACE = "Pace";
 export const COUNT = "Count";
 export const DISPLAY_UNITS = [DISTANCE, TIME, PACE, COUNT];
 
+export const DAY = "Day";
 export const WEEK = "Week";
 export const MONTH = "Month";
-export const GROUP_BY = [WEEK, MONTH];
+export const GROUP_BY = [DAY, WEEK, MONTH];
 
 const formatTotalTime = (totalSeconds, showUnit = true) => {
   const hours = Math.floor(totalSeconds / (60 * 60));
@@ -186,25 +188,41 @@ export const getMonth = (date) => {
   return month;
 };
 
-export const getGroup = (date, type = WEEK) => {
+export const getGroups = (date, type) => {
   const group = [];
-  let tmpDate =
-    type === WEEK
-      ? startOfWeek(startOfYear(date), weekOptions)
-      : startOfYear(date);
 
-  while (
-    type === WEEK
-      ? !isSameWeek(date, tmpDate, weekOptions)
-      : !isSameMonth(date, tmpDate)
-  ) {
-    group.push(type === WEEK ? getWeek(tmpDate) : getMonth(tmpDate));
+  if (type === DAY) {
+    let tmpDate = startOfYear(date);
 
-    tmpDate =
-      type === WEEK ? addWeeks(tmpDate, 1, weekOptions) : addMonths(tmpDate, 1);
+    while (isBefore(tmpDate, date)) {
+      group.push([tmpDate]);
+      tmpDate = addDays(tmpDate, 1);
+    }
+
+    group.push([tmpDate]);
   }
 
-  group.push(type === WEEK ? getWeek(tmpDate) : getMonth(tmpDate));
+  if (type === WEEK) {
+    let tmpDate = startOfWeek(startOfYear(date), weekOptions);
+
+    while (!isSameWeek(date, tmpDate, weekOptions)) {
+      group.push(getWeek(tmpDate));
+      tmpDate = addWeeks(tmpDate, 1, weekOptions);
+    }
+
+    group.push(getWeek(tmpDate));
+  }
+
+  if (type === MONTH) {
+    let tmpDate = startOfYear(date);
+
+    while (!isSameMonth(date, tmpDate)) {
+      group.push(getMonth(tmpDate));
+      tmpDate = addMonths(tmpDate, 1);
+    }
+
+    group.push(getMonth(tmpDate));
+  }
 
   return group;
 };

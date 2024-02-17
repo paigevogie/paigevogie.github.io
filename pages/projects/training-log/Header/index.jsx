@@ -10,10 +10,11 @@ import {
   DISPLAY_UNITS,
   COUNT,
   GROUP_BY,
+  WEEK,
   getMonth,
   getTotal,
   getStepsStreak,
-  getGroup,
+  getGroups,
   today,
 } from "../utils";
 
@@ -125,7 +126,7 @@ const Header = ({
               <small>{getYearFromDate(today)} Total</small>
               <div>
                 {getTotal(
-                  getGroup(today).flat(),
+                  getGroups(today, WEEK).flat(),
                   filteredActivities,
                   displayUnit,
                   activityType

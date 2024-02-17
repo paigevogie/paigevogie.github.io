@@ -2,19 +2,16 @@ import ChartJS from "chart.js/auto";
 import { Bar } from "react-chartjs-2";
 import styles from "./index.module.scss";
 import {
-  DAYS,
   MONTHS,
   today,
-  getWeek,
-  getActivityDisplayUnit,
-  activitiesDateFormat,
   COUNT,
   DISTANCE,
   TIME,
   PACE,
   RELATIVE_EFFORT,
-  getGroup,
+  getGroups,
   getTotal,
+  DAY,
   WEEK,
   MONTH,
   weekOptions,
@@ -23,7 +20,7 @@ import { format, isSameMonth } from "date-fns";
 
 const Chart = ({ activityType, displayUnit, filteredActivities, groupBy }) => {
   const getData = () =>
-    getGroup(today, groupBy).map((group) =>
+    getGroups(today, groupBy).map((group) =>
       getTotal(group, filteredActivities, displayUnit, activityType, false)
     );
 
@@ -44,8 +41,12 @@ const Chart = ({ activityType, displayUnit, filteredActivities, groupBy }) => {
 
   const getLabels = () => {
     switch (groupBy) {
+      case DAY:
+        return getGroups(today, groupBy).map(
+          (group) => `${format(group[0], "MMM d")}`
+        );
       case WEEK:
-        return getGroup(today, groupBy).map(
+        return getGroups(today, groupBy).map(
           (group) =>
             `${format(group[0], "MMM d")} – ${format(
               group[6],
