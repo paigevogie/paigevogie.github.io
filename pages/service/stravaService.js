@@ -89,14 +89,36 @@ const getStravaHeaders = async () => ({
   },
 });
 
-const getStravaActivities = async (perPage = 200, page = 1) => {
+const getStravaActivities = async ({ perPage, page = 1, ...args }) => {
   const response = await fetch(
     `https://www.strava.com/api/v3/athlete/activities?per_page=${perPage}&page=${page}`,
     await getStravaHeaders()
   );
   handleResponseError(response, "Strava Activities");
 
-  return await response.json();
+  return (await response.json()).map(
+    ({
+      name,
+      id,
+      type,
+      distance,
+      moving_time,
+      average_speed,
+      start_date_local,
+      total_photo_count,
+      map,
+    }) => ({
+      name,
+      id,
+      type,
+      distance,
+      moving_time,
+      average_speed,
+      start_date_local,
+      ...(args.photoCount ? { total_photo_count } : {}),
+      ...(args.map ? { map } : {}),
+    })
+  );
 };
 
 const getStravaActivity = async (id) => {

@@ -58,7 +58,12 @@ export const getStravaData = async () => {
     }
 
     const SIZE = 10;
-    const stravaActivities = await getStravaActivities(SIZE);
+    const stravaActivities = await getStravaActivities({
+      perPage: SIZE,
+      // TODO: fix map caching
+      // map: true,
+      // photoCount: true,
+    });
 
     const activitiesData = await Promise.all(
       stravaActivities.map(async (activity) => {

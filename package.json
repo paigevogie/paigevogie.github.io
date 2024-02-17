@@ -30,6 +30,7 @@
   },
   "scripts": {
     "dev": "next dev",
+    "vercel:dev": "vercel dev",
     "build": "next build",
     "start": "next start",
     "prettier": "npx prettier --write .",

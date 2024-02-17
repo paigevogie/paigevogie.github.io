@@ -290,7 +290,7 @@ export const getStepsStreak = (filteredActivities) => {
   const increment = () => {
     tmpDate = subDays(tmpDate, 1);
     ({ totalSteps, dailyStepGoal } =
-      filteredActivities[format(tmpDate, activitiesDateFormat)]?.[0]) || {};
+      filteredActivities[format(tmpDate, activitiesDateFormat)]?.[0] || {});
   };
 
   let streakCount = totalSteps >= dailyStepGoal ? 1 : 0;

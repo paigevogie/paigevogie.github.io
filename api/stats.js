@@ -1,8 +1,10 @@
-import { updateGarminData } from "../pages/service/garminService";
+import { getGarminData } from "../pages/service/garminService";
 
 export default async function handler(request, response) {
-  const newData = await (await fetch(`${process.env.HOST}/api/garmin`)).json();
-  const updatedData = await updateGarminData(newData);
+  const data = await getGarminData({
+    ...(request.query.perPage ? { perPage: request.query.perPage } : {}),
+    ...(request.query.page ? { page: request.query.page } : {}),
+  });
 
-  return response.status(200).json(updatedData);
+  return response.status(200).json(data);
 }

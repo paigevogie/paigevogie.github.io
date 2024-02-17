@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { format } from "date-fns";
 import styles from "./index.module.scss";
 import { getStravaActivities } from "@/service/stravaService";
+import { getGarminData } from "@/service/garminService";
 import {
   CALENDAR,
   CHART,
@@ -17,6 +18,10 @@ import Header from "./Header";
 import Calendar from "./Calendar";
 import Chart from "./Chart";
 
+const ACTIVITIES_PER_PAGE = 100;
+const STATS_PER_PAGE = 200;
+const CURRENT_PAGE = 1;
+
 export async function getServerSideProps({ res }) {
   res.setHeader(
     "Cache-Control",
@@ -25,11 +30,14 @@ export async function getServerSideProps({ res }) {
 
   return {
     props: {
-      activities: [
-        ...(await getStravaActivities(200)),
-        ...(await getStravaActivities(200, 2)),
-      ],
-      stats: await (await fetch(`${process.env.HOST}/api/stats`)).json(),
+      activities: await getStravaActivities({
+        perPage: ACTIVITIES_PER_PAGE,
+        page: CURRENT_PAGE,
+      }),
+      stats: await getGarminData({
+        perPage: STATS_PER_PAGE,
+        page: CURRENT_PAGE,
+      }),
     },
   };
 }
@@ -40,20 +48,21 @@ const TrainingLog = (props) => {
   const [displayUnit, setDisplayUnit] = useState(COUNT);
   const [groupBy, setGroupBy] = useState(WEEK);
   const [activities, setActivities] = useState(props.activities);
+  const [stats, setStats] = useState(props.stats);
   const [topWeek, setTopWeek] = useState(null);
 
   const headerRef = useRef();
   const calendarRef = useRef();
 
   const filteredActivities = [STEPS, INTENSITY_MINUTES].includes(activityType)
-    ? props.stats
+    ? stats
     : activities
         .filter(({ type }) =>
           activityType === ALL ? true : type === activityType
         )
         .reduce((acc, activity) => {
           const date = format(
-            new Date(activity.start_date),
+            new Date(activity.start_date_local),
             activitiesDateFormat
           );
           acc[date] = acc[date] || [];
@@ -91,9 +100,14 @@ const TrainingLog = (props) => {
                   displayUnit,
                   activityType,
                   activities,
+                  stats,
                   setTopWeek,
                   filteredActivities,
                   setActivities,
+                  setStats,
+                  currentPage: CURRENT_PAGE,
+                  activitiesPerPage: ACTIVITIES_PER_PAGE,
+                  statsPerPage: STATS_PER_PAGE,
                 }}
               />
             );
