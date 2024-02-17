@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { format } from "date-fns";
 import styles from "./index.module.scss";
 import { getStravaActivities } from "@/service/stravaService";
@@ -22,7 +22,7 @@ const ACTIVITIES_PER_PAGE = 100;
 const STATS_PER_PAGE = 200;
 const CURRENT_PAGE = 1;
 
-export async function getServerSideProps({ res }) {
+export async function getServerSideProps({ res, query = {} }) {
   res.setHeader(
     "Cache-Control",
     "public, s-maxage=600, stale-while-revalidate=59"
@@ -30,6 +30,7 @@ export async function getServerSideProps({ res }) {
 
   return {
     props: {
+      query,
       activities: await getStravaActivities({
         perPage: ACTIVITIES_PER_PAGE,
         page: CURRENT_PAGE,
@@ -43,16 +44,28 @@ export async function getServerSideProps({ res }) {
 }
 
 const TrainingLog = (props) => {
-  const [view, setView] = useState(CALENDAR);
-  const [activityType, setActivityType] = useState(STEPS);
-  const [displayUnit, setDisplayUnit] = useState(COUNT);
-  const [groupBy, setGroupBy] = useState(DAY);
+  const [view, setView] = useState(props.query.view || CALENDAR);
+  const [activityType, setActivityType] = useState(
+    props.query.activityType?.replace("+", " ") || STEPS
+  );
+  const [displayUnit, setDisplayUnit] = useState(
+    props.query.displayUnit || COUNT
+  );
+  const [groupBy, setGroupBy] = useState(props.query.groupBy || DAY);
   const [activities, setActivities] = useState(props.activities);
   const [stats, setStats] = useState(props.stats);
   const [topWeek, setTopWeek] = useState(null);
 
   const headerRef = useRef();
   const calendarRef = useRef();
+
+  const updateStateWithParams = (key, setState) => (value) => {
+    const url = new URL(window.location);
+    url.searchParams.set(key, value);
+    window.history.pushState(null, "", url.toString());
+
+    setState(value);
+  };
 
   const filteredActivities = [STEPS, INTENSITY_MINUTES].includes(activityType)
     ? stats
@@ -77,16 +90,19 @@ const TrainingLog = (props) => {
         {...{
           headerRef,
           activityType,
-          setActivityType,
           displayUnit,
-          setDisplayUnit,
           topWeek,
           filteredActivities,
           activities,
           view,
-          setView,
           groupBy,
-          setGroupBy,
+          setActivityType: updateStateWithParams(
+            "activityType",
+            setActivityType
+          ),
+          setDisplayUnit: updateStateWithParams("displayUnit", setDisplayUnit),
+          setView: updateStateWithParams("view", setView),
+          setGroupBy: updateStateWithParams("groupBy", setGroupBy),
         }}
       />
       {(() => {

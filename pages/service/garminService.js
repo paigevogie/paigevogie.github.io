@@ -7,11 +7,15 @@ export const getGarminData = async ({ perPage, page = 1 }) => {
 
   // only get new data for first page
   if (page === 1) {
-    const newData = await (
-      await fetch(`${process.env.HOST}/api/garmin`)
-    ).json();
+    try {
+      const newData = await (
+        await fetch(`${process.env.HOST}/api/garmin`)
+      ).json();
 
-    await kv.set(GARMIN_DATA, { ...data, ...newData });
+      await kv.set(GARMIN_DATA, { ...data, ...newData });
+    } catch (err) {
+      console.log("Unable to fetch new garmin data:", err);
+    }
   }
 
   const paginatedData = Object.keys(data)
