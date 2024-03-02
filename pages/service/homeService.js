@@ -1,9 +1,9 @@
 import { kv } from "@vercel/kv";
 import { handleResponseError } from "./serviceUtils";
 import {
-  getStravaMap,
   getStravaActivities,
   getStravaActivity,
+  getStravaMap,
 } from "./stravaService";
 
 const STRAVA_DATA = "strava_data";

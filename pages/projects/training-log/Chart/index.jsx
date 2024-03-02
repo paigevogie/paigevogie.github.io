@@ -1,22 +1,22 @@
 import ChartJS from "chart.js/auto";
+import { format, isSameMonth } from "date-fns";
 import { Bar } from "react-chartjs-2";
-import styles from "./index.module.scss";
 import {
-  MONTHS,
-  today,
   COUNT,
+  DAY,
   DISTANCE,
-  TIME,
-  PACE,
-  RELATIVE_EFFORT,
   getGroups,
   getTotal,
-  DAY,
-  WEEK,
   MONTH,
+  MONTHS,
+  PACE,
+  RELATIVE_EFFORT,
+  TIME,
+  today,
+  WEEK,
   weekOptions,
 } from "../utils";
-import { format, isSameMonth } from "date-fns";
+import styles from "./index.module.scss";
 
 const Chart = ({ activityType, displayUnit, filteredActivities, groupBy }) => {
   const getData = () =>

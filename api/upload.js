@@ -1,4 +1,4 @@
-import { put, list, del } from "@vercel/blob";
+import { put } from "@vercel/blob";
 
 export default async function handler(request, response) {
   // const { blobs } = await list();

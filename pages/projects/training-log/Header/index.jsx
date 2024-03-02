@@ -1,22 +1,22 @@
-import styles from "./index.module.scss";
 import { format, getYear as getYearFromDate } from "date-fns";
 import {
+  ALL,
   CALENDAR,
   CHART,
-  ALL,
-  STEPS,
-  STATS,
-  DISTANCE,
-  DISPLAY_UNITS,
   COUNT,
-  GROUP_BY,
-  WEEK,
-  getMonth,
-  getTotal,
-  getStepsStreak,
+  DISPLAY_UNITS,
+  DISTANCE,
   getGroups,
+  getMonth,
+  getStepsStreak,
+  getTotal,
+  GROUP_BY,
+  STATS,
+  STEPS,
   today,
+  WEEK,
 } from "../utils";
+import styles from "./index.module.scss";
 
 const Header = ({
   headerRef,

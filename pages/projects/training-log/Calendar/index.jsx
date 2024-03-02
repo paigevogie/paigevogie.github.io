@@ -1,29 +1,29 @@
-import { Fragment, useState, useEffect, useRef } from "react";
-import styles from "./index.module.scss";
 import {
-  startOfWeek,
+  addWeeks,
+  differenceInCalendarWeeks,
   endOfWeek,
   format,
-  differenceInCalendarWeeks,
-  addWeeks,
   isSameMonth,
+  startOfWeek,
 } from "date-fns";
 import throttle from "lodash.throttle";
+import { Fragment, useEffect, useRef, useState } from "react";
+import config from "../config";
 import {
-  DISTANCE,
-  STEPS,
-  RUN,
+  activitiesDateFormat,
   DAYS,
+  DISTANCE,
   getActivityDisplayUnit,
   getTotal,
   getWeek,
   isFuture,
   isToday,
+  RUN,
+  STEPS,
   today,
   weekOptions,
-  activitiesDateFormat,
 } from "../utils";
-import config from "../config";
+import styles from "./index.module.scss";
 
 const Calendar = ({
   headerRef,

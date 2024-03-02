@@ -1,5 +1,4 @@
 import { getGarminData } from "@/service/garminService";
-
 import { getStravaActivities } from "@/service/stravaService";
 import { format } from "date-fns";
 import { useRef, useState } from "react";
