@@ -24,6 +24,7 @@
   "devDependencies": {
     "husky": "^7.0.4",
     "lint-staged": "^15.1.0",
+    "nodemon": "^3.1.0",
     "prettier": "2.5.1",
     "sass": "^1.60.0",
     "vercel": "^32.5.6"
@@ -31,6 +32,7 @@
   "scripts": {
     "dev": "next dev",
     "vercel:dev": "vercel dev",
+    "python:dev": "nodemon --exec python3 local.py",
     "build": "next build",
     "start": "next start",
     "prettier": "npx prettier --write .",

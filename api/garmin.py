@@ -1,15 +1,14 @@
 import logging
-from http.server import BaseHTTPRequestHandler
+from datetime import datetime, timedelta
+from http.server import BaseHTTPRequestHandler, HTTPServer
 from json import dumps
 from os import getenv
+from urllib.parse import parse_qs, urlparse
+
 from dotenv import load_dotenv
-from http.server import HTTPServer
-from datetime import datetime, timedelta
-from pytz import timezone
 # https://github.com/cyberjunky/python-garminconnect
-from garminconnect import (
-    Garmin
-)
+from garminconnect import Garmin
+from pytz import timezone
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -24,10 +23,14 @@ class Handler(BaseHTTPRequestHandler):
       api = Garmin(getenv('GARMIN_USERNAME'), getenv('GARMIN_PASSWORD'))
       api.login()
 
-      # pull data for last three days
+      # pull data for last X days
       i=0
       dates = []
-      while i < 3:
+      days = 3
+      query = parse_qs(urlparse(self.path).query)
+      if "days" in query:
+        days = int(query['days'][0])
+      while i < days:
         date = (datetime.now(timezone('US/Central')).date() - timedelta(days=i)).isoformat()
         dates.append(date)
         i+=1
@@ -36,9 +39,9 @@ class Handler(BaseHTTPRequestHandler):
       for date in dates:
         data[date] = api.get_stats_and_body(date)
 
-      filteredData = {}
+      filtered_data = {}
       for date in data:
-        filteredData[date] = [{
+        filtered_data[date] = [{
           'totalSteps': data[date]['totalSteps'],
           'dailyStepGoal': data[date]['dailyStepGoal'],
           'moderateIntensityMinutes': data[date]['moderateIntensityMinutes'],
@@ -47,8 +50,8 @@ class Handler(BaseHTTPRequestHandler):
         }]
 
       # sort by most recent date
-      sortedData = dict(sorted(
-        filteredData.items(),
+      sorted_data = dict(sorted(
+        filtered_data.items(),
         key = lambda x:datetime.strptime(x[0], '%Y-%m-%d'),
         reverse=True
       ))
@@ -56,21 +59,10 @@ class Handler(BaseHTTPRequestHandler):
       self.send_response(200)
       self.send_header('Content-type', 'application/json')
       self.end_headers()
-      self.wfile.write(dumps(sortedData).encode())
+      self.wfile.write(dumps(sorted_data).encode())
     except Exception as err:
       logger.error('Error on do_GET: %s', err)
       self.send_response(500)
       self.send_header('Content-type', 'text/html')
       self.end_headers()
       self.wfile.write('Server Error'.encode())
-
-
-# Testing serverless functions locally
-def startServer(server_class=HTTPServer, handler_class=Handler, port=8008):
-  server_address = ('', port)
-  httpd = server_class(server_address, handler_class)
-
-  print('Starting httpd on port', port)
-  httpd.serve_forever()
-
-# startServer()
