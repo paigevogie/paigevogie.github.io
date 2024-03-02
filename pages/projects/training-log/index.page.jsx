@@ -1,23 +1,23 @@
-import { useState, useRef, useEffect } from "react";
-
-import { format } from "date-fns";
-import styles from "./index.module.scss";
-import { getStravaActivities } from "@/service/stravaService";
 import { getGarminData } from "@/service/garminService";
-import {
-  CALENDAR,
-  CHART,
-  ALL,
-  STEPS,
-  INTENSITY_MINUTES,
-  COUNT,
-  activitiesDateFormat,
-  DAY,
-} from "./utils";
+
+import { getStravaActivities } from "@/service/stravaService";
+import { format } from "date-fns";
+import { useRef, useState } from "react";
 import Layout from "../../components/Layout";
-import Header from "./Header";
 import Calendar from "./Calendar";
 import Chart from "./Chart";
+import Header from "./Header";
+import styles from "./index.module.scss";
+import {
+  activitiesDateFormat,
+  ALL,
+  CALENDAR,
+  CHART,
+  COUNT,
+  DAY,
+  INTENSITY_MINUTES,
+  STEPS,
+} from "./utils";
 
 const ACTIVITIES_PER_PAGE = 100;
 const STATS_PER_PAGE = 200;
