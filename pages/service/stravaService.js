@@ -89,7 +89,7 @@ const getStravaHeaders = async () => ({
   },
 });
 
-const getStravaActivities = async ({ perPage, page = 1, ...args }) => {
+const getStravaActivities = async ({ perPage = 10, page = 1, ...args }) => {
   const response = await fetch(
     `https://www.strava.com/api/v3/athlete/activities?per_page=${perPage}&page=${page}`,
     await getStravaHeaders()

@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+
 import { format } from "date-fns";
 import styles from "./index.module.scss";
 import { getStravaActivities } from "@/service/stravaService";
