@@ -177,6 +177,7 @@ const TrainingLog = (props) => {
                   groupBy,
                   chartDate,
                   setChartDate,
+                  loadMore,
                 }}
               />
             );

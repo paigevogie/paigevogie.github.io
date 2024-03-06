@@ -24,6 +24,7 @@ const Chart = ({
   groupBy,
   chartDate,
   setChartDate,
+  loadMore,
 }) => {
   const getData = () =>
     getGroups(chartDate, groupBy).map((group) =>
@@ -120,6 +121,9 @@ const Chart = ({
         </button>
       </div>
       <Bar data={chartData} options={options} />
+      <div className={styles.loadMoreContainer}>
+        <button onClick={loadMore}>Load More</button>
+      </div>
     </>
   );
 };
