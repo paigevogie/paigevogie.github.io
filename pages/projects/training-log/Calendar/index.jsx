@@ -7,7 +7,7 @@ import {
   startOfWeek,
 } from "date-fns";
 import throttle from "lodash.throttle";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef } from "react";
 import config from "../config";
 import {
   activitiesDateFormat,
@@ -34,51 +34,10 @@ const Calendar = ({
   stats,
   setTopWeek,
   filteredActivities,
-  setActivities,
-  setStats,
-  activitiesPerPage,
-  statsPerPage,
-  ...props
+  loadMore,
+  showLoadMore,
 }) => {
-  const [currentPage, setCurrentPage] = useState(props.currentPage);
-  const [showLoadMore, setShowLoadMore] = useState(true);
   const calendarHeaderRef = useRef();
-
-  const loadMore = async () => {
-    const newActivities =
-      (await (
-        await fetch(
-          `/api/activities?perPage=${activitiesPerPage}&page=${currentPage + 1}`
-        )
-      ).json()) || [];
-
-    const newStats =
-      (await (
-        await fetch(
-          `/api/stats?perPage=${statsPerPage}&page=${currentPage + 1}`
-        )
-      ).json()) || {};
-
-    const allActivities = [...activities, ...newActivities];
-    const allStats = { ...stats, ...newStats };
-
-    const lastActivityDate = new Date(
-      allActivities[allActivities.length - 1].start_date_local
-    );
-    const lastStatsDate = new Date(
-      Object.keys(allStats).sort((a, b) => new Date(a) - new Date(b))[0]
-    );
-
-    // Since I started using strava before garmin, check that there's no new garmin stats
-    // to load and the oldest strava activity is older than oldest garmin stats
-    if (!Object.keys(newStats).length && lastActivityDate <= lastStatsDate) {
-      setShowLoadMore(false);
-    }
-
-    !!newActivities.length && setActivities(allActivities);
-    !!Object.keys(newStats).length && setStats(allStats);
-    setCurrentPage(currentPage + 1);
-  };
 
   useEffect(() => {
     const updateTopWeek = () => {

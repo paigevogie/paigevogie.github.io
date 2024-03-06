@@ -16,6 +16,7 @@ import {
   DAY,
   INTENSITY_MINUTES,
   STEPS,
+  today,
 } from "./utils";
 
 const ACTIVITIES_PER_PAGE = 100;
@@ -55,6 +56,9 @@ const TrainingLog = (props) => {
   const [activities, setActivities] = useState(props.activities);
   const [stats, setStats] = useState(props.stats);
   const [topWeek, setTopWeek] = useState(null);
+  const [chartDate, setChartDate] = useState(today);
+  const [currentPage, setCurrentPage] = useState(CURRENT_PAGE);
+  const [showLoadMore, setShowLoadMore] = useState(true);
 
   const headerRef = useRef();
   const calendarRef = useRef();
@@ -84,6 +88,44 @@ const TrainingLog = (props) => {
           return acc;
         }, {});
 
+  const loadMore = async () => {
+    const newActivities =
+      (await (
+        await fetch(
+          `/api/activities?perPage=${ACTIVITIES_PER_PAGE}&page=${
+            currentPage + 1
+          }`
+        )
+      ).json()) || [];
+
+    const newStats =
+      (await (
+        await fetch(
+          `/api/stats?perPage=${STATS_PER_PAGE}&page=${currentPage + 1}`
+        )
+      ).json()) || {};
+
+    const allActivities = [...activities, ...newActivities];
+    const allStats = { ...stats, ...newStats };
+
+    const lastActivityDate = new Date(
+      allActivities[allActivities.length - 1].start_date_local
+    );
+    const lastStatsDate = new Date(
+      Object.keys(allStats).sort((a, b) => new Date(a) - new Date(b))[0]
+    );
+
+    // Since I started using strava before garmin, check that there's no new garmin stats
+    // to load and the oldest strava activity is older than oldest garmin stats
+    if (!Object.keys(newStats).length && lastActivityDate <= lastStatsDate) {
+      setShowLoadMore(false);
+    }
+
+    !!newActivities.length && setActivities(allActivities);
+    !!Object.keys(newStats).length && setStats(allStats);
+    setCurrentPage(currentPage + 1);
+  };
+
   return (
     <Layout title="Training Log" className={styles.trainingLog} {...props}>
       <Header
@@ -96,6 +138,7 @@ const TrainingLog = (props) => {
           activities,
           view,
           groupBy,
+          chartDate,
           setActivityType: updateStateWithParams(
             "activityType",
             setActivityType
@@ -119,11 +162,8 @@ const TrainingLog = (props) => {
                   stats,
                   setTopWeek,
                   filteredActivities,
-                  setActivities,
-                  setStats,
-                  currentPage: CURRENT_PAGE,
-                  activitiesPerPage: ACTIVITIES_PER_PAGE,
-                  statsPerPage: STATS_PER_PAGE,
+                  loadMore,
+                  showLoadMore,
                 }}
               />
             );
@@ -135,6 +175,8 @@ const TrainingLog = (props) => {
                   displayUnit,
                   filteredActivities,
                   groupBy,
+                  chartDate,
+                  setChartDate,
                 }}
               />
             );

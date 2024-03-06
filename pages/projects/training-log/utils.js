@@ -3,9 +3,12 @@ import {
   addMonths,
   addWeeks,
   format,
+  getYear,
   isBefore,
+  isSameDay,
   isSameMonth,
   isSameWeek,
+  isSameYear,
   startOfMonth,
   startOfWeek,
   startOfYear,
@@ -189,42 +192,49 @@ export const getMonth = (date) => {
 };
 
 export const getGroups = (date, type) => {
-  const group = [];
+  const groups = [];
+  const isThisYear = isSameYear(today, date);
 
   if (type === DAY) {
     let tmpDate = startOfYear(date);
 
-    while (isBefore(tmpDate, date)) {
-      group.push([tmpDate]);
+    while (
+      isThisYear
+        ? isBefore(tmpDate, date) || isSameDay(tmpDate, date)
+        : isSameYear(tmpDate, date)
+    ) {
+      groups.push([tmpDate]);
       tmpDate = addDays(tmpDate, 1);
     }
-
-    group.push([tmpDate]);
   }
 
   if (type === WEEK) {
     let tmpDate = startOfWeek(startOfYear(date), weekOptions);
 
-    while (!isSameWeek(date, tmpDate, weekOptions)) {
-      group.push(getWeek(tmpDate));
+    while (
+      isThisYear
+        ? isBefore(tmpDate, date) || isSameWeek(tmpDate, date, weekOptions)
+        : getYear(tmpDate) <= getYear(date)
+    ) {
+      groups.push(getWeek(tmpDate));
       tmpDate = addWeeks(tmpDate, 1, weekOptions);
     }
-
-    group.push(getWeek(tmpDate));
   }
 
   if (type === MONTH) {
     let tmpDate = startOfYear(date);
 
-    while (!isSameMonth(date, tmpDate)) {
-      group.push(getMonth(tmpDate));
+    while (
+      isThisYear
+        ? isBefore(tmpDate, date) || isSameMonth(tmpDate, date)
+        : isSameYear(tmpDate, date)
+    ) {
+      groups.push(getMonth(tmpDate));
       tmpDate = addMonths(tmpDate, 1);
     }
-
-    group.push(getMonth(tmpDate));
   }
 
-  return group;
+  return groups;
 };
 
 export const activitiesDateFormat = "yyyy-MM-dd";

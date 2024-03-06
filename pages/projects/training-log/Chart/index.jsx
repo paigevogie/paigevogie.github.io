@@ -1,5 +1,5 @@
 import ChartJS from "chart.js/auto";
-import { format, isSameMonth } from "date-fns";
+import { addYears, format, isSameMonth } from "date-fns";
 import { Bar } from "react-chartjs-2";
 import {
   COUNT,
@@ -12,15 +12,21 @@ import {
   PACE,
   RELATIVE_EFFORT,
   TIME,
-  today,
   WEEK,
   weekOptions,
 } from "../utils";
 import styles from "./index.module.scss";
 
-const Chart = ({ activityType, displayUnit, filteredActivities, groupBy }) => {
+const Chart = ({
+  activityType,
+  displayUnit,
+  filteredActivities,
+  groupBy,
+  chartDate,
+  setChartDate,
+}) => {
   const getData = () =>
-    getGroups(today, groupBy).map((group) =>
+    getGroups(chartDate, groupBy).map((group) =>
       getTotal(group, filteredActivities, displayUnit, activityType, false)
     );
 
@@ -42,11 +48,11 @@ const Chart = ({ activityType, displayUnit, filteredActivities, groupBy }) => {
   const getLabels = () => {
     switch (groupBy) {
       case DAY:
-        return getGroups(today, groupBy).map(
+        return getGroups(chartDate, groupBy).map(
           (group) => `${format(group[0], "MMM d")}`
         );
       case WEEK:
-        return getGroups(today, groupBy).map(
+        return getGroups(chartDate, groupBy).map(
           (group) =>
             `${format(group[0], "MMM d")} – ${format(
               group[6],
@@ -58,6 +64,10 @@ const Chart = ({ activityType, displayUnit, filteredActivities, groupBy }) => {
     }
   };
 
+  const black = "#323232";
+  const grey = "#ededed";
+  const green = "#97ead0";
+
   // https://www.chartjs.org/docs/latest/configuration/
   const chartData = {
     labels: getLabels(),
@@ -65,7 +75,7 @@ const Chart = ({ activityType, displayUnit, filteredActivities, groupBy }) => {
       {
         data: getData(),
         label: getLabel(),
-        backgroundColor: "#97ead0",
+        backgroundColor: green,
       },
     ],
   };
@@ -79,13 +89,13 @@ const Chart = ({ activityType, displayUnit, filteredActivities, groupBy }) => {
       tooltip: {
         cornerRadius: 0,
         padding: 8,
-        titleColor: "#323232",
+        titleColor: black,
         titleFont: {
           weight: "normal",
         },
         titleMarginBottom: 2,
-        bodyColor: "#323232",
-        backgroundColor: "#ededed",
+        bodyColor: black,
+        backgroundColor: grey,
         displayColors: false,
         xAlign: "center",
         yAlign: "bottom",
@@ -96,13 +106,21 @@ const Chart = ({ activityType, displayUnit, filteredActivities, groupBy }) => {
   ChartJS.defaults.font.size = 10;
   ChartJS.defaults.font.family = "Helvetica, Arial, sans-serif";
   ChartJS.defaults.font.weight = "lighter";
-  ChartJS.defaults.color = "#323232";
-  ChartJS.defaults.borderColor = "#ededed";
+  ChartJS.defaults.color = black;
+  ChartJS.defaults.borderColor = grey;
 
   return (
-    <div className={styles.charts}>
+    <>
+      <div className={styles.chartNavigation}>
+        <button onClick={() => setChartDate(addYears(chartDate, -1))}>
+          Prev
+        </button>
+        <button onClick={() => setChartDate(addYears(chartDate, 1))}>
+          Next
+        </button>
+      </div>
       <Bar data={chartData} options={options} />
-    </div>
+    </>
   );
 };
 

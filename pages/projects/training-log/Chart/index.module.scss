@@ -1,5 +1,21 @@
-.charts {
+.chartNavigation {
   display: flex;
-  justify-content: center;
-  padding-top: $sizing-lg;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: $sizing-sm;
+
+  button {
+    padding: $sizing-2xs;
+    border: 1px solid $green;
+    background-color: white;
+    border-radius: 0;
+    cursor: pointer;
+    font-weight: 300;
+    width: 50px;
+    text-transform: uppercase;
+
+    &:hover {
+      color: $light-grey;
+    }
+  }
 }
