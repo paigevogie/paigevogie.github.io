@@ -3,7 +3,7 @@
 
   > div {
     height: 20%;
-    padding: $sizing-lg;
+    padding: $embed-padding;
     display: flex;
 
     a {
@@ -18,7 +18,7 @@
 
   ul {
     margin: 0;
-    padding: 0 $sizing-lg $sizing-md;
+    padding: 0 $embed-padding $embed-padding;
     height: 80%;
     overflow-y: scroll;
     list-style: none;

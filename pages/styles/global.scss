@@ -62,33 +62,43 @@ body {
   }
 
   .profile-badge {
-    width: 100%;
+    width: 75%;
     height: 100%;
-    padding: $sizing-xl $sizing-lg;
+    padding: $embed-padding;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
-    .profile-badge__header icon {
-      color: #0a66c2;
-      display: inline-block;
-      width: 84px;
+    .profile-badge__header {
+      display: flex;
+      justify-content: center;
+      icon {
+        color: #0a66c2;
+        display: inline-block;
+        svg {
+          height: 20px;
+        }
+      }
     }
     .profile-badge__content {
       .profile-badge__content-profile-image {
-        margin: $sizing-lg 0;
-        height: $sizing-5xl;
-        width: $sizing-5xl;
-        border-radius: 50%;
+        // hide because linkedin and github profile images are the same
+        display: none;
       }
       h3 {
         margin-bottom: $sizing-xs;
+        // text-align: center;
       }
       h4 {
         font-weight: 300;
-        font-size: $font-size-md;
+        font-size: $font-size-sm;
+        margin-bottom: $sizing-xs;
       }
     }
     .profile-badge__cta-btn {
       display: inline-block;
-      margin-top: $sizing-md;
+      margin: 0 auto;
       padding: $sizing-sm $sizing-lg;
       color: #0a66c2;
       border: 1px solid #0a66c2;

@@ -6,3 +6,4 @@ data/*
 tmp/
 data.json
 local.**
+.env*.local

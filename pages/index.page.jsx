@@ -47,9 +47,9 @@ const Home = ({
     {...props}
   >
     <div>
-      <Strava {...{ stravaData }} />
-      <Libby {...{ libbyData }} />
       <GitHub {...{ githubData }} />
+      <Libby {...{ libbyData }} />
+      <Strava {...{ stravaData }} />
       <LinkedIn {...{ linkedInData }} />
     </div>
   </Layout>

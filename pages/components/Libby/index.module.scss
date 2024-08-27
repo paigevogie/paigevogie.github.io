@@ -2,7 +2,7 @@
   overflow: hidden;
 
   > a {
-    padding: $sizing-lg;
+    padding: $embed-padding;
     font-weight: 400;
     display: flex;
     justify-content: space-between;
@@ -19,7 +19,7 @@
 
   ul {
     margin: 0;
-    padding: 0 $sizing-lg $sizing-md;
+    padding: 0 $embed-padding $embed-padding;
     list-style: none;
     display: flex;
     flex-direction: column;
