@@ -12,11 +12,7 @@ const Layout = ({
   seoTitle,
 }) => (
   <>
-    <SEO
-      title={seoTitle || title}
-      description={description}
-      path={path}
-    />
+    <SEO title={seoTitle || title} description={description} path={path} />
     <header className={styles.header}>
       <Nav />
       <div>

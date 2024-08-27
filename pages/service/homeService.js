@@ -1,12 +1,5 @@
-import { kv } from "@vercel/kv";
 import { handleResponseError } from "./serviceUtils";
-import {
-  getStravaActivities,
-  getStravaActivity,
-  getStravaMap,
-} from "./stravaService";
-
-const STRAVA_DATA = "strava_data";
+import { getStravaActivities, getStravaMap } from "./stravaService";
 
 export const getLibbyData = async () => {
   try {
@@ -49,39 +42,21 @@ export const getLinkedInData = async () => {
 
 export const getStravaData = async () => {
   try {
-    const stravaData = await kv.get(STRAVA_DATA);
-    const isToday =
-      new Date().setHours(0, 0, 0, 0) ===
-      new Date(stravaData?.timestamp).setHours(0, 0, 0, 0);
-    if (isToday) {
-      console.info("Returning cached strava data");
-      return stravaData.activitiesData;
-    }
-
-    const SIZE = 10;
+    const SIZE = 20;
     const stravaActivities = await getStravaActivities({
       perPage: SIZE,
-      // TODO: fix map caching
-      // map: true,
-      // photoCount: true,
+      map: true,
     });
 
     const activitiesData = await Promise.all(
-      stravaActivities.map(async (activity) => {
-        if (!activity.map?.summary_polyline && activity.total_photo_count > 0) {
-          const { photos } = await getStravaActivity(activity.id);
-          activity.photos = photos;
-        }
-
-        if (activity.map?.summary_polyline && !activity.map.url) {
+      stravaActivities
+        // only return activities witha map
+        .filter((activity) => !!activity.map?.summary_polyline)
+        .map(async (activity) => {
           activity.map.url = await getStravaMap(activity);
-        }
-
-        return activity;
-      })
+          return activity;
+        })
     );
-
-    await kv.set(STRAVA_DATA, { activitiesData, timestamp: Date.now() });
 
     return activitiesData;
   } catch (err) {

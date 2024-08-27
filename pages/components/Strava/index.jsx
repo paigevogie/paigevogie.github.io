@@ -30,53 +30,28 @@ const StravaSvg = () => (
   </svg>
 );
 
-const Strava = ({ stravaData }) => {
-  const formatTime = (time) => {
-    const hours = `${Math.floor(time / (60 * 60))}`;
-    const minutes = `${Math.floor((time - hours * 60 * 60) / 60)}`.padStart(
-      2,
-      "0"
-    );
-    const seconds = `${time - hours * 60 * 60 - minutes * 60}`.padStart(2, "0");
-    return `${hours > 0 ? `${hours}:` : ""}${minutes}:${seconds}`;
-  };
-
-  return (
-    <div className={styles["strava-embed"]}>
-      <div>
-        <a href="https://www.strava.com/athletes/55412609">
-          <StravaSvg />
-        </a>
-      </div>
-      <ul>
-        {stravaData.map(
-          ({
-            // map,
-            // photos,
-            name,
-            distance,
-            moving_time,
-            start_date_local,
-            id,
-          }) => (
-            <li key={id}>
-              {/* {(!!map?.url || !!photos) && (
-                <img src={map?.url || photos?.primary?.urls["100"]} />
-              )} */}
-              <div>
-                <div>{name}</div>
-                <small>
-                  <div>{`${new Date(start_date_local).toDateString()}`}</div>
-                  <div>{`${Math.round((distance / 1609) * 100) / 100} mi`}</div>
-                  <div>{`${formatTime(moving_time)}`}</div>
-                </small>
-              </div>
-            </li>
-          )
-        )}
-      </ul>
+const Strava = ({ stravaData }) => (
+  <div className={styles["strava-embed"]}>
+    <div>
+      <a href="https://www.strava.com/athletes/55412609">
+        <StravaSvg />
+      </a>
     </div>
-  );
-};
+    <ul>
+      {stravaData.map(({ map, name, distance, start_date_local, id }) => (
+        <li key={id}>
+          <img src={map?.url} alt={`map for activity id:${id}`} />
+          <div>
+            <div>{name}</div>
+            <small>
+              <div>{`${new Date(start_date_local).toDateString()}`}</div>
+              <div>{`${Math.round((distance / 1609) * 100) / 100} mi`}</div>
+            </small>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+);
 
 export default Strava;

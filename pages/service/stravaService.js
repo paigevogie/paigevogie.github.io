@@ -1,7 +1,5 @@
+import { list, put } from "@vercel/blob";
 import { kv } from "@vercel/kv";
-import fs, { promises as fsp } from "fs";
-import { Readable } from "stream";
-import { finished } from "stream/promises";
 import { handleResponseError } from "./serviceUtils";
 
 const getStravaToken = async () => {
@@ -34,6 +32,19 @@ const getStravaToken = async () => {
 
 const getStravaMap = async ({ map, id }) => {
   try {
+    const { blobs } = await list();
+
+    // blobs.length && await del(blobs.map(({ url }) => url));
+    // return null;
+
+    const matchedBlob = blobs.find(({ pathname }) => pathname === `${id}`);
+    if (matchedBlob?.url) {
+      console.info(`Returning cached map for id:${id}, url:${matchedBlob.url}`);
+      return matchedBlob.url;
+    }
+
+    console.info(`Fetching mapbox map for id:${id}`);
+
     const MAP_STYLE = "streets-v12";
     const DIMENSIONS = "100x100";
     const STROKE_WIDTH = 2;
@@ -50,33 +61,11 @@ const getStravaMap = async ({ map, id }) => {
     );
     handleResponseError(mapResponse, "Mapbox");
 
-    // Followed this example to write body to file
-    // https://stackoverflow.com/questions/37614649/how-can-i-download-and-save-a-file-using-the-fetch-api-node-js
-    const fileName = `${id}.png`;
-    const dir = "/tmp";
-    const filePath = `${dir}/${fileName}`;
+    const blob = await put(id, mapResponse.body, {
+      access: "public",
+    });
 
-    if (!fs.existsSync(dir)) await fsp.mkdir(dir);
-
-    const fileStream = fs.createWriteStream(filePath);
-    await finished(Readable.fromWeb(mapResponse.body).pipe(fileStream));
-
-    const image = await fsp.readFile(filePath);
-
-    const response = await fetch(
-      `${process.env.HOST}/api/upload?filename=${fileName}`,
-      {
-        method: "POST",
-        body: image,
-      }
-    );
-    handleResponseError(response, "Upload");
-
-    const { url } = await response.json();
-
-    await fsp.rm(filePath);
-
-    return url;
+    return blob.url;
   } catch (err) {
     console.error(`Error getting Strava map id ${id}: ${err}`);
     return null;
@@ -105,7 +94,6 @@ const getStravaActivities = async ({ perPage = 10, page = 1, ...args }) => {
       moving_time,
       average_speed,
       start_date_local,
-      total_photo_count,
       map,
     }) => ({
       name,
@@ -115,7 +103,6 @@ const getStravaActivities = async ({ perPage = 10, page = 1, ...args }) => {
       moving_time,
       average_speed,
       start_date_local,
-      ...(args.photoCount ? { total_photo_count } : {}),
       ...(args.map ? { map } : {}),
     })
   );
