@@ -51,8 +51,8 @@ const Strava = ({ stravaData }) => {
       <ul>
         {stravaData.map(
           ({
-            map,
-            photos,
+            // map,
+            // photos,
             name,
             distance,
             moving_time,

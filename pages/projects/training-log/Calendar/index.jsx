@@ -59,7 +59,7 @@ const Calendar = ({
     document.addEventListener("scroll", onScroll);
 
     return () => document.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [calendarRef, headerRef, setTopWeek]);
 
   const getNumWeeksDisplayed = () => {
     const lastActivityDate = new Date(
@@ -145,7 +145,7 @@ const Calendar = ({
                           activity
                         );
 
-                        return !!display ? (
+                        return display ? (
                           <Fragment
                             key={activity.start_date_local + activity.id}
                           >

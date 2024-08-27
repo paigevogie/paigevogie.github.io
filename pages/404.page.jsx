@@ -5,7 +5,7 @@ const FourZeroFour = (props) => (
     title="404 :("
     subtitle={
       <p>
-        Sorry, this page doesn't exist. Please head back to the{" "}
+        Sorry, this page doesn&apos;t exist. Please head back to the{" "}
         <a href="/">homepage</a>.
       </p>
     }

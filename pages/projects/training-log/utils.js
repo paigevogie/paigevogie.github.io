@@ -213,7 +213,7 @@ export const getTotal = (
 ) => {
   const total = days.reduce((acc, day) => {
     const activityArr = filteredActivities[format(day, activitiesDateFormat)];
-    if (!!activityArr) {
+    if (activityArr) {
       activityArr.forEach(
         ({ distance, moving_time, suffer_score = 0, average_speed = 0 }) => {
           switch (displayUnit) {

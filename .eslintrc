@@ -1,0 +1,12 @@
+{
+  "extends": ["eslint:recommended", "prettier", "next/core-web-vitals"],
+  "plugins": ["jsx-a11y"],
+  "parser": "@babel/eslint-parser",
+  "parserOptions": {
+    "requireConfigFile": false,
+    "babelOptions": {
+      "presets": ["@babel/preset-env", "@babel/preset-react"]
+    }
+  },
+  "ignorePatterns": ["local.js"]
+}

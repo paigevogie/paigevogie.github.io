@@ -128,7 +128,7 @@ const getStravaActivity = async (id) => {
   );
   handleResponseError(activityResponse, `Strava Activity ${id}`);
 
-  return await response.json();
+  return await activityResponse.json();
 };
 
 export { getStravaMap, getStravaActivities, getStravaActivity };

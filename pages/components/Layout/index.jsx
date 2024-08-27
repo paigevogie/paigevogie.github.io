@@ -13,7 +13,7 @@ const Layout = ({
 }) => (
   <>
     <SEO
-      title={!!seoTitle ? seoTitle : title}
+      title={seoTitle || title}
       description={description}
       path={path}
     />
