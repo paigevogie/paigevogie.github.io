@@ -1,4 +1,3 @@
-import { getGarminData } from "@/service/garminService";
 import { getStravaActivities } from "@/service/stravaService";
 import { format } from "date-fns";
 import { useRef, useState } from "react";
@@ -12,15 +11,13 @@ import {
   ALL,
   CALENDAR,
   CHART,
-  COUNT,
   DAY,
-  INTENSITY_MINUTES,
-  STEPS,
+  DISTANCE,
+  RUN,
   today,
 } from "./utils";
 
 const ACTIVITIES_PER_PAGE = 100;
-const STATS_PER_PAGE = 200;
 const CURRENT_PAGE = 1;
 
 export async function getServerSideProps({ res, query = {} }) {
@@ -36,10 +33,6 @@ export async function getServerSideProps({ res, query = {} }) {
         perPage: ACTIVITIES_PER_PAGE,
         page: CURRENT_PAGE,
       }),
-      stats: await getGarminData({
-        perPage: STATS_PER_PAGE,
-        page: CURRENT_PAGE,
-      }),
     },
   };
 }
@@ -47,14 +40,13 @@ export async function getServerSideProps({ res, query = {} }) {
 const TrainingLog = (props) => {
   const [view, setView] = useState(props.query.view || CALENDAR);
   const [activityType, setActivityType] = useState(
-    props.query.activityType?.replace("+", " ") || STEPS
+    props.query.activityType?.replace("+", " ") || RUN
   );
   const [displayUnit, setDisplayUnit] = useState(
-    props.query.displayUnit || COUNT
+    props.query.displayUnit || DISTANCE
   );
   const [groupBy, setGroupBy] = useState(props.query.groupBy || DAY);
   const [activities, setActivities] = useState(props.activities);
-  const [stats, setStats] = useState(props.stats);
   const [topWeek, setTopWeek] = useState(null);
   const [chartDate, setChartDate] = useState(today);
   const [currentPage, setCurrentPage] = useState(CURRENT_PAGE);
@@ -71,22 +63,18 @@ const TrainingLog = (props) => {
     setState(value);
   };
 
-  const filteredActivities = [STEPS, INTENSITY_MINUTES].includes(activityType)
-    ? stats
-    : activities
-        .filter(({ type }) =>
-          activityType === ALL ? true : type === activityType
-        )
-        .reduce((acc, activity) => {
-          const date = format(
-            new Date(activity.start_date_local),
-            activitiesDateFormat
-          );
-          acc[date] = acc[date] || [];
-          acc[date].push(activity);
+  const filteredActivities = activities
+    .filter(({ type }) => (activityType === ALL ? true : type === activityType))
+    .reduce((acc, activity) => {
+      const date = format(
+        new Date(activity.start_date_local),
+        activitiesDateFormat
+      );
+      acc[date] = acc[date] || [];
+      acc[date].push(activity);
 
-          return acc;
-        }, {});
+      return acc;
+    }, {});
 
   const loadMore = async () => {
     const newActivities =
@@ -98,31 +86,12 @@ const TrainingLog = (props) => {
         )
       ).json()) || [];
 
-    const newStats =
-      (await (
-        await fetch(
-          `/api/stats?perPage=${STATS_PER_PAGE}&page=${currentPage + 1}`
-        )
-      ).json()) || {};
-
-    const allActivities = [...activities, ...newActivities];
-    const allStats = { ...stats, ...newStats };
-
-    const lastActivityDate = new Date(
-      allActivities[allActivities.length - 1].start_date_local
-    );
-    const lastStatsDate = new Date(
-      Object.keys(allStats).sort((a, b) => new Date(a) - new Date(b))[0]
-    );
-
-    // Since I started using strava before garmin, check that there's no new garmin stats
-    // to load and the oldest strava activity is older than oldest garmin stats
-    if (!Object.keys(newStats).length && lastActivityDate <= lastStatsDate) {
+    if (!newActivities.length) {
       setShowLoadMore(false);
+      return;
     }
 
-    !!newActivities.length && setActivities(allActivities);
-    !!Object.keys(newStats).length && setStats(allStats);
+    setActivities([...activities, ...newActivities]);
     setCurrentPage(currentPage + 1);
   };
 
@@ -159,7 +128,6 @@ const TrainingLog = (props) => {
                   displayUnit,
                   activityType,
                   activities,
-                  stats,
                   setTopWeek,
                   filteredActivities,
                   loadMore,
@@ -171,7 +139,6 @@ const TrainingLog = (props) => {
             return (
               <Chart
                 {...{
-                  activityType,
                   displayUnit,
                   filteredActivities,
                   groupBy,

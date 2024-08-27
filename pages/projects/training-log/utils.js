@@ -12,7 +12,6 @@ import {
   startOfMonth,
   startOfWeek,
   startOfYear,
-  subDays,
 } from "date-fns";
 import { utcToZonedTime } from "date-fns-tz";
 
@@ -37,16 +36,12 @@ export const MONTHS = [
 
 export const ALL = "All";
 export const RUN = "Run";
-export const STEPS = "Steps";
-export const INTENSITY_MINUTES = "Intensity Minutes";
-export const STATS = [STEPS, INTENSITY_MINUTES];
 
 export const DISTANCE = "Distance";
 export const TIME = "Time";
 export const RELATIVE_EFFORT = "Relative Effort";
 export const PACE = "Pace";
-export const COUNT = "Count";
-export const DISPLAY_UNITS = [DISTANCE, TIME, PACE, COUNT];
+export const DISPLAY_UNITS = [DISTANCE, TIME, PACE];
 
 export const DAY = "Day";
 export const WEEK = "Week";
@@ -83,14 +78,6 @@ const formatTime = (totalSeconds, showUnit = true) => {
   return showUnit ? `${`${hours}:`}${minutes}` : totalMinutes;
 };
 
-const formatSteps = (steps, showUnit = true) =>
-  `${Math.floor(Number(steps) / 100) / 10}${showUnit ? "K" : ""}`;
-
-const formatTotalSteps = (steps) =>
-  steps < 1000000
-    ? `${Math.floor(Number(steps) / 1000)}K`
-    : steps.toLocaleString();
-
 const formatPace = (metersPerSecond, showUnit = true) => {
   if (!metersPerSecond) return 0;
 
@@ -119,20 +106,9 @@ const formatTotalPace = (
   return showUnit ? `${pace} /mi` : pace;
 };
 
-const formatIntensityMinutes = (moderate, vigorous) => 2 * vigorous + moderate;
-
 export const getActivityDisplayUnit = (
   displayUnit,
-  activityType,
-  {
-    distance,
-    moving_time,
-    suffer_score = 0,
-    totalSteps = 0,
-    average_speed = 0,
-    moderateIntensityMinutes = 0,
-    vigorousIntensityMinutes = 0,
-  },
+  { distance, moving_time, suffer_score = 0, average_speed = 0 },
   showUnit = true
 ) => {
   switch (displayUnit) {
@@ -144,16 +120,6 @@ export const getActivityDisplayUnit = (
       return formatPace(average_speed, showUnit);
     case RELATIVE_EFFORT:
       return suffer_score;
-    case COUNT:
-      switch (activityType) {
-        case STEPS:
-          return formatSteps(totalSteps, showUnit);
-        case INTENSITY_MINUTES:
-          return formatIntensityMinutes(
-            moderateIntensityMinutes,
-            vigorousIntensityMinutes
-          );
-      }
   }
 };
 
@@ -243,22 +209,13 @@ export const getTotal = (
   days,
   filteredActivities,
   displayUnit,
-  activityType,
   showUnit = true
 ) => {
   const total = days.reduce((acc, day) => {
     const activityArr = filteredActivities[format(day, activitiesDateFormat)];
     if (!!activityArr) {
       activityArr.forEach(
-        ({
-          distance,
-          moving_time,
-          suffer_score = 0,
-          totalSteps = 0,
-          average_speed = 0,
-          moderateIntensityMinutes = 0,
-          vigorousIntensityMinutes = 0,
-        }) => {
+        ({ distance, moving_time, suffer_score = 0, average_speed = 0 }) => {
           switch (displayUnit) {
             case DISTANCE:
               acc += distance;
@@ -272,18 +229,6 @@ export const getTotal = (
             case RELATIVE_EFFORT:
               acc += suffer_score;
               break;
-            case COUNT:
-              switch (activityType) {
-                case STEPS:
-                  acc += totalSteps;
-                  break;
-                case INTENSITY_MINUTES:
-                  acc += formatIntensityMinutes(
-                    moderateIntensityMinutes,
-                    vigorousIntensityMinutes
-                  );
-                  break;
-              }
           }
         }
       );
@@ -300,34 +245,5 @@ export const getTotal = (
       return total;
     case PACE:
       return formatTotalPace(total, days, filteredActivities, showUnit);
-    case COUNT:
-      switch (activityType) {
-        case STEPS:
-          return showUnit ? formatTotalSteps(total) : total;
-        case INTENSITY_MINUTES:
-          return showUnit ? total.toLocaleString() : total;
-      }
   }
-};
-
-export const getStepsStreak = (filteredActivities) => {
-  let tmpDate = today;
-  let { totalSteps, dailyStepGoal } =
-    filteredActivities[format(tmpDate, activitiesDateFormat)]?.[0] || {};
-
-  const increment = () => {
-    tmpDate = subDays(tmpDate, 1);
-    ({ totalSteps, dailyStepGoal } =
-      filteredActivities[format(tmpDate, activitiesDateFormat)]?.[0] || {});
-  };
-
-  let streakCount = totalSteps >= dailyStepGoal ? 1 : 0;
-  increment();
-
-  while (totalSteps >= dailyStepGoal) {
-    streakCount++;
-    increment();
-  }
-
-  return streakCount;
 };

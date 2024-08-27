@@ -19,7 +19,6 @@ import {
   isFuture,
   isToday,
   RUN,
-  STEPS,
   today,
   weekOptions,
 } from "../utils";
@@ -31,7 +30,6 @@ const Calendar = ({
   displayUnit,
   activityType,
   activities,
-  stats,
   setTopWeek,
   filteredActivities,
   loadMore,
@@ -67,14 +65,8 @@ const Calendar = ({
     const lastActivityDate = new Date(
       activities[activities.length - 1].start_date_local
     );
-    const lastStatsDate = new Date(
-      Object.keys(stats).sort((a, b) => new Date(a) - new Date(b))[0]
-    );
 
-    return differenceInCalendarWeeks(
-      today,
-      lastActivityDate > lastStatsDate ? lastActivityDate : lastStatsDate
-    );
+    return differenceInCalendarWeeks(today, lastActivityDate);
   };
 
   return (
@@ -100,7 +92,6 @@ const Calendar = ({
             getWeek(referenceDate),
             filteredActivities,
             displayUnit,
-            activityType,
             !isRunAndDistance
           );
           const { weeklyDistanceGoal } = config;
@@ -151,7 +142,6 @@ const Calendar = ({
                       .map((activity) => {
                         const display = getActivityDisplayUnit(
                           displayUnit,
-                          activityType,
                           activity
                         );
 
@@ -160,14 +150,7 @@ const Calendar = ({
                             key={activity.start_date_local + activity.id}
                           >
                             <div className={styles.displayUnitContainer}>
-                              <small
-                                className={`${styles.displayUnit} ${
-                                  activityType === STEPS &&
-                                  activity.totalSteps > activity.dailyStepGoal
-                                    ? styles.goal
-                                    : ""
-                                }`}
-                              >
+                              <small className={styles.displayUnit}>
                                 {display}
                                 {displayUnit === DISTANCE}
                               </small>

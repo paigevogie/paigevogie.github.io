@@ -3,16 +3,11 @@ import {
   ALL,
   CALENDAR,
   CHART,
-  COUNT,
   DISPLAY_UNITS,
-  DISTANCE,
   getGroups,
   getMonth,
-  getStepsStreak,
   getTotal,
   GROUP_BY,
-  STATS,
-  STEPS,
   WEEK,
 } from "../utils";
 import styles from "./index.module.scss";
@@ -41,13 +36,6 @@ const Header = ({
 
   const onActivityTypeChange = (e) => {
     const { value: newActivityType } = e.target;
-
-    if (STATS.includes(newActivityType)) {
-      setDisplayUnit(COUNT);
-    } else if (!STATS.includes(newActivityType) && displayUnit === COUNT) {
-      setDisplayUnit(DISTANCE);
-    }
-
     setActivityType(newActivityType);
   };
 
@@ -60,11 +48,6 @@ const Header = ({
             <option value={CHART}>{CHART}</option>
           </select>
           <select value={activityType} onChange={onActivityTypeChange}>
-            {STATS.map((stat) => (
-              <option key={stat} value={stat}>
-                {stat}
-              </option>
-            ))}
             {getActivityTypes().map((type) => (
               <option key={type} value={type}>
                 {type}
@@ -75,15 +58,12 @@ const Header = ({
           <select
             value={displayUnit}
             onChange={(e) => setDisplayUnit(e.target.value)}
-            disabled={displayUnit === COUNT}
           >
-            {DISPLAY_UNITS.map((unit) =>
-              unit !== COUNT || displayUnit === COUNT ? (
-                <option key={unit} value={unit}>
-                  {unit}
-                </option>
-              ) : null
-            )}
+            {DISPLAY_UNITS.map((unit) => (
+              <option key={unit} value={unit}>
+                {unit}
+              </option>
+            ))}
           </select>
           {view === CHART && (
             <select
@@ -99,12 +79,7 @@ const Header = ({
           )}
         </div>
         <div className={styles.topWeek}>
-          {view === CALENDAR && activityType === STEPS ? (
-            <>
-              <small>Streak</small>
-              <div>{getStepsStreak(filteredActivities)}</div>
-            </>
-          ) : view === CALENDAR && topWeek ? (
+          {view === CALENDAR && topWeek ? (
             <>
               <small>
                 {format(
@@ -116,8 +91,7 @@ const Header = ({
                 {getTotal(
                   getMonth(new Date(topWeek?.getAttribute("data-value"))),
                   filteredActivities,
-                  displayUnit,
-                  activityType
+                  displayUnit
                 )}
               </div>
             </>
@@ -128,8 +102,7 @@ const Header = ({
                 {getTotal(
                   getGroups(chartDate, WEEK).flat(),
                   filteredActivities,
-                  displayUnit,
-                  activityType
+                  displayUnit
                 )}
               </div>
             </>

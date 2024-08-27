@@ -2,7 +2,6 @@ import ChartJS from "chart.js/auto";
 import { addYears, format, isSameMonth } from "date-fns";
 import { Bar } from "react-chartjs-2";
 import {
-  COUNT,
   DAY,
   DISTANCE,
   getGroups,
@@ -18,7 +17,6 @@ import {
 import styles from "./index.module.scss";
 
 const Chart = ({
-  activityType,
   displayUnit,
   filteredActivities,
   groupBy,
@@ -28,7 +26,7 @@ const Chart = ({
 }) => {
   const getData = () =>
     getGroups(chartDate, groupBy).map((group) =>
-      getTotal(group, filteredActivities, displayUnit, activityType, false)
+      getTotal(group, filteredActivities, displayUnit, false)
     );
 
   const getLabel = () => {
@@ -41,8 +39,6 @@ const Chart = ({
         return "Minutes";
       case RELATIVE_EFFORT:
         return RELATIVE_EFFORT;
-      case COUNT:
-        return activityType;
     }
   };
 
