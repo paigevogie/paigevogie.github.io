@@ -39,7 +39,6 @@ const getStravaMap = async ({ map, id }) => {
 
     const matchedBlob = blobs.find(({ pathname }) => pathname === `${id}`);
     if (matchedBlob?.url) {
-      console.info(`Returning cached map for id:${id}, url:${matchedBlob.url}`);
       return matchedBlob.url;
     }
 

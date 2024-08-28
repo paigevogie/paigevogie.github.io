@@ -16,7 +16,7 @@
   display: flex;
   width: 100%;
   justify-content: space-between;
-  margin-bottom: $sizing-sm;
+  margin-bottom: $sizing-md;
 
   button {
     @include button;
@@ -24,14 +24,6 @@
   }
 }
 
-.loadMoreContainer {
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  margin-top: $sizing-md;
-
-  button {
-    @include button;
-    width: 100px;
-  }
+.chart {
+  padding-bottom: $sizing-lg;
 }

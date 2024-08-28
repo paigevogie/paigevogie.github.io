@@ -1,0 +1,20 @@
+.loading {
+  border: $sizing-sm solid $lightest-grey;
+  border-top: $sizing-sm solid $light-grey;
+  border-radius: 50%;
+  width: $sizing-5xl;
+  height: $sizing-5xl;
+  animation: spin 1.2s ease-in-out infinite;
+  position: fixed;
+  top: calc(50% - $sizing-5xl/2);
+  left: calc(50% - $sizing-5xl/2);
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

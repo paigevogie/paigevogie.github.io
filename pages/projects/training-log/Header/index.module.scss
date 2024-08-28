@@ -19,7 +19,7 @@
       font-weight: 300;
       width: 70px;
       padding: $sizing-sm $sizing-xs;
-      margin: 0 $sizing-sm $sizing-sm 0;
+      margin-right: $sizing-sm;
       text-align-last: center;
 
       @include min-size-md {
@@ -47,6 +47,9 @@
     > div:last-child {
       text-align: right;
       min-width: 70px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
 
       @include min-size-md {
         font-size: $font-size-xl;

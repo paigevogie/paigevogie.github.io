@@ -1,16 +1,17 @@
 import ChartJS from "chart.js/auto";
-import { addYears, format, isSameMonth } from "date-fns";
+import { addDays, addMonths, addWeeks, format, isSameMonth } from "date-fns";
+import { useEffect } from "react";
 import { Bar } from "react-chartjs-2";
 import {
   DAY,
   DISTANCE,
-  getGroups,
+  getChartGroups,
   getTotal,
   MONTH,
-  MONTHS,
   PACE,
   RELATIVE_EFFORT,
   TIME,
+  TOTAL_CHART_GROUPS,
   WEEK,
   weekOptions,
 } from "../utils";
@@ -23,10 +24,27 @@ const Chart = ({
   chartDate,
   setChartDate,
   loadMore,
+  activities,
 }) => {
+  const chartGroups = getChartGroups(chartDate, groupBy);
+  const oldestActivityDate = new Date(
+    activities[activities.length - 1].start_date_local
+  );
+  const oldestGroupDate = new Date(chartGroups[0][0]);
+  const shouldLoadMore = oldestGroupDate < oldestActivityDate;
+
+  useEffect(() => {
+    if (shouldLoadMore) {
+      loadMore();
+    }
+  }, [shouldLoadMore, loadMore]);
+
   const getData = () =>
-    getGroups(chartDate, groupBy).map((group) =>
-      getTotal(group, filteredActivities, displayUnit, false)
+    chartGroups.map((group) =>
+      // Don't display partial data
+      shouldLoadMore
+        ? 0
+        : getTotal(group, filteredActivities, displayUnit, false)
     );
 
   const getLabel = () => {
@@ -45,11 +63,9 @@ const Chart = ({
   const getLabels = () => {
     switch (groupBy) {
       case DAY:
-        return getGroups(chartDate, groupBy).map(
-          (group) => `${format(group[0], "MMM d")}`
-        );
+        return chartGroups.map((group) => format(group[0], "MMM d"));
       case WEEK:
-        return getGroups(chartDate, groupBy).map(
+        return chartGroups.map(
           (group) =>
             `${format(group[0], "MMM d")} – ${format(
               group[6],
@@ -57,8 +73,21 @@ const Chart = ({
             )}`
         );
       case MONTH:
-        return MONTHS;
+        return chartGroups.map((group) => format(group[0], "MMM"));
     }
+  };
+
+  const navigate = (direction = 1) => {
+    const addFunc =
+      groupBy === DAY
+        ? addDays
+        : groupBy === WEEK
+        ? addWeeks
+        : groupBy === MONTH
+        ? addMonths
+        : () => {};
+
+    setChartDate(addFunc(chartDate, direction * TOTAL_CHART_GROUPS));
   };
 
   const black = "#323232";
@@ -109,17 +138,10 @@ const Chart = ({
   return (
     <>
       <div className={styles.chartNavigation}>
-        <button onClick={() => setChartDate(addYears(chartDate, -1))}>
-          Prev
-        </button>
-        <button onClick={() => setChartDate(addYears(chartDate, 1))}>
-          Next
-        </button>
+        <button onClick={() => navigate(-1)}>Prev</button>
+        <button onClick={() => navigate()}>Next</button>
       </div>
-      <Bar data={chartData} options={options} />
-      <div className={styles.loadMoreContainer}>
-        <button onClick={loadMore}>Load More</button>
-      </div>
+      <Bar className={styles.chart} data={chartData} options={options} />
     </>
   );
 };
