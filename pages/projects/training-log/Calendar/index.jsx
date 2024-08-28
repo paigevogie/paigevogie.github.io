@@ -88,13 +88,13 @@ const Calendar = ({
           );
           const isRunAndDistance =
             activityType === RUN && displayUnit === DISTANCE;
+          const { weeklyDistanceGoal } = config;
           const total = getTotal(
             getWeek(referenceDate),
             filteredActivities,
             displayUnit,
-            !isRunAndDistance
+            !(isRunAndDistance && weeklyDistanceGoal)
           );
-          const { weeklyDistanceGoal } = config;
 
           return (
             <div
@@ -105,7 +105,7 @@ const Calendar = ({
               <div className={styles.weekDetails}>
                 <div>{`${startDateFormatted} – ${endDateFormatted}`}</div>
                 <div className={styles.weekTotal}>
-                  {isRunAndDistance ? (
+                  {isRunAndDistance && weeklyDistanceGoal ? (
                     <>
                       <div>
                         {`${total} mi`}

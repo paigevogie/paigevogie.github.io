@@ -21,16 +21,14 @@
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@babel/eslint-parser": "^7.25.1",
+    "@babel/node": "^7.25.0",
     "@babel/preset-env": "^7.25.4",
     "@babel/preset-react": "^7.24.7",
-    "@eslint/js": "^9.9.1",
     "eslint": "^8.57.0",
     "eslint-config-next": "^14.2.6",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-jsx-a11y": "^6.9.0",
-    "globals": "^15.9.0",
     "husky": "^7.0.4",
-    "nodemon": "^3.1.0",
     "prettier": "2.5.1",
     "prettier-plugin-organize-imports": "^3.2.4",
     "sass": "^1.60.0",
@@ -39,12 +37,12 @@
   "scripts": {
     "dev": "next dev",
     "vercel:dev": "vercel dev",
-    "python:dev": "nodemon --exec python3 local.py",
     "build": "next build",
     "start": "next start",
     "prettier": "npx prettier --write .",
     "prepare": "husky install",
     "pull-env": "vercel env pull",
-    "lint": "DEBUG=eslint:cli-engine eslint . --ext .js,.jsx"
+    "lint": "DEBUG=eslint:cli-engine eslint . --ext .js,.jsx",
+    "local": "npx babel-node --presets @babel/preset-env local.js"
   }
 }

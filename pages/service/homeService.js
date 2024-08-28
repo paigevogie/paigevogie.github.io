@@ -35,7 +35,8 @@ export const getLinkedInData = async () => {
   const html = response
     .replace(`LIBadgeCallback("`, "") // remove function call
     .replace(/",\d*\)/, "") // remove second param
-    .replace(/<link.*?>/, ""); // remove link
+    .replace(/<link.*?>/, "") // remove stylesheet link
+    .replaceAll("<a ", '<a target="_blank"'); // add missing target="_blank"
 
   return html;
 };

@@ -1,6 +1,5 @@
 const config = {
-  weeklyDistanceGoal: 12,
-  monthlyDistanceGoal: 50,
+  // weeklyDistanceGoal: 12,
 };
 
 export default config;

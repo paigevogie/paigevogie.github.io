@@ -43,8 +43,6 @@ const getStravaMap = async ({ map, id }) => {
       return matchedBlob.url;
     }
 
-    console.info(`Fetching mapbox map for id:${id}`);
-
     const MAP_STYLE = "streets-v12";
     const DIMENSIONS = "100x100";
     const STROKE_WIDTH = 2;
@@ -64,6 +62,8 @@ const getStravaMap = async ({ map, id }) => {
     const blob = await put(id, mapResponse.body, {
       access: "public",
     });
+
+    console.info(`Fetched mapbox map for id:${id}, url: ${blob.url}`);
 
     return blob.url;
   } catch (err) {
@@ -108,14 +108,4 @@ const getStravaActivities = async ({ perPage = 10, page = 1, ...args }) => {
   );
 };
 
-const getStravaActivity = async (id) => {
-  const activityResponse = await fetch(
-    `https://www.strava.com/api/v3/activities/${id}`,
-    await getStravaHeaders()
-  );
-  handleResponseError(activityResponse, `Strava Activity ${id}`);
-
-  return await activityResponse.json();
-};
-
-export { getStravaMap, getStravaActivities, getStravaActivity };
+export { getStravaActivities, getStravaHeaders, getStravaMap };

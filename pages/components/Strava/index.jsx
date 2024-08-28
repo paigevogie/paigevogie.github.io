@@ -33,7 +33,7 @@ const StravaSvg = () => (
 const Strava = ({ stravaData }) => (
   <div className={styles["strava-embed"]}>
     <div>
-      <a href="https://www.strava.com/athletes/55412609">
+      <a href="https://www.strava.com/athletes/55412609" target="_blank">
         <StravaSvg />
       </a>
     </div>
