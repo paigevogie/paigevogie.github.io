@@ -1,14 +1,12 @@
-import { format, getYear } from "date-fns";
+import { format } from "date-fns";
 import {
   ALL,
   CALENDAR,
   CHART,
   DISPLAY_UNITS,
-  getGroups,
   getMonth,
   getTotal,
   GROUP_BY,
-  WEEK,
 } from "../utils";
 import styles from "./index.module.scss";
 
@@ -25,7 +23,7 @@ const Header = ({
   setView,
   groupBy,
   setGroupBy,
-  chartDate,
+  // chartDate,
 }) => {
   const getActivityTypes = () => {
     const types = {};
@@ -96,16 +94,9 @@ const Header = ({
               </div>
             </>
           ) : view === CHART ? (
-            <>
-              <small>{getYear(chartDate)} Total</small>
-              <div>
-                {getTotal(
-                  getGroups(chartDate, WEEK).flat(),
-                  filteredActivities,
-                  displayUnit
-                )}
-              </div>
-            </>
+            // TODO: make this date make sense
+            // <small>{format(chartDate, "MMM yyy")}</small>
+            <></>
           ) : null}
         </div>
       </div>

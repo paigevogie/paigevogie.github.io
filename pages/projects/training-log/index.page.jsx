@@ -6,13 +6,14 @@ import Calendar from "./Calendar";
 import Chart from "./Chart";
 import Header from "./Header";
 import styles from "./index.module.scss";
+import Loading from "./Loading";
 import {
   activitiesDateFormat,
   ALL,
   CALENDAR,
   CHART,
-  DAY,
   DISTANCE,
+  MONTH,
   RUN,
   today,
 } from "./utils";
@@ -45,12 +46,13 @@ const TrainingLog = (props) => {
   const [displayUnit, setDisplayUnit] = useState(
     props.query.displayUnit || DISTANCE
   );
-  const [groupBy, setGroupBy] = useState(props.query.groupBy || DAY);
+  const [groupBy, setGroupBy] = useState(props.query.groupBy || MONTH);
   const [activities, setActivities] = useState(props.activities);
   const [topWeek, setTopWeek] = useState(null);
   const [chartDate, setChartDate] = useState(today);
   const [currentPage, setCurrentPage] = useState(CURRENT_PAGE);
   const [showLoadMore, setShowLoadMore] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const headerRef = useRef();
   const calendarRef = useRef();
@@ -77,6 +79,8 @@ const TrainingLog = (props) => {
     }, {});
 
   const loadMore = async () => {
+    setIsLoading(true);
+
     const newActivities =
       (await (
         await fetch(
@@ -91,6 +95,7 @@ const TrainingLog = (props) => {
       return;
     }
 
+    setIsLoading(false);
     setActivities([...activities, ...newActivities]);
     setCurrentPage(currentPage + 1);
   };
@@ -145,11 +150,13 @@ const TrainingLog = (props) => {
                   chartDate,
                   setChartDate,
                   loadMore,
+                  activities,
                 }}
               />
             );
         }
       })()}
+      {isLoading && <Loading />}
     </Layout>
   );
 };

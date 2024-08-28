@@ -3,15 +3,9 @@ import {
   addMonths,
   addWeeks,
   format,
-  getYear,
-  isBefore,
-  isSameDay,
   isSameMonth,
-  isSameWeek,
-  isSameYear,
   startOfMonth,
   startOfWeek,
-  startOfYear,
 } from "date-fns";
 import { utcToZonedTime } from "date-fns-tz";
 
@@ -157,50 +151,26 @@ export const getMonth = (date) => {
   return month;
 };
 
-export const getGroups = (date, type) => {
+export const TOTAL_CHART_GROUPS = 6;
+
+export const getChartGroups = (date, groupBy) => {
   const groups = [];
-  const isThisYear = isSameYear(today, date);
+  let tmpDate = date;
 
-  if (type === DAY) {
-    let tmpDate = startOfYear(date);
-
-    while (
-      isThisYear
-        ? isBefore(tmpDate, date) || isSameDay(tmpDate, date)
-        : isSameYear(tmpDate, date)
-    ) {
+  while (groups.length < TOTAL_CHART_GROUPS) {
+    if (groupBy === DAY) {
       groups.push([tmpDate]);
-      tmpDate = addDays(tmpDate, 1);
-    }
-  }
-
-  if (type === WEEK) {
-    let tmpDate = startOfWeek(startOfYear(date), weekOptions);
-
-    while (
-      isThisYear
-        ? isBefore(tmpDate, date) || isSameWeek(tmpDate, date, weekOptions)
-        : getYear(tmpDate) <= getYear(date)
-    ) {
+      tmpDate = addDays(tmpDate, -1);
+    } else if (groupBy === WEEK) {
       groups.push(getWeek(tmpDate));
-      tmpDate = addWeeks(tmpDate, 1, weekOptions);
-    }
-  }
-
-  if (type === MONTH) {
-    let tmpDate = startOfYear(date);
-
-    while (
-      isThisYear
-        ? isBefore(tmpDate, date) || isSameMonth(tmpDate, date)
-        : isSameYear(tmpDate, date)
-    ) {
+      tmpDate = addWeeks(tmpDate, -1);
+    } else if (groupBy === MONTH) {
       groups.push(getMonth(tmpDate));
-      tmpDate = addMonths(tmpDate, 1);
+      tmpDate = addMonths(tmpDate, -1);
     }
   }
 
-  return groups;
+  return groups.reverse();
 };
 
 export const activitiesDateFormat = "yyyy-MM-dd";

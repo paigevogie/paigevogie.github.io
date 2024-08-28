@@ -23,15 +23,3 @@
     width: 50px;
   }
 }
-
-.loadMoreContainer {
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  margin-top: $sizing-md;
-
-  button {
-    @include button;
-    width: 100px;
-  }
-}
