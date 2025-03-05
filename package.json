@@ -48,5 +48,6 @@
     "pull-env": "vercel env pull",
     "lint": "DEBUG=eslint:cli-engine eslint . --ext .js,.jsx",
     "local": "npx babel-node --presets @babel/preset-env local.js"
-  }
+  },
+  "packageManager": "yarn@4.7.0"
 }

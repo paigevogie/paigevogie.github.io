@@ -73,7 +73,7 @@ const LibbySvg = () => (
 
 const Libby = ({ libbyData }) => (
   <div className={styles["libby-embed"]}>
-    <a href={process.env.LIBBY_URL?.replace(".json", ".html")} target="_blank">
+    <a href={libbyData.url} target="_blank">
       <div>Books Read in {libbyData.tag.name}</div>
       <LibbySvg />
     </a>

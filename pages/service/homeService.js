@@ -6,7 +6,10 @@ export const getLibbyData = async () => {
     const response = await fetch(process.env.LIBBY_URL);
     handleResponseError(response, "Libby");
 
-    return await response.json();
+    return {
+      ...(await response.json()),
+      url: process.env.LIBBY_URL?.replace(".json", ".html"),
+    };
   } catch (error) {
     console.error("Error fetching Libby data:", error);
     return {};
