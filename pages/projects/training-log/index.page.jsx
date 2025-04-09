@@ -12,9 +12,8 @@ import {
   ALL,
   CALENDAR,
   CHART,
-  DISTANCE,
   MONTH,
-  RUN,
+  TIME,
   today,
 } from "./utils";
 
@@ -41,10 +40,10 @@ export async function getServerSideProps({ res, query = {} }) {
 const TrainingLog = (props) => {
   const [view, setView] = useState(props.query.view || CALENDAR);
   const [activityType, setActivityType] = useState(
-    props.query.activityType?.replace("+", " ") || RUN
+    props.query.activityType?.replace("+", " ") || ALL
   );
   const [displayUnit, setDisplayUnit] = useState(
-    props.query.displayUnit || DISTANCE
+    props.query.displayUnit || TIME
   );
   const [groupBy, setGroupBy] = useState(props.query.groupBy || MONTH);
   const [activities, setActivities] = useState(props.activities);
