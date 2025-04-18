@@ -22,11 +22,13 @@
 
     li {
       margin-bottom: $sizing-md;
-      display: flex;
 
-      &:last-child {
-        margin-bottom: 0;
-      }
+      a {
+        display: flex;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
 
         img {
           height: $sizing-5xl;
@@ -48,6 +50,7 @@
             font-size: $font-size-sm;
           }
         }
+      }
     }
   }
 }
