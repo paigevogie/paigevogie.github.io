@@ -1,14 +1,14 @@
 import GitHub from "./components/GitHub";
 import Layout from "./components/Layout";
-import Libby from "./components/Libby";
 import LinkedIn from "./components/LinkedIn";
 import { config } from "./components/SEO";
+import StoryGraph from "./components/StoryGraph";
 import Strava from "./components/Strava";
 import styles from "./index.module.scss";
 import {
   getGithubData,
-  getLibbyData,
   getLinkedInData,
+  getStorygraphData,
   getStravaData,
 } from "./service/homeService";
 
@@ -21,7 +21,7 @@ export async function getServerSideProps({ res }) {
   return {
     props: {
       githubData: await getGithubData(),
-      libbyData: await getLibbyData(),
+      storygraphData: await getStorygraphData(),
       linkedInData: await getLinkedInData(),
       stravaData: await getStravaData(),
     },
@@ -31,7 +31,7 @@ export async function getServerSideProps({ res }) {
 const Home = ({
   githubData,
   stravaData,
-  libbyData,
+  storygraphData,
   linkedInData,
   ...props
 }) => (
@@ -48,7 +48,7 @@ const Home = ({
   >
     <div>
       <GitHub {...{ githubData }} />
-      <Libby {...{ libbyData }} />
+      <StoryGraph {...{ storygraphData }} />
       <Strava {...{ stravaData }} />
       <LinkedIn {...{ linkedInData }} />
     </div>

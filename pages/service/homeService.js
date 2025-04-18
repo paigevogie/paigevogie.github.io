@@ -1,17 +1,12 @@
+import { getBooksRead } from "storygraph-js";
 import { handleResponseError } from "./serviceUtils";
 import { getStravaActivities, getStravaMap } from "./stravaService";
 
-export const getLibbyData = async () => {
+export const getStorygraphData = async () => {
   try {
-    const response = await fetch(process.env.LIBBY_URL);
-    handleResponseError(response, "Libby");
-
-    return {
-      ...(await response.json()),
-      url: process.env.LIBBY_URL?.replace(".json", ".html"),
-    };
+    return await getBooksRead("paigevogie");
   } catch (error) {
-    console.error("Error fetching Libby data:", error);
+    console.error("Error fetching Storygraph data:", error);
     return {};
   }
 };

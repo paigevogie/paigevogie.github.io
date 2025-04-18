@@ -21,13 +21,12 @@
     "./src/**/*.{js,jsx}": "eslint --fix"
   },
   "dependencies": {
-    "@vercel/blob": "^0.27.3",
-    "@vercel/kv": "^1.0.0",
+    "@vercel/kv": "^1.0.1",
     "chart.js": "^4.4.1",
     "date-fns": "^2.30.0",
     "date-fns-tz": "^2.0.0",
     "lodash.throttle": "^4.1.1",
-    "next": "^14.2.6",
+    "next": "^14.2.28",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",

@@ -1,7 +1,7 @@
-.libby-embed {
+.storygraph-embed {
   overflow: hidden;
 
-  > a {
+  > div {
     padding: $embed-padding;
     font-weight: 400;
     display: flex;
@@ -9,12 +9,6 @@
     align-items: center;
     background-color: #ffffff;
     height: 20%;
-
-    svg {
-      border-radius: 100%;
-      height: $sizing-xl;
-      width: $sizing-xl;
-    }
   }
 
   ul {
@@ -28,12 +22,11 @@
 
     li {
       margin-bottom: $sizing-md;
+      display: flex;
 
       &:last-child {
         margin-bottom: 0;
       }
-      a {
-        display: flex;
 
         img {
           height: $sizing-5xl;
@@ -55,7 +48,6 @@
             font-size: $font-size-sm;
           }
         }
-      }
     }
   }
 }

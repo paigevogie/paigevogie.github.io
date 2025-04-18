@@ -1,4 +1,3 @@
-import { list, put } from "@vercel/blob";
 import { kv } from "@vercel/kv";
 import { handleResponseError } from "./serviceUtils";
 
@@ -32,16 +31,6 @@ const getStravaToken = async () => {
 
 const getStravaMap = async ({ map, id }) => {
   try {
-    const { blobs } = await list();
-
-    // blobs.length && await del(blobs.map(({ url }) => url));
-    // return null;
-
-    const matchedBlob = blobs.find(({ pathname }) => pathname === `${id}`);
-    if (matchedBlob?.url) {
-      return matchedBlob.url;
-    }
-
     const MAP_STYLE = "streets-v12";
     const DIMENSIONS = "100x100";
     const STROKE_WIDTH = 2;
@@ -49,22 +38,12 @@ const getStravaMap = async ({ map, id }) => {
     const STROKE_OPACITY = 1;
     const PADDING = 8;
 
-    const mapResponse = await fetch(
-      `https://api.mapbox.com/styles/v1/mapbox/${MAP_STYLE}/static/path-${STROKE_WIDTH}+${STROKE_COLOR}-${STROKE_OPACITY}(${encodeURIComponent(
-        map.summary_polyline
-      )})/auto/${DIMENSIONS}?padding=${PADDING}&access_token=${
-        process.env.MAPBOX_TOKEN
-      }`
-    );
-    handleResponseError(mapResponse, "Mapbox");
-
-    const blob = await put(id, mapResponse.body, {
-      access: "public",
-    });
-
-    console.info(`Fetched mapbox map for id:${id}, url: ${blob.url}`);
-
-    return blob.url;
+    return `https://api.mapbox.com/styles/v1/mapbox/${MAP_STYLE}/static/path-${STROKE_WIDTH}+${STROKE_COLOR}-${STROKE_OPACITY}(${encodeURIComponent(
+      map.summary_polyline
+    )})/auto/${DIMENSIONS}?padding=${PADDING}&access_token=${
+      process.env.MAPBOX_TOKEN
+    }`
+    
   } catch (err) {
     console.error(`Error getting Strava map id ${id}: ${err}`);
     return null;
