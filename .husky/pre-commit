@@ -1,4 +1,1 @@
-# Husky V8 Setup: https://github.com/typicode/husky/tree/3c0e08d3ca4d01d04ebb92089e68c47e131ab6be/docs#manual
-
-echo "Linting staged js files..." &&
-DEBUG=eslint:cli-engine yarn eslint --fix --no-error-on-unmatched-pattern $(git diff --name-only HEAD '**/*.js' '**/*.jsx' | xargs)
+echo "Linting staged files..." && lint-staged
