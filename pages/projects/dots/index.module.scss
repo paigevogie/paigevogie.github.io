@@ -33,7 +33,7 @@ $deg: 360deg;
       $dotsList: ();
 
       @for $j from 0 to $dotCount {
-        $x: $j * $deg/$dotCount;
+        $x: calc($j * $deg/$dotCount);
         $offsetX: $i * cos($x) * 1em;
         $offsetY: $i * sin($x) * 1em;
         $dotsList: $dotsList, $offsetX $offsetY $medium-grey;

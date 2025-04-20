@@ -52,7 +52,8 @@ export const getStravaData = async () => {
         // only return activities witha map
         .filter((activity) => !!activity.map?.summary_polyline)
         .map(async (activity) => {
-          activity.map.url = await getStravaMap(activity);
+          activity.map.url = getStravaMap(activity);
+          console.log("MAP", activity.map.url);
           return activity;
         })
     );

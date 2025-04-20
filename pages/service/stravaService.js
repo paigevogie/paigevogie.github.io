@@ -29,24 +29,19 @@ const getStravaToken = async () => {
   }
 };
 
-const getStravaMap = async ({ map, id }) => {
-  try {
-    const MAP_STYLE = "streets-v12";
-    const DIMENSIONS = "100x100";
-    const STROKE_WIDTH = 2;
-    const STROKE_COLOR = "FC5200";
-    const STROKE_OPACITY = 1;
-    const PADDING = 8;
+const getStravaMap = ({ map }) => {
+  const MAP_STYLE = "streets-v12";
+  const DIMENSIONS = "100x100";
+  const STROKE_WIDTH = 2;
+  const STROKE_COLOR = "FC5200";
+  const STROKE_OPACITY = 1;
+  const PADDING = 8;
 
-    return `https://api.mapbox.com/styles/v1/mapbox/${MAP_STYLE}/static/path-${STROKE_WIDTH}+${STROKE_COLOR}-${STROKE_OPACITY}(${encodeURIComponent(
-      map.summary_polyline
-    )})/auto/${DIMENSIONS}?padding=${PADDING}&access_token=${
-      process.env.MAPBOX_TOKEN
-    }`;
-  } catch (err) {
-    console.error(`Error getting Strava map id ${id}: ${err}`);
-    return null;
-  }
+  return `https://api.mapbox.com/styles/v1/mapbox/${MAP_STYLE}/static/path-${STROKE_WIDTH}+${STROKE_COLOR}-${STROKE_OPACITY}(${encodeURIComponent(
+    map.summary_polyline
+  )})/auto/${DIMENSIONS}?padding=${PADDING}&access_token=${
+    process.env.MAPBOX_TOKEN
+  }`;
 };
 
 const getStravaHeaders = async () => ({

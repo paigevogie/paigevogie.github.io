@@ -8,6 +8,7 @@ const config = {
   images: {
     // https://nextjs.org/docs/pages/api-reference/components/image#minimumcachettl
     minimumCacheTTL: 2678400, // 31 days
+    // https://nextjs.org/docs/app/api-reference/components/image#remotepatterns
     remotePatterns: [
       {
         protocol: "https",
