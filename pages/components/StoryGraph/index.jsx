@@ -1,3 +1,4 @@
+import Image from "next/image";
 import styles from "./index.module.scss";
 
 const StoryGraph = ({ storygraphData }) => (
@@ -7,7 +8,7 @@ const StoryGraph = ({ storygraphData }) => (
       {storygraphData.books.map(({ title, author, img, url }) => (
         <li key={`${title}${author}`}>
           <a href={url} target="_blank">
-            <img src={img} alt={title} />
+            <Image src={img} alt={title} width={56} height={56} />
             <div>
               <div>{title}</div>
               <small>{author}</small>

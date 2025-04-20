@@ -42,8 +42,7 @@ const getStravaMap = async ({ map, id }) => {
       map.summary_polyline
     )})/auto/${DIMENSIONS}?padding=${PADDING}&access_token=${
       process.env.MAPBOX_TOKEN
-    }`
-    
+    }`;
   } catch (err) {
     console.error(`Error getting Strava map id ${id}: ${err}`);
     return null;

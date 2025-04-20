@@ -5,6 +5,24 @@ const config = {
   sassOptions: {
     prependData: `@use "@/styles/_vars" as *;`,
   },
+  images: {
+    // https://nextjs.org/docs/pages/api-reference/components/image#minimumcachettl
+    minimumCacheTTL: 2678400, // 31 days
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "cdn.thestorygraph.com",
+      },
+      {
+        protocol: "https",
+        hostname: "api.mapbox.com",
+      },
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+      },
+    ],
+  },
 };
 
 export default config;

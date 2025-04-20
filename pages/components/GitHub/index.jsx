@@ -1,3 +1,4 @@
+import Image from "next/image";
 import styles from "./index.module.scss";
 
 const GitHub = ({ githubData }) => {
@@ -10,7 +11,12 @@ const GitHub = ({ githubData }) => {
   return (
     <div className={styles["github-embed"]}>
       <a href={html_url} target="_blank">
-        <img src={avatar_url} alt="github profile pic" />
+        <Image
+          src={avatar_url}
+          alt="github profile pic"
+          height={125}
+          width={125}
+        />
       </a>
       <div>
         <a href={html_url} target="_blank">

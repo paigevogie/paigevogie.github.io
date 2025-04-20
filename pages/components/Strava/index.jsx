@@ -1,3 +1,4 @@
+import Image from "next/image";
 import styles from "./index.module.scss";
 
 const StravaSvg = () => (
@@ -40,7 +41,12 @@ const Strava = ({ stravaData }) => (
     <ul>
       {stravaData.map(({ map, name, distance, start_date_local, id }) => (
         <li key={id}>
-          <img src={map?.url} alt={`map for activity id:${id}`} />
+          <Image
+            src={map.url}
+            alt={`map for activity id:${id}`}
+            width={56}
+            height={56}
+          />
           <div>
             <div>{name}</div>
             <small>
